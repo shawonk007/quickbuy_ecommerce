@@ -1,0 +1,1 @@
+<aside id="sidebar" class="customer-sidebar"></aside>

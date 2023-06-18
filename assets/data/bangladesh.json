@@ -1,0 +1,131 @@
+{
+  "divisions": [
+    {
+      "name": "Dhaka Division",
+      "districts": [
+        "Dhaka",
+        "Gazipur",
+        "Narayanganj",
+        "Tangail",
+        "Mymensingh",
+        "Manikganj",
+        "Narsingdi",
+        "Gopalganj",
+        "Faridpur",
+        "Jamalpur",
+        "Kishoreganj",
+        "Sherpur",
+        "Madaripur",
+        "Rajbari",
+        "Munshiganj",
+        "Madaripur",
+        "Shariatpur"
+      ]
+    },
+    {
+      "name": "Chittagong Division",
+      "districts": [
+        "Chittagong",
+        "Cox's Bazar",
+        "Rangamati",
+        "Khagrachari",
+        "Bandarban",
+        "Noakhali",
+        "Feni",
+        "Lakshmipur",
+        "Chandpur",
+        "Comilla",
+        "Brahmanbaria",
+        "Rangpur",
+        "Gaibandha",
+        "Kurigram",
+        "Lalmonirhat",
+        "Nilphamari",
+        "Panchagarh",
+        "Thakurgaon",
+        "Dinajpur",
+        "Bagerhat",
+        "Chuadanga",
+        "Jessore",
+        "Jhenaidah",
+        "Khulna",
+        "Kushtia",
+        "Magura",
+        "Meherpur",
+        "Narail",
+        "Satkhira"
+      ]
+    },
+    {
+      "name": "Rajshahi Division",
+      "districts": [
+          "Rajshahi",
+          "Bogra",
+          "Joypurhat",
+          "Naogaon",
+          "Natore",
+          "Chapai Nawabganj",
+          "Pabna",
+          "Sirajganj"
+      ]
+    },
+    {
+      "name": "Khulna Division",
+      "districts": [
+          "Khulna",
+          "Bagerhat",
+          "Chuadanga",
+          "Jessore",
+          "Jhenaidah",
+          "Kushtia",
+          "Magura",
+          "Meherpur",
+          "Narail",
+          "Satkhira"
+      ]
+    },
+    {
+      "name": "Barisal Division",
+      "districts": [
+          "Barisal",
+          "Barguna",
+          "Bhola",
+          "Jhalokati",
+          "Patuakhali",
+          "Pirojpur"
+      ]
+    },
+    {
+      "name": "Sylhet Division",
+      "districts": [
+          "Sylhet",
+          "Habiganj",
+          "Moulvibazar",
+          "Sunamganj"
+      ]
+    },
+    {
+      "name": "Rangpur Division",
+      "districts": [
+        "Rangpur",
+        "Dinajpur",
+        "Gaibandha",
+        "Kurigram",
+        "Lalmonirhat",
+        "Nilphamari",
+        "Panchagarh",
+        "Thakurgaon"
+      ]
+    },
+    {
+      "name": "Mymensingh Division",
+      "districts": [
+        "Mymensingh",
+        "Jamalpur",
+        "Netrokona",
+        "Sherpur"
+      ]
+    }
+  ]
+}
+  

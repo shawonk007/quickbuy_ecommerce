@@ -1,0 +1,10 @@
+CREATE PROCEDURE storeRole (
+    IN title varchar(50),
+    IN description varchar(255),
+    IN slug varchar(50),
+    IN status tinyint
+)
+BEGIN
+	INSERT INTO roles VALUES(null, title, description, slug, status, current_timestamp, current_timestamp);
+END
+//
