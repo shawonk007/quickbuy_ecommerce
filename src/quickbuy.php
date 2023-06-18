@@ -1,4 +1,5 @@
 <?php
+if (!function_exists('info')) {
 function info() {
   $path = "http://localhost/quickbuy/";
   return [
@@ -9,5 +10,15 @@ function info() {
     'logo'=> $path."assets/images/logo.png",
     'description' => "Your ultimate online shopping destination. Discover endless possibilities with trusted vendors, offering fashion, electronics, home goods, and more. Seamless browsing, secure purchases, and convenience at its best. Shop with joy at QuickBuy!"
   ];
+}
+}
+
+if (!function_exists('config')) {
+  function config($param)
+  {        
+    $parts = explode(".",$param);
+    $inc = include(__DIR__."/../config/".$parts[0].".php");
+    return $inc[$parts[1]];
+  }
 }
 ?>

@@ -1,14 +1,20 @@
 <?php
+require __DIR__ . '/../vendor/autoload.php';
+// echo __DIR__;
+// exit;
+// require_once 'header.php';
+
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
 $pageName = "Dashboard";
 $pageGroup = "Dashboard";
 $currentPage = "Dashboard";
-$root = "/quickbuy/admin/";
+
+$root = config("app.adminroot");
 require __DIR__ . '/../components/header/secondary.php';
-// require_once 'header.php';
-require __DIR__ . '../../vendor/autoload.php';
+
 ?>
 <!-- <style>
   table th, td {
