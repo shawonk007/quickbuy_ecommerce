@@ -17,7 +17,7 @@ class Database {
       }
       
       // Set the character encoding
-      mysqli_set_charset($this->conn, "UT8");
+      mysqli_set_charset($this->conn, "UTF8");
     } catch (\Exception $e) {
       // Handle the connection error
       die("Database Connection Error: ". $e->getMessage());
