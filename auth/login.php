@@ -1,4 +1,6 @@
 <?php
+use App\Database;
+$db = new Database();
 $pageName = "Login";
 $root = "/quickbuy/";
 require __DIR__ . '/../components/header/secondary.php';

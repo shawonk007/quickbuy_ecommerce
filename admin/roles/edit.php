@@ -1,22 +1,21 @@
 <?php
-
-use App\Class\Roles;
-
+require __DIR__ . '../../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Class\Roles;
+use App\Database;
+$db = new Database();
+$roles = new Roles($db->conn);
 $pageName = "Edit Role";
 $pageGroup = "Users Settings";
 $currentGroup = ["Roles", "roles/index.php"];
 $currentPage = "Edit";
 $currentURL = $_SERVER['PHP_SELF'];
 require __DIR__ . '/../../components/header/tertiary.php';
-require __DIR__ . '../../../vendor/autoload.php';
-
-$roles = new Roles($conn);
 
 $errors = [];
-
 function logError($errorMessage) {
   global $pageName;
   $logFile = __DIR__ . '/errors.log'; // Specify the log file name and path
@@ -24,68 +23,14 @@ function logError($errorMessage) {
   file_put_contents($logFile, $logMessage, FILE_APPEND);
   logError($logMessage); // Call the logError function recursively
 }
-
 if (isset($_GET['id'])) {
   $id = $_GET['id'];
   try {
     $role = $roles->edit($id);
   } catch (Exception $e) {
-    $response = [
-      'success' => false,
-      'message' => 'Failed to retrive: ' . $e->getMessage()
-    ];
-    exit();
-  }
-
-  if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    $title = $_POST['title'];
-    $desc = $_POST['description'];
-    $slug = $_POST['slug'];
-    $status = $_POST['status'];
-  
-    if (empty($title)) {
-      $errors[] = "Role title is required.";
-    }
-  
-    if (empty($slug)) {
-      $errors[] = "Role slug is required.";
-    }
-  
-    if (empty($errors)) {
-      try {
-        if ($roles->update($id, $title, $desc, $slug, $status)) {
-          $response = [
-            'success' => true,
-            'message' => 'Role updated successfully.'
-          ];
-        } else {
-          $response = [
-            'success' => false,
-            'message' => 'Failed to update role.'
-          ];
-        }
-      } catch (\Throwable $e) {
-        $errorMessage = $e->getMessage();
-        logError($errorMessage);
-        $response = [
-          'success' => false,
-          'message' => 'An error occurred: ' . $e->getMessage()
-        ];
-      }
-    } else {
-      $response = [
-        'success' => false,
-        'message' => 'Validation error',
-        'errors' => $errors
-      ];
-    }
-    // Send the AJAX response as JSON
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    exit();
+    // exit();
   }
 }
-
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
@@ -97,12 +42,13 @@ if (isset($_GET['id'])) {
     <section class="container-fluid my-5"></section>
     <section class="container-fluid d-flex align-items-center justify-content-center py-5 my-5">
       <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-6">
-        <form action="<?= $currentURL; ?>" method="post">
+        <form action="<?= config("app.root") ?>src/actions/roles/update.php" method="post" id="updateRole">
           <div class="card shadow">
             <div class="card-header bg-success pb-0">
               <h4 class="card-title text-light">Update Role</h4>
             </div>
             <div class="card-body">
+              <input type="hidden" name="id" value="<?= isset($role['role_id']) ? $role['role_id'] : '' ?>" >
               <div class="row g-3 mb-3">
                 <div class="input-group">
                   <input type="text" name="title" class="form-control" id="" placeholder="Role Title" value="<?= isset($role['role_title']) ? $role['role_title'] : '' ?>" required />
@@ -151,11 +97,10 @@ if (isset($_GET['id'])) {
   </main>
   <script>
     $(document).ready(function() {
-      $('form').submit(function(e) {
+      $('#updateRole').submit(function(e) {
         e.preventDefault();
-        // Perform AJAX request
         $.ajax({
-          url: '',
+          url: '<?= config("app.root") ?>src/actions/roles/update.php',
           type: 'POST',
           data: $(this).serialize(),
           dataType: 'json',
@@ -163,12 +108,12 @@ if (isset($_GET['id'])) {
             if (response.success) {
               Swal.fire({
                 icon: 'success',
-                title: 'Created',
+                title: 'Updated',
                 text: response.message,
                 timer: 2000,
                 showConfirmButton: false
               }).then(function() {
-                window.location.href = 'create.php';
+                window.location.href = 'index.php';
               });
             } else {
               Swal.fire({

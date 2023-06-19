@@ -3,10 +3,10 @@
 namespace App;
 
 class Database {
-  private $conn;
+  public $conn;
 
   // Constructor
-  public function __construct($hostname, $username, $password, $database) {
+  public function __construct($hostname = "localhost", $username = "root", $password = "", $database = "test_quickbuy") {
     try {
       // Create Database Connection
       $this->conn = new \mysqli($hostname, $username, $password, $database);
@@ -17,7 +17,7 @@ class Database {
       }
       
       // Set the character encoding
-      mysqli_set_charset($this->conn, "UTF8");
+      $this->conn->set_charset("UTF8");
     } catch (\Exception $e) {
       // Handle the connection error
       die("Database Connection Error: ". $e->getMessage());
@@ -30,10 +30,10 @@ class Database {
   }
 }
 // Create an instance of the Database class
-$connect = new \App\Database("localhost", "root", "", "test_quickbuy");
+// $connect = new Database("localhost", "root", "", "test_quickbuy");
 
 // Get the connection object
-$conn = $connect->connection();
+// $conn = $connect->connection();
 
 // Check if the connection was successful
 // if ($conn->connect_errno) {

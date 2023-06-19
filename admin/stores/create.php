@@ -1,13 +1,15 @@
 <?php
+require __DIR__ . '../../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+use App\Database;
+$db = new Database();
 $pageName = "Add New Merchant";
 $pageGroup = "Seller Center";
 $currentGroup = ["Stores", "stores/index.php"];
 $currentPage = "Create";
 require __DIR__ . '/../../components/header/tertiary.php';
-require __DIR__ . '../../../vendor/autoload.php';
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>

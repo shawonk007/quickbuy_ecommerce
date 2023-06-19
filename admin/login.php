@@ -1,10 +1,12 @@
 <?php
+require __DIR__ . '../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+use App\Database;
+$db = new Database();
 $pageName = "Admin Login";
 require __DIR__ . '/../components/header/secondary.php';
-require __DIR__ . '../../vendor/autoload.php';
 ?>
 <body>
   <main>

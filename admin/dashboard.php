@@ -1,26 +1,19 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-// echo __DIR__;
-// exit;
-// require_once 'header.php';
 
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
-
+use App\Database;
+$db = new Database();
 $pageName = "Dashboard";
 $pageGroup = "Dashboard";
 $currentPage = "Dashboard";
 
-$root = config("app.adminroot");
+$root = config("app.admin");
 require __DIR__ . '/../components/header/secondary.php';
 
 ?>
-<!-- <style>
-  table th, td {
-    font-size: 0.75rem;
-  }
-</style> -->
 <body>
   <?php require __DIR__ . "/../components/sidebar/admin.php" ?>
   <main id="content">

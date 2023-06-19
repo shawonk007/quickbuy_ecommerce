@@ -1,27 +1,18 @@
 <?php
-
-use App\Class\Roles;
-
+require __DIR__ . '../../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+use App\Database;
+use App\Class\Roles;
+use Carbon\Carbon;
+$db = new Database();
+$roles = new Roles($db->conn);
 $pageName = "Manage Roles";
 $pageGroup = "Users Settings";
 $currentGroup = ["Roles", "roles/index.php"];
 $currentPage = "Index";
 require __DIR__ . '/../../components/header/tertiary.php';
-require __DIR__ . '../../../vendor/autoload.php';
-
-$roles = new Roles($conn);
-
-if (isset($_POST['id'])) {
-  $id = $_POST['id'];
-  header('Content-Type: application/json');
-  $result = $roles->destroy($id);
-  echo json_encode($result);
-  exit();
-}
-
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
@@ -111,9 +102,9 @@ if (isset($_POST['id'])) {
                     <td>
                       <span class="badge bg-success"><?= $statusLabel ?></span>
                     </td>
-                    <td>2 minutes ago</td>
+                    <td><?= Carbon::parse($role['created_at'])->diffForHumans(); ?></td>
                     <td>
-                      <form action="" method="post">
+                      <form action="<?= config("app.root") ?>src/actions/roles/delete.php" method="post" id="deleteRole">
                         <input type="hidden" name="id" value="<?= $role['role_id'] ?>">
                         <a href="edit.php?id=<?= $role['role_id'] ?>" class="btn btn-outline-info btn-sm">
                           <i class="fas fa-edit"></i>
@@ -121,7 +112,7 @@ if (isset($_POST['id'])) {
                         <!-- <button type="button" class="btn btn-outline-success btn-sm view-role" data-bs-toggle="modal" data-bs-target="#viewRole" data-role-id="<?= $role['role_id'] ?>" >
                           <i class="fas fa-eye"></i>
                         </button> -->
-                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="confirmDelete(<?= $role['role_id'] ?>)" >
+                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteRole(<?= $role['role_id'] ?>)" >
                           <i class="fas fa-trash-alt"></i>
                         </button>
                       </form>
@@ -287,9 +278,8 @@ if (isset($_POST['id'])) {
       </div>
     </section>
   </main>
-  <!-- AJAX and Script to handle the SweetAlert confirmation -->
   <script>
-    function confirmDelete(id) {
+    function deleteRole(id) {
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -298,29 +288,39 @@ if (isset($_POST['id'])) {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Perform the deletion using AJAX
+      })
+      .then((confirmed) => {
+        if (confirmed) {
           $.ajax({
-            url: 'index.php', // Replace with your deletion endpoint
-            type: 'POST',
-            data: {
-              id: id
-            },
+            url: "<?= config("app.root") ?>src/actions/roles/delete.php", // Replace with your deletion endpoint
+            type: "POST",
+            data: { id: id},
             dataType: 'json',
             success: function(response) {
-              // Handle the response after deletion
-              if (response.success) {
-                Swal.fire('Deleted!', 'The role has been deleted.', 'success').then(() => {
-                  // Refresh the page or update the UI as needed
+              if (response === "success") {
+                Swal.fire({
+                  title: "Deleted!",
+                  text: "The role has been deleted.",
+                  icon: "success",
+                }).then(() => {
+                  // Refresh the page to update the role list
                   location.reload();
                 });
               } else {
-                Swal.fire('Error!', 'Failed to delete the role.', 'error');
+                // If deletion fails
+                Swal.fire({
+                  title: "Error!",
+                  text: "Failed to delete the role. Please try again.",
+                  icon: "error",
+                });
               }
             },
             error: function() {
-              Swal.fire('Error!', 'An error occurred while processing the request.', 'error');
+              Swal.fire({
+                title: "Error!",
+                text: "An error occurred while deleting the role. Please try again.",
+                icon: "error",
+              });
             }
           });
         }

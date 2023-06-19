@@ -1,9 +1,11 @@
 <?php
+require __DIR__ . '/vendor/autoload.php';
+use App\Database;
+$db = new Database();
 $pageName = "Customer Dashboard";
 $pageGroup = "Dashboard";
 $currentPage = "Dashboard";
 require __DIR__ . '/components/header/primary.php';
-require __DIR__ . '/vendor/autoload.php';
 ?>
 <body>
 <?php require __DIR__ . "/components/sidebar/customer.php" ?>

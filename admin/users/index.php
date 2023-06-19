@@ -1,4 +1,5 @@
 <?php
+require __DIR__ . '../../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
@@ -7,7 +8,6 @@ $pageGroup = "Users & Members";
 $currentGroup = ["Users", "users/index.php"];
 $currentPage = "Index";
 require __DIR__ . '/../../components/header/tertiary.php';
-require __DIR__ . '../../../vendor/autoload.php';
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>

@@ -1,5 +1,5 @@
 <?php //$root = "/quickbuy/admin/"; ?>
-<?php $root = config("app.adminroot"); ?>
+<?php $root = config("app.admin"); ?>
 <aside id="sidebar" class="admin-sidebar" >
   <button id="toggleSidebar" >
     <i class="fas fa-bars" style="width: 1.5rem; height: 1.5rem; font-size: 1.5rem; color: white;"></i>

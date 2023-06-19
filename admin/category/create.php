@@ -1,21 +1,16 @@
 <?php
-
-use App\Class\Category;
-
+require __DIR__ . '../../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+use App\Database;
+$db = new Database();
 $pageName = "Add New Category";
 $pageGroup = "Category & Product";
 $currentGroup = ["Category", "category/index.php"];
 $currentPage = "Create";
 require __DIR__ . '/../../components/header/tertiary.php';
-require __DIR__ . '../../../vendor/autoload.php';
-
-$categories = new Category($conn);
-
 $errors = [];
-
 function logError($errorMessage) {
   global $pageName;
   $logFile = __DIR__ . '/errors.log'; // Specify the log file name and path
@@ -23,7 +18,6 @@ function logError($errorMessage) {
   file_put_contents($logFile, $logMessage, FILE_APPEND);
   logError($logMessage); // Call the logError function recursively
 }
-
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
   $title = $_POST['title'];
   $desc = $_POST['description'];
@@ -31,14 +25,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
   $slug = $_POST['slug'];
   $status = $_POST['status'];
   $mark = $_POST['mark'];
-
   if (empty($title)) {
     $errors[] = "Category title is required";
   }
   if (empty($slug)) {
     $errors[] = "Category slug is required";
   }
-
   if (empty($errors)) {
     try {
       if ($categories->create($title, $desc, $parent, $slug, $status, $mark)) {

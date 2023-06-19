@@ -1,10 +1,13 @@
 <?php
+require __DIR__ . '/vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+use App\Database;
+$db = new Database();
 $pageName = "Cart";
 require __DIR__ . '/components/header/primary.php';
-require __DIR__ . '/vendor/autoload.php';
+
 ?>
 <body>
   <?php require __DIR__ . '/components/navbar/primary.php' ?>

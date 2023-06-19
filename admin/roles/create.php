@@ -1,18 +1,18 @@
 <?php
 
-use App\Class\Roles;
+require __DIR__ . '../../../vendor/autoload.php';
+
 
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+use App\Database;
+$db = new Database();
 $pageName = "Add New Role";
 $pageGroup = "Users Settings";
 $currentGroup = ["Roles", "roles/index.php"];
 $currentPage = "Create";
 require __DIR__ . '/../../components/header/tertiary.php';
-require __DIR__ . '../../../vendor/autoload.php';
-
-$roles = new Roles($conn);
 
 $errors = [];
 
@@ -22,54 +22,6 @@ function logError($errorMessage) {
   $logMessage = '['. date('Y-m-d H:i:s A') . ']' . ' | ' . 'ERROR from ' . $pageName . $errorMessage . PHP_EOL ;
   file_put_contents($logFile, $logMessage, FILE_APPEND);
   logError($logMessage); // Call the logError function recursively
-}
-
-if ($_SERVER['REQUEST_METHOD'] === "POST") {
-  $title = $_POST['title'];
-  $desc = $_POST['description'];
-  $slug = $_POST['slug'];
-  $status = $_POST['status'];
-
-  if (empty($title)) {
-    $errors[] = "Role title is required.";
-  }
-
-  if (empty($slug)) {
-    $errors[] = "Role slug is required.";
-  }
-
-  if (empty($errors)) {
-    try {
-      if ($roles->create($title, $desc, $slug, $status)) {
-        $response = [
-          'success' => true,
-          'message' => 'Role created successfully.'
-        ];
-      } else {
-        $response = [
-          'success' => false,
-          'message' => 'Failed to create role.'
-        ];
-      }
-    } catch (\Throwable $e) {
-      $errorMessage = $e->getMessage();
-      logError($errorMessage);
-      $response = [
-        'success' => false,
-        'message' => 'An error occurred: ' . $e->getMessage()
-      ];
-    }
-  } else {
-    $response = [
-      'success' => false,
-      'message' => 'Validation error',
-      'errors' => $errors
-    ];
-  }
-  // Send the AJAX response as JSON
-  header('Content-Type: application/json');
-  echo json_encode($response);
-  exit();
 }
 
 ?>
@@ -83,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     <section class="container-fluid my-5"></section>
     <section class="container-fluid d-flex align-items-center justify-content-center py-5 my-5">
       <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-6">
-        <form action="" method="post">
+        <form action="<?= config("app.root") ?>src/actions/roles/store.php" method="post" id="createRole">
           <div class="card shadow">
             <div class="card-header bg-primary pb-0">
               <h4 class="card-title text-light">Create New Role</h4>
@@ -137,15 +89,15 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
   </main>
   <script>
     $(document).ready(function() {
-      $('form').submit(function(e) {
+      $('#createRole').submit(function(e) {
         e.preventDefault();
-        // Perform AJAX request
         $.ajax({
-          url: '',
+          url: '<?= config("app.root") ?>src/actions/roles/store.php',
           type: 'POST',
           data: $(this).serialize(),
           dataType: 'json',
           success: function(response) {
+            console.log(response);
             if (response.success) {
               Swal.fire({
                 icon: 'success',
