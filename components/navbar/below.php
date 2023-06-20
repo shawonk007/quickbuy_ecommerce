@@ -1,4 +1,5 @@
-<?php $auth = "/quickbuy/auth/"; ?>
+<?php // $auth = "/quickbuy/auth/"; ?>
+<?php $auth = config("app.auth"); ?>
 <nav class="navbar navbar-expand-lg bg-primary-subtle shadow-sm sticky-top py-3">
   <div class="container">
     <button class="btn btn-outline-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#browseCategories" aria-controls="browseCategories">

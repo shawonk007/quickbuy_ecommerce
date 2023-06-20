@@ -3,7 +3,6 @@ require __DIR__ . '../../../../vendor/autoload.php';
 use App\Database;
 $db = new Database();
 use App\Class\Roles;
-
 $roles = new Roles($db->conn);
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
