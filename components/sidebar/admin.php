@@ -91,6 +91,12 @@
           <span class="sidebar-link-span" >Manage Users</span>
         </a>
       </li>
+      <li >
+        <a href="<?= $root ?>users/index.php">
+          <i class="fas fa-users" style="width: 1.5rem;" ></i>
+          <span class="sidebar-link-span" >Manage Users</span>
+        </a>
+      </li>
       <li>
         <a href="<?= $root ?>roles/index.php">
           <i class="fas fa-user-cog" style="width: 1.5rem;" ></i>

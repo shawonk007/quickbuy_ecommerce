@@ -1,8 +1,16 @@
 <?php
+
 require __DIR__ . '../../../vendor/autoload.php';
+
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Database;
+use App\Class\Roles;
+$db = new Database();
+$roles = new Roles($db->conn);
+
 $pageName = "Add New User";
 $pageGroup = "Users & Members";
 $currentGroup = ["Users", "users/index.php"];
@@ -35,7 +43,7 @@ require __DIR__ . '/../../components/header/tertiary.php';
                         <p class="mb-2 text-dark text-center" style="font-size: 0.75rem;">
                           <span>PNG, WEBP, JPG or JPEG</span><br />
                           <span>(MAX. UPLOAD SIZE 2MB)</span><br />
-                          <span>(MIN. RESOLUTION 700X700)</span>
+                          <span>(MIN. RESOLUTION 300X300)</span>
                         </p>
                       </div>
                       <input type="file" name="file" class="d-none" id="imageInput" required accept="image/*;capture=camera" />
@@ -73,12 +81,12 @@ require __DIR__ . '/../../components/header/tertiary.php';
                 <div class="row g-3">
                   <div class="col-6">
                     <div class="input-group input-group-sm">
-                      <input type="tel" name="" class="form-control" id="" placeholder="+88 (01X) XX-XXXXXX" />
+                      <input type="tel" name="phone" class="form-control" id="" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" />
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="input-group input-group-sm">
-                      <input type="tel" name="" class="form-control" id="" placeholder="+88 (01X) XX-XXXXXX" />
+                      <input type="tel" name="phone2" class="form-control" id="" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" />
                     </div>
                   </div>
                   <div class="col-6">
@@ -95,6 +103,12 @@ require __DIR__ . '/../../components/header/tertiary.php';
                     <div class="input-group input-group-sm">
                       <select name="" class="form-control" id="">
                         <option selected>-- Choose Role --</option>
+                        <?php
+                          $roleList = $roles->index();
+                          foreach ($roleList as $role) {
+                            if ($role['role_status'] == 1) { ?>
+                              <option value="<?= $role['role_id'] ?>"><?= $role['role_title'] ?></option>
+                        <?php } } ?>
                       </select>
                     </div>
                   </div>

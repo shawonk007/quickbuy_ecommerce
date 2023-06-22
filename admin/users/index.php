@@ -1,8 +1,13 @@
 <?php
+
 require __DIR__ . '../../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+use App\Database;
+use App\Class\Users;
+$db = new Database();
+$users = new Users($db->conn);
 $pageName = "Manage Users";
 $pageGroup = "Users & Members";
 $currentGroup = ["Users", "users/index.php"];
@@ -61,19 +66,56 @@ require __DIR__ . '/../../components/header/tertiary.php';
                 <tr>
                   <th scope="col">SL</th>
                   <th scope="col">Name of Users</th>
-                  <th scope="col">Promo Code</th>
-                  <th scope="col">User Role</th>
+                  <th scope="col">Email Address</th>
+                  <th scope="col">Username</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Coupon</td>
-                  <td>XXXX-XXXX-XXXX</td>
-                  <td>Coupon</td>
-                  <td>Active</td>
-                </tr>
+                <?php
+                  $userList = $users->index();
+                  if (empty($userList)) { ?>
+                    <tr>
+                      <td class="text-center" colspan="6"><?= "No Data Available" ?></td>
+                    </tr>
+                  <?php }
+                  foreach ($userList as $k => $user) { 
+                    $statusLabel = "";
+                    $statusClass = "";
+                    if ($user['user_status'] == 1) {
+                      $statusLabel = "Active";
+                      $statusClass = "bg-success";
+                    } elseif ($user['user_status'] == 0) {
+                      $statusLabel = "Deactive";
+                      $statusClass = "bg-danger";
+                    } else {
+                      $statusLabel = "Pending";
+                      $statusClass = "bg-secondary";
+                    }
+                  ?>
+                    <tr>
+                      <th scope="row"><?= $k+1 ?></th>
+                      <td><?= $user['first_name'] . " " . $user['last_name'] ?></td>
+                      <td><?= $user['email_address'] ?></td>
+                      <td><?= $user['username'] ?></td>
+                      <td>
+                        <span class="badge <?= $statusClass ?>"><?= $statusLabel ?></span>
+                      </td>
+                      <td>
+                        <a href="edit.php?id=<?= $user['id'] ?>" class="btn btn-outline-info btn-sm">
+                          <i class="fas fa-edit"></i>
+                        </a>
+                        <!-- <button type="button" class="btn btn-outline-success btn-sm view-role" data-bs-toggle="modal" data-bs-target="#viewRole" data-role-id="<?= $role['role_id'] ?>" >
+                          <i class="fas fa-eye"></i>
+                        </button> -->
+                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteUser(<?= $user['id'] ?>)" >
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  <?php }
+                ?>
               </tbody>
             </table>
           </div>

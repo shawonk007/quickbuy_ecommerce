@@ -33,19 +33,6 @@ $(document).ready(function() {
   });
 });
 
-// Toggle sidebar sinks active
-
-
-// $(document).ready(function() {
-//   console.log("Document ready");
-//   $('.nav-sidebar li a').on('click', function(e) {
-//     e.preventDefault();
-//     $('.nav-sidebar li a').removeClass('active');
-//     $(this).addClass('active');
-//   });
-// });
-
-// Division & Districts
 // Function to populate the districts dropdown based on the selected division
 function populateDistricts() {
   var divisionSelect = document.getElementById('division');
@@ -69,9 +56,8 @@ function populateDistricts() {
   }
 }
 
-// Input Mask : Phone Number
-function formatPhoneNumber() {
-  let phoneNumber = document.getElementById("phone").value;
+function formatPhoneNumber(input) {
+  let phoneNumber = input.value;
   phoneNumber = phoneNumber.replace(/\D/g, ''); // remove all non-numeric characters
   phoneNumber = phoneNumber.substring(0, 13); // trim to max length of 11 digits
   const countryCode = phoneNumber.substring(0, 2);
@@ -87,7 +73,7 @@ function formatPhoneNumber() {
   } else {
     phoneNumber = `+${countryCode}`;
   }
-  document.getElementById("phone").value = phoneNumber;
+  input.value = phoneNumber;
 }
 
 // Product Card Gallery

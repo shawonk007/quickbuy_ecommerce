@@ -39,7 +39,7 @@ class Roles {
   }
 
   public function show($id) {
-    $sql = "SELECT * FROM roles WHERE role_id = ?";
+    $sql = "SELECT * FROM " . $this->table . " WHERE role_id = ?";
     $statement = $this->conn->prepare($sql);
     $statement->bind_param("i", $id);
     $statement->execute();
@@ -53,7 +53,7 @@ class Roles {
   }
 
   public function edit($id) {
-    $sql = "SELECT * FROM roles WHERE role_id = ?";
+    $sql = "SELECT * FROM " . $this->table . " WHERE role_id = ?";
     $statement = $this->conn->prepare($sql);
     $statement->bind_param("i", $id);
     $statement->execute();
@@ -67,7 +67,7 @@ class Roles {
   }
 
   public function update($id, $title, $desc, $slug, $status) {
-    $sql = "UPDATE roles SET role_title = ?, role_description = ?, role_slug = ?, role_status = ? WHERE role_id = ?";
+    $sql = "UPDATE " . $this->table . " SET role_title = ?, role_description = ?, role_slug = ?, role_status = ? WHERE role_id = ?";
     $statement = $this->conn->prepare($sql);
     $statement->bind_param("ssssi", $title, $desc, $slug, $status, $id);
     $statement->execute();
@@ -79,7 +79,7 @@ class Roles {
   }
 
   public function destroy($id) {
-    $sql = "DELETE FROM roles WHERE role_id = ?";
+    $sql = "DELETE FROM " . $this->table . " WHERE role_id = ?";
     $statement = $this->conn->prepare($sql);
     $statement->bind_param("i", $id);
     $statement->execute();

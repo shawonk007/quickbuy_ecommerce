@@ -1,10 +1,15 @@
 <?php
+require __DIR__ . '../../vendor/autoload.php';
+
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 use App\Database;
 $db = new Database();
 $pageName = "Register";
-$root = "/quickbuy/";
+$root = config("app.root");
+$auth = config("app.auth");
 require __DIR__ . '/../components/header/secondary.php';
-require __DIR__ . '../../vendor/autoload.php';
 ?>
 <style>
   .gradient-custom-3 {
@@ -48,7 +53,7 @@ require __DIR__ . '../../vendor/autoload.php';
                     <p class="small mb-0">For buyers, our platform offers a diverse range of products from various trusted vendors. Discover unique items, compare prices, and make secure purchases, all within a user-friendly interface. Enjoy a seamless shopping experience tailored to your preferences.</p>
                     <div class="d-flex align-items-center justify-content-center pt-5">
                       <p class="mb-0 me-2">Already have an account?</p>
-                      <a href="login.php"" class="btn btn-outline-light">
+                      <a href="<?= $auth ?>login.php"" class="btn btn-outline-light">
                         <strong>LOGIN</strong>
                       </a>
                     </div>
@@ -62,7 +67,7 @@ require __DIR__ . '../../vendor/autoload.php';
                       </a>
                       <h5 class="mt-2 mb-5 pb-1">"Discover, Explore, Shop!"</h5>
                     </div>
-                    <form action="" method="post">
+                    <form action="<?= config("app.root") ?>src/actions/auth/store.php" method="post" id="userRegister">
                       <!-- <p class="text-center mb-5">Please login to your account</p> -->
                       <div class="form-outline mb-4">
                         <div class="input-group input-group-sm">
@@ -84,7 +89,7 @@ require __DIR__ . '../../vendor/autoload.php';
                           <div class="form-outline">
                             <div class="input-group input-group-sm">
                               <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                              <input type="tel" name="phone" class="form-control" id="phone" placeholder="+88 (01X) XX-XXXXXX" />
+                              <input type="tel" name="phone" class="form-control" id="phone" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" />
                             </div>
                           </div>
                         </div>
@@ -98,8 +103,8 @@ require __DIR__ . '../../vendor/autoload.php';
                       <div class="form-outline mb-3">
                         <div class="input-group input-group-sm">
                           <span class="input-group-text"><i class="fas fa-key"></i></span>
-                          <input type="password" name="password" class="form-control" id="pass" placeholder="Password" />
-                          <input type="password" name="c_password" class="form-control" id="cPass" placeholder="Comfirm Password" />
+                          <input type="password" name="pass1" class="form-control" id="pass" placeholder="Password" />
+                          <input type="password" name="pass2" class="form-control" id="cPass" placeholder="Comfirm Password" />
                         </div>
                         <!-- <label class="form-label" for="form2Example22">Password</label> -->
                       </div>
@@ -118,7 +123,7 @@ require __DIR__ . '../../vendor/autoload.php';
                         </div>
                       </div>
                       <div class="d-flex align-items-center justify-content-center">
-                        <button class="btn btn-primary fa-lg gradient-custom-3 ps-5 pe-5 mb-3" type="button">
+                        <button class="btn btn-primary fa-lg gradient-custom-3 ps-5 pe-5 mb-3" type="submit">
                           <i class="fas fa-right-to-bracket"></i>
                           <strong class="ps-2">REGISTER</strong>
                         </button>
@@ -138,5 +143,67 @@ require __DIR__ . '../../vendor/autoload.php';
       </div>
     </section>
   </main>
+  <script>
+    $(document).ready(function() {
+      $('#userRegister').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+          url: '<?= config("app.root") ?>src/actions/auth/store.php',
+          type: 'POST',
+          data: $(this).serialize(),
+          dataType: 'json',
+          success: function(response) {
+            console.log(response);
+            if (response.success) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Congratulations',
+                text: response.message,
+                timer: 1500,
+                showConfirmButton: false
+              }).then(function() {
+                window.location.href = "login.php";
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: response.message,
+                timer: 2000,
+                showConfirmButton: false,
+              });
+            }
+          },
+          error: function(xhr, status, error) {
+            if (xhr.status === 400) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Bad request. Please check your form data.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            } else if (xhr.status === 500) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Internal server error. Please try again later.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while processing the request.',
+                timer: 2000,
+                showConfirmButton: true
+              });
+            }
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

@@ -107,7 +107,7 @@ require __DIR__ . '/../../components/header/tertiary.php';
                 </div>
                 <div class="input-group input-group-sm mb-3">
                   <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                  <input type="tel" name="" class="form-control" id="" placeholder="+88 (01X) XX-XXXXXX" />
+                  <input type="tel" name="phone" class="form-control" id="" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" />
                 </div>
                 <div class="input-group input-group-sm mb-3">
                   <span class="input-group-text"><i class="fas fa-globe"></i></span>

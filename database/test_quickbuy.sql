@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 13, 2023 at 05:41 PM
+-- Generation Time: Jun 21, 2023 at 03:13 PM
 -- Server version: 8.0.31
--- PHP Version: 8.0.26
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `quickbuy`
+-- Database: `test_quickbuy`
 --
 
 -- --------------------------------------------------------
@@ -30,10 +30,10 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `attributes`;
 CREATE TABLE IF NOT EXISTS `attributes` (
   `attribute_id` int NOT NULL AUTO_INCREMENT,
-  `attribute_title` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `attribute_description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `attribute_title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `attribute_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `parent_id` int DEFAULT NULL,
-  `attribute_slug` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `attribute_slug` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `attribute_status` tinyint DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `cat_title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `cat_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `parent_id` int DEFAULT NULL,
-  `cat_slug` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `cat_slug` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `cat_status` tinyint DEFAULT NULL,
   `is_featured` tinyint(1) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `msg_id` int NOT NULL AUTO_INCREMENT,
   `sender_id` int NOT NULL,
   `reciever_id` int NOT NULL,
-  `msg_details` text COLLATE utf8mb4_general_ci NOT NULL,
+  `msg_details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `read_status` tinyint DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -147,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `post_categories` (
   `pcat_title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `pcat_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `pcat_parent` int DEFAULT NULL,
-  `pcat_slug` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `pcat_slug` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `pcat_status` tinyint NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -164,7 +164,7 @@ DROP TABLE IF EXISTS `post_comments`;
 CREATE TABLE IF NOT EXISTS `post_comments` (
   `pcmnt_id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `pcmnt_details` text COLLATE utf8mb4_general_ci NOT NULL,
+  `pcmnt_details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `parent_id` int DEFAULT NULL,
   `pcmnt_status` int DEFAULT NULL,
   `created_id` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -211,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `product_attributes` (
   `product_id` int NOT NULL,
   `attribute_set` int NOT NULL,
   `attribute_type` int NOT NULL,
-  `attribute_value` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `attribute_value` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `attribute_thumbnail` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -225,7 +225,7 @@ DROP TABLE IF EXISTS `product_comments`;
 CREATE TABLE IF NOT EXISTS `product_comments` (
   `cmnt_id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `cmnt_details` text COLLATE utf8mb4_general_ci NOT NULL,
+  `cmnt_details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `parent_id` int DEFAULT NULL,
   `cmnt_status` tinyint DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -243,7 +243,7 @@ DROP TABLE IF EXISTS `product_images`;
 CREATE TABLE IF NOT EXISTS `product_images` (
   `image_id` int NOT NULL AUTO_INCREMENT,
   `product_id` int NOT NULL,
-  `product_image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `product_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `is_thumbnail` tinyint(1) NOT NULL,
   PRIMARY KEY (`image_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -277,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `product_reports` (
   `user_id` int NOT NULL,
   `product_id` int NOT NULL,
   `report_type` tinyint DEFAULT NULL,
-  `report_content` text COLLATE utf8mb4_general_ci NOT NULL,
+  `report_content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`preport_id`)
@@ -307,16 +307,16 @@ DROP TABLE IF EXISTS `promos`;
 CREATE TABLE IF NOT EXISTS `promos` (
   `promo_id` int NOT NULL AUTO_INCREMENT,
   `vendor_id` int NOT NULL,
-  `promo_title` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `promo_code` varchar(14) COLLATE utf8mb4_general_ci NOT NULL,
-  `promo_description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `promo_title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `promo_code` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `promo_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `promo_type` tinyint NOT NULL,
   `discount_type` tinyint NOT NULL,
   `discount_value` int NOT NULL,
   `starting_date` timestamp NOT NULL,
   `expiration_date` timestamp NOT NULL,
   `promo_status` tinyint DEFAULT NULL,
-  `usage_restriction` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `usage_restriction` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`promo_id`)
@@ -348,7 +348,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `role_id` int NOT NULL AUTO_INCREMENT,
   `role_title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `role_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `role_slug` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `role_slug` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `role_status` tinyint DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -364,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `first_name` int NOT NULL,
+  `first_name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `last_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `username` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `email_address` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -414,15 +414,15 @@ DROP TABLE IF EXISTS `users_devices`;
 CREATE TABLE IF NOT EXISTS `users_devices` (
   `device_id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `device_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `device_type` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `os_info` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `browser_info` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `device_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `device_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `os_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `browser_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `ip_address` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `mac_address` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `latitude` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `longtitude` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `session_id` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `latitude` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `longtitude` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `session_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`device_id`)
@@ -440,10 +440,10 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   `user_id` int NOT NULL,
   `store_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `store_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `store_logo` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `store_banner` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_banner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `store_category` int NOT NULL,
-  `store_slug` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_slug` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `store_status` tinyint DEFAULT NULL,
   `is_verified` tinyint(1) DEFAULT NULL,
   `is_featured` int DEFAULT NULL,
@@ -462,15 +462,15 @@ DROP TABLE IF EXISTS `vendor_contact`;
 CREATE TABLE IF NOT EXISTS `vendor_contact` (
   `contact_id` int NOT NULL AUTO_INCREMENT,
   `store_id` int NOT NULL,
-  `store_email` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `store_phone` varchar(19) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `store_address` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_phone` varchar(19) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `store_division` int DEFAULT NULL,
   `store_district` int DEFAULT NULL,
   `store_postal_code` int DEFAULT NULL,
-  `store_website` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `store_facebook` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `store_whatsapp` varchar(19) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_website` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_facebook` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_whatsapp` varchar(19) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`contact_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

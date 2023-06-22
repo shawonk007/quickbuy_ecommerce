@@ -1,10 +1,15 @@
 <?php
+require __DIR__ . '/../vendor/autoload.php';
+
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 use App\Database;
 $db = new Database();
 $pageName = "Login";
-$root = "/quickbuy/";
+$root = config("app.root");
+$auth = config("app.auth");
 require __DIR__ . '/../components/header/secondary.php';
-require __DIR__ . '../../vendor/autoload.php';
 ?>
 <style>
   .gradient-custom-2 {
@@ -49,12 +54,12 @@ require __DIR__ . '../../vendor/autoload.php';
                       </a>
                       <h5 class="mt-2 mb-5 pb-1">"Discover, Explore, Shop!"</h5>
                     </div>
-                    <form action="" method="post">
+                    <form action="<?= $root ?>/src/actions/auth/verify.php" method="post" id="userLogin" >
                       <p class="text-center mb-5">Please login to your account</p>
                       <div class="form-outline mb-4">
                         <div class="input-group">
                           <span class="input-group-text"><i class="fas fa-user"></i></span>
-                          <input type="email" name="" class="form-control" id="" placeholder="Username, Phone or Email" />
+                          <input type="email" name="auth" class="form-control" id="" placeholder="Username, Phone or Email" />
                         </div>
                         <!-- <label class="form-label" for="form2Example11">Username</label> -->
                       </div>
@@ -77,7 +82,7 @@ require __DIR__ . '../../vendor/autoload.php';
                         </div>
                       </div>
                       <div class="d-flex align-items-center justify-content-center">
-                        <button class="btn btn-primary fa-lg gradient-custom-2 ps-5 pe-5 mb-3" type="button">
+                        <button class="btn btn-primary fa-lg gradient-custom-2 ps-5 pe-5 mb-3" type="submit">
                           <i class="fas fa-right-to-bracket"></i>
                           <strong class="ps-2">LOGIN</strong>
                         </button>
@@ -96,7 +101,7 @@ require __DIR__ . '../../vendor/autoload.php';
                     <p class="small mb-0">For buyers, our platform offers a diverse range of products from various trusted vendors. Discover unique items, compare prices, and make secure purchases, all within a user-friendly interface. Enjoy a seamless shopping experience tailored to your preferences.</p>
                     <div class="d-flex align-items-center justify-content-center pt-5">
                       <p class="mb-0 me-2">Don't have an account?</p>
-                      <a href="register.php"" class="btn btn-outline-light">
+                      <a href="<?= $auth ?>register.php"" class="btn btn-outline-light">
                         <strong>Create new</strong>
                       </a>
                     </div>
@@ -109,5 +114,71 @@ require __DIR__ . '../../vendor/autoload.php';
       </div>
     </section>
   </main>
+  <script>
+    $(document).ready(function() {
+      $('#userLogin').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+          url: '<?= config("app.root") ?>src/actions/auth/verify.php',
+          type: 'POST',
+          data: $(this).serialize(),
+          dataType: 'json',
+          success: function(response) {
+            console.log(response);
+            if (response.success) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Access Granted',
+                text: response.message,
+                timer: 1000,
+                showConfirmButton: false
+              }).then(function() {
+                if (response.redirect) {
+                  window.location.href = response.redirect;
+                } else {
+                  window.location.href = "../home.php";
+                }
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: response.message,
+                timer: 2000,
+                showConfirmButton: false,
+              });
+            }
+          },
+          error: function(xhr, status, error) {
+            if (xhr.status === 400) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: 'Bad request. Please check your credentials.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            } else if (xhr.status === 500) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: 'Internal server error. Please try again later.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: 'An error occurred while processing the request.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            }
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

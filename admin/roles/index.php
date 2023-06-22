@@ -100,23 +100,19 @@ require __DIR__ . '/../../components/header/tertiary.php';
                     <td><?= $role['role_title'] ?></td>
                     <td><?= $role['role_slug'] ?></td>
                     <td>
-                      <span class="badge bg-success"><?= $statusLabel ?></span>
+                      <span class="badge <?= $statusClass ?>"><?= $statusLabel ?></span>
                     </td>
                     <td><?= Carbon::parse($role['created_at'])->diffForHumans(); ?></td>
                     <td>
-                      <!-- <form action="<?= config("app.root") ?>src/actions/roles/delete.php" method="post" id="deleteRole"> -->
-                        <!-- <input type="hidden" name="id" value="<?= $role['role_id'] ?>"> -->
-                        <a href="edit.php?id=<?= $role['role_id'] ?>" class="btn btn-outline-info btn-sm">
-                          <i class="fas fa-edit"></i>
-                        </a>
-                        <!-- <button type="button" class="btn btn-outline-success btn-sm view-role" data-bs-toggle="modal" data-bs-target="#viewRole" data-role-id="<?= $role['role_id'] ?>" >
-                          <i class="fas fa-eye"></i>
-                        </button> -->
-                        <!-- <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteRole(<?= $role['role_id'] ?>)" > -->
-                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteRole(<?= $role['role_id'] ?>)" >
-                          <i class="fas fa-trash-alt"></i>
-                        </button>
-                      <!-- </form> -->
+                      <a href="edit.php?id=<?= $role['role_id'] ?>" class="btn btn-outline-info btn-sm">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                      <!-- <button type="button" class="btn btn-outline-success btn-sm view-role" data-bs-toggle="modal" data-bs-target="#viewRole" data-role-id="<?= $role['role_id'] ?>" >
+                        <i class="fas fa-eye"></i>
+                      </button> -->
+                      <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteRole(<?= $role['role_id'] ?>)" >
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
                     </td>
                   </tr>
                   <?php } } ?>

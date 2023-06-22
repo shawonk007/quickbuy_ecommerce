@@ -67,7 +67,7 @@ require __DIR__ . '/../../components/header/tertiary.php';
                   </div>
                 </div>
                 <div class="input-group input-group-sm">
-                  <textarea name=""class="form-control" id="" cols="30" rows="20" placeholder="Type product description here ..."></textarea>
+                  <textarea name=""class="form-control" id="tiny" cols="30" rows="20" placeholder="Type product description here ..."></textarea>
                 </div>
                 <div class="row g-3 mt-0 mb-0">
                   <div class="col">

@@ -48,7 +48,7 @@ require_once "./includes/header.php";
                           <span class="input-group-text" id="inputGroup-sizing-sm">
                             <i class="fas fa-phone"></i>
                           </span>
-                          <input type="tel" class="form-control" id="phone" name="phone" placeholder="+88 (0XX) XX-XXXXXX" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" oninput="formatPhoneNumber()" maxlength="19" />
+                          <input type="tel" name="phone" class="form-control" id="" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" />
                         </div>
                       </div>
                     </div>
@@ -97,7 +97,7 @@ require_once "./includes/header.php";
                             <span class="input-group-text" id="inputGroup-sizing-sm">
                               <i class="fas fa-phone"></i>
                             </span>
-                            <input type="tel" class="form-control" id="phone2" name="phone" placeholder="+88 (0XX) XX-XXXXXX" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" oninput="formatPhoneNumber()" maxlength="19" />
+                            <input type="tel" name="phone" class="form-control" id="" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" />
                         </div>
                       </div>
                     </div>

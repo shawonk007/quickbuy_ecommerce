@@ -3,8 +3,7 @@
     "description": "multivendor system e-commerce platform",
     "require": {
         "intervention/image": "^2.7",
-        "nesbot/carbon": "^2.67",
-        "cocur/slugify": "^4.3"
+        "nesbot/carbon": "^2.67"
     },
     "license": "GNU General Public License v3.0",
     "autoload": {

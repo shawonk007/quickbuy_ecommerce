@@ -3,16 +3,73 @@
 namespace App;
 
 class Auth {
-  private $user;
-  private $role;
+  private $conn;
 
-  public function __construct($user, $role) {
-    $this->user = $user;
-    $this->role = $role;
+  public function __construct($db) {
+    $this->conn = $db;
   }
 
-  public static function isAdmin() {}
+  public function isAuthenticated($auth, $pass) {
+    // $auth = $this->conn->escape_string($auth);
+    // $pass = $this->conn->$pass;
 
-  public static function isMerchant() {}
+    $sql = "SELECT * FROM users WHERE username = '$auth' OR email_address = '$auth' OR cell_phone = '$auth'";
+    $result = $this->conn->query($sql);
+    if ($result->num_rows === 1) {
+      $user = $result->fetch_assoc();
+      if (password_verify($pass, $user['password'])) {
+        $_SESSION['user'] = $user['id'];
+        $_SESSION['role'] = $user['role'];
+        return true;
+      }
+    }
+    return false;
+  }
 
+  public static function isAdmin() {
+    if ($_SESSION['role'] == 1) {
+      return true;
+    }
+    // return false;
+  }
+
+  public static function isMerchant() {
+    if ($_SESSION['role'] == 6) {
+      return true;
+    }
+    // return false;
+  }
+
+  public static function isCustomer() {
+    if ($_SESSION['role'] === 7) {
+      return true;
+    }
+    // return false;
+  }
+
+  public function user() {
+    if (isset($_SESSION['user'])) {
+      $user = $_SESSION['user'];
+      $sql = "SELECT * FROM users WHERE id = '$user'";
+      $result = $this->conn->query($sql);
+      if ($result->num_rows === 1) {
+        return $result->fetch_assoc();
+      }
+      return false;
+    }
+  }
+
+  public function update($data) {
+    if (isset($_SESSION['user'])) {
+      $user = $_SESSION['user'];
+
+      $uname = $this->conn->escape_string($data['uname']);
+      $email = $this->conn->escape_string($data['email']);
+      $phone = $this->conn->escape_string($data['phone']);
+
+      $sql = "UPDATE users SET username = '$uname', email_address = '$email', cell_phone = '$phone' WHERE id = '$user'";
+      $result = $this->conn->query($sql);
+      return $result;
+    }
+  }
 }

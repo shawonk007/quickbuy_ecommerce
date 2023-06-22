@@ -3,8 +3,11 @@ require __DIR__ . '../../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Class\Category;
 use App\Database;
 $db = new Database();
+$categories = new Category($db->conn);
 $pageName = "Manage Categories";
 $pageGroup = "Category & Product";
 $currentGroup = ["Category", "category/index.php"];

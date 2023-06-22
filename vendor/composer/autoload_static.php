@@ -36,7 +36,6 @@ class ComposerStaticInit59ba3e53c091f45836d33770e0aee62b
         ),
         'C' => 
         array (
-            'Cocur\\Slugify\\' => 14,
             'Carbon\\' => 7,
         ),
         'A' => 
@@ -74,10 +73,6 @@ class ComposerStaticInit59ba3e53c091f45836d33770e0aee62b
         'GuzzleHttp\\Psr7\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
-        ),
-        'Cocur\\Slugify\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/cocur/slugify/src',
         ),
         'Carbon\\' => 
         array (

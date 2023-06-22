@@ -29,6 +29,8 @@
   <script src="../plugins/bootstrap-v5.3.0/js/bootstrap.bundle.min.js"></script>
   <!-- Owl-Carousel (v2.3.4) -->
   <script src="../plugins/owl-carousel-v2.3.4/js/owl.carousel.min.js"></script>
+  <!-- Sweetalart2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Custom JS -->
   <script src="../assets/js/scripts.js"></script>
   <!-- Google Fonts : -->
