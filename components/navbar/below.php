@@ -1,4 +1,8 @@
-<?php // $auth = "/quickbuy/auth/"; ?>
+<?php // $auth = "/quickbuy/auth/"; 
+
+use App\Auth;
+
+?>
 <?php $auth = config("app.auth"); ?>
 <nav class="navbar navbar-expand-lg bg-primary-subtle shadow-sm sticky-top py-3">
   <div class="container">
@@ -38,14 +42,6 @@
         <li class="nav-item">
           <a class="nav-link ps-4 pe-4" href="contact.php">Contact</a>
         </li>
-        <!-- <li class="nav-item dropdown">
-          <a class="nav-link ps-4 pe-4 dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="<?= $auth ?>login.php">Login</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<?= $auth ?>register.php">Register</a></li>
-          </ul>
-        </li> -->
       </ul>
       <ul class="navbar-nav ms-lg-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
@@ -56,9 +52,14 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="admin/dashboard.php">Admin</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<?= $auth ?>login.php">Login</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<?= $auth ?>register.php">Register</a></li>
+            <?php
+            if (Auth::check()) { ?>
+              <li><a class="dropdown-item" href="<?= $auth ?>logout.php">Logout</a></li>
+            <?php } else { ?>
+              <li><a class="dropdown-item" href="<?= $auth ?>login.php">Login</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="<?= $auth ?>register.php">Register</a></li>
+            <?php } ?>
           </ul>
         </li>
         <li class="nav-item d-none d-lg-block">

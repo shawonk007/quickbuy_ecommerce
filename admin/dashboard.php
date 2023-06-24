@@ -4,11 +4,17 @@ require __DIR__ . '/../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Auth;
 use App\Database;
 $db = new Database();
 $pageName = "Dashboard";
 $pageGroup = "Dashboard";
 $currentPage = "Dashboard";
+
+// if (Auth::check() === false && Auth::isAdmin() === false) {
+//   header("Location: login.php");
+// }
 
 $root = config("app.admin");
 require __DIR__ . '/../components/header/secondary.php';

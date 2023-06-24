@@ -4,8 +4,10 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
-use App\Class\Category;
 use App\Database;
+use App\Class\Category;
+use Carbon\Carbon;
+
 $db = new Database();
 $categories = new Category($db->conn);
 $pageName = "Manage Categories";
@@ -78,27 +80,60 @@ function logError($errorMessage) {
                   <th scope="col">Slug</th>
                   <th scope="col">Status</th>
                   <th scope="col">Date Created</th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Coupon</td>
-                  <td>XXXX-XXXX-XXXX</td>
-                  <td>Coupon</td>
-                  <td>
-                    <span class="badge bg-success">Active</span>
-                  </td>
-                  <td>2 minutes ago</td>
-                </tr>
                 <?php
                   $catList = $categories->index();
+                  // $limit = 10;
+                  // $count = 0;
                   if (empty($catList)) { ?>
                     <tr>
                       <td class="text-center" colspan="6"><?= "No Data Available" ?></td>
                     </tr>
-                  <?php }
-                ?>
+                  <?php } else {
+                    foreach ($catList as $k => $category) {
+                      // $parent = $category['parent_id'];
+                      $statusLabel = "";
+                      $statusClass = "";
+                      $parentTitle = Category::parent($category['parent_id'], $db);
+                      $parent = $parentTitle !== false ? $parentTitle : "No Parent";
+                      if ($category['cat_status'] == 1) {
+                        $statusLabel = "Active";
+                        $statusClass = "bg-success";
+                      } elseif ($category['cat_status'] == 0) {
+                        $statusLabel = "Deactive";
+                        $statusClass = "bg-danger";
+                      } else {
+                        $statusLabel = "Pending";
+                        $statusClass = "bg-secondary";
+                      }
+                      // if ($count >= $limit) {
+                      //   break;
+                      // }
+                      // $count++;
+                      ?>
+                    <tr>
+                      <th scope="row"><?= $k+1 ?></th>
+                      <td><?= $category['cat_title'] ?></td>
+                      <td><?= $parent ?>
+                      </td>
+                      <td><?= $category['cat_slug'] ?></td>
+                      <td>
+                        <span class="badge <?= $statusClass ?>"><?= $statusLabel ?></span>
+                      </td>
+                      <td><?= Carbon::parse($category['created_at'])->diffForHumans() ?></td>
+                      <td>
+                        <a href="edit.php?id=<?= $category['cat_id'] ?>" class="btn btn-info btn-sm">
+                          <i class="fas fa-edit"></i>
+                        </a>
+                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteCat(<?= $category['cat_id'] ?>)" >
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </td>
+                  </tr>
+                <?php } } ?>
               </tbody>
             </table>
           </div>
@@ -184,5 +219,43 @@ function logError($errorMessage) {
       </div>
     </section>
   </main>
+  <script>
+    function deleteCat(catId) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: '<?= config("app.root")?>src/actions/category/delete.php',
+            type: 'POST',
+            data: { id: catId },
+            success: function(response) {
+              console.log(response);
+              Swal.fire({
+                title: 'Deleted!',
+                text: 'Category has been deleted',
+                icon: 'success'
+              }).then(() => {
+                location.reload();
+              });
+            },
+            error: function() {
+              Swal.fire({
+                title: 'Error',
+                text: 'An error occurred while deleting the category.',
+                icon: 'error'
+              });
+            }
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>

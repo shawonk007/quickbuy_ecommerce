@@ -4,6 +4,7 @@ require __DIR__ . '/../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
 use App\Database;
 $db = new Database();
 $pageName = "Login";
@@ -59,7 +60,7 @@ require __DIR__ . '/../components/header/secondary.php';
                       <div class="form-outline mb-4">
                         <div class="input-group">
                           <span class="input-group-text"><i class="fas fa-user"></i></span>
-                          <input type="email" name="auth" class="form-control" id="" placeholder="Username, Phone or Email" />
+                          <input type="text" name="auth" class="form-control" id="" placeholder="Username, Phone or Email" />
                         </div>
                         <!-- <label class="form-label" for="form2Example11">Username</label> -->
                       </div>
