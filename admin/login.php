@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 use App\Database;
 $db = new Database();
 $pageName = "Admin Login";
-require __DIR__ . '/../components/header/secondary.php';
+require __DIR__ . '/../components/header.php';
 ?>
 <body>
   <main>

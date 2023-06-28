@@ -3,6 +3,15 @@
   padding: 0;
 }
 
+.scrollable-content .ps__rail-y {
+  background-color: #f1f1f1;
+  opacity: 0.8;
+}
+
+.scrollable-content .ps__thumb-y {
+  background-color: #888;
+}
+
 #top {
   display: none;
   position: fixed;
@@ -23,15 +32,14 @@
 
 #sidebar {
   width: 250px;
-  height: 100vh;
   position: fixed;
-  border-right: 1px solid antiquewhite;
-  overflow-y: auto;
   z-index: 1021;
   transition: 0.5s;
 }
 #sidebar nav {
   margin-left: -2rem;
+  height: 100vh;
+  overflow-y: auto;
 }
 #sidebar nav ul {
   display: flex;
@@ -81,6 +89,7 @@
   padding: 1rem 1rem;
   position: sticky;
   top: 0;
+  box-shadow: grey;
 }
 #sidebar button span {
   color: #ffffff;
@@ -140,6 +149,7 @@
 
 .admin-sidebar {
   background-color: #111827;
+  border-right: 1px solid #9e9e9e;
 }
 .admin-sidebar nav ul li a:hover, .admin-sidebar nav ul li a.active {
   background-color: #1f2937;
@@ -299,4 +309,8 @@
 }
 .payment-icon input[type=radio]:checked + label .pay-icon {
   color: blue;
+}
+
+.dashboard-icon {
+  color: lightgray;
 }/*# sourceMappingURL=styles.css.map */

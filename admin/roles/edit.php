@@ -12,7 +12,7 @@ $pageName = "Edit Role";
 $pageGroup = "Users Settings";
 $currentGroup = ["Roles", "roles/index.php"];
 $currentPage = "Edit";
-require __DIR__ . '/../../components/header/tertiary.php';
+require __DIR__ . '/../../components/header.php';
 
 $errors = [];
 function logError($errorMessage) {
@@ -66,8 +66,8 @@ if (isset($_GET['id'])) {
                   <div class="input-group">
                     <select name="status" class="form-control" id="">
                       <option selected>-- Role Status --</option>
-                      <option value="1" <?php echo isset($role['role_status']) && $role['role_status'] == 1 ? 'selected' : ''; ?>>Enable</option>
-                      <option value="0" <?php echo isset($role['role_status']) && $role['role_status'] == 0 ? 'selected' : ''; ?>>Disable</option>
+                      <option value="1" <?= isset($role['role_status']) && $role['role_status'] == 1 ? 'selected' : ''; ?>>Enable</option>
+                      <option value="0" <?= isset($role['role_status']) && $role['role_status'] == 0 ? 'selected' : ''; ?>>Disable</option>
                     </select>
                   </div>
                 </div>

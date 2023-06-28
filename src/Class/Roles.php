@@ -89,5 +89,20 @@ class Roles {
       return false;
     }
   }
+
+  public static function match($user, $db) {
+    $conn = $db->conn;
+    $sql = "SELECT * FROM roles WHERE role_id = ?";
+    $statement = $conn->prepare($sql);
+    $statement->bind_param("i", $user);
+    $statement->execute();
+    $result = $statement->get_result();
+    if ($result->num_rows === 1) {
+      $role = $result->fetch_assoc();
+      return $role['role_title'];
+    } else {
+      return false;
+    }
+  }
 }
 ?>

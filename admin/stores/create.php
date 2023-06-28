@@ -9,7 +9,7 @@ $pageName = "Add New Merchant";
 $pageGroup = "Seller Center";
 $currentGroup = ["Stores", "stores/index.php"];
 $currentPage = "Create";
-require __DIR__ . '/../../components/header/tertiary.php';
+require __DIR__ . '/../../components/header.php';
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>

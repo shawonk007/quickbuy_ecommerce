@@ -9,7 +9,7 @@ $pageName = "Inbox";
 $pageGroup = "Messages";
 $currentGroup = ["Messages", "messages/index.php"];
 $currentPage = "Index";
-require __DIR__ . '/../../components/header/tertiary.php';
+require __DIR__ . '/../../components/header.php';
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
@@ -43,21 +43,8 @@ require __DIR__ . '/../../components/header/tertiary.php';
     <section class="container-fluid tab-content my-5" id="myTabContent">
       <div class="tab-pane fade show active" id="inbox-tab-pane" role="tabpanel" aria-labelledby="inbox-tab" tabindex="0">
         <div class="card shadow">
-          <div class="card-body">
-            <!-- <h4>All Promo Cards</h4> -->
-            <form action="" method="post" >
-              <div class="w-100 d-flex align-items-center justify-content-center my-5">
-                <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-8 col-xxl-8">
-                  <div class="input-group">
-                    <input type="search" name="" class="form-control" id="" placeholder="Type here to search ..." />
-                    <button type="submit" class="btn btn-primary">
-                      <i class="fas fa-magnifying-glass"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
-            <table class="table">
+          <div class="card-body py-5">
+            <table class="table data-table py-5">
               <thead class="table-dark">
                 <tr>
                   <th scope="col">Avatar</th>
@@ -84,21 +71,8 @@ require __DIR__ . '/../../components/header/tertiary.php';
       </div>
       <div class="tab-pane fade" id="coupon-tab-pane" role="tabpanel" aria-labelledby="coupon-tab" tabindex="0">
         <div class="card shadow">
-          <div class="card-body">
-            <!-- <h4>Coupon Cards</h4> -->
-            <form action="" method="post" >
-              <div class="w-100 d-flex align-items-center justify-content-center my-5">
-                <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-8 col-xxl-8">
-                  <div class="input-group">
-                    <input type="search" name="" class="form-control" id="" placeholder="Type here to search ..." />
-                    <button type="submit" class="btn btn-primary">
-                      <i class="fas fa-magnifying-glass"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
-            <table class="table">
+          <div class="card-body py-5">
+            <table class="table data-table py-5">
               <thead class="table-dark">
                 <tr>
                   <th scope="col">SL</th>
@@ -123,21 +97,8 @@ require __DIR__ . '/../../components/header/tertiary.php';
       </div>
       <div class="tab-pane fade" id="voucher-tab-pane" role="tabpanel" aria-labelledby="voucher-tab" tabindex="0">
         <div class="card shadow">
-          <div class="card-body">
-            <!-- <h4>Voucher Cards</h4> -->
-            <form action="" method="post" >
-              <div class="w-100 d-flex align-items-center justify-content-center my-5">
-                <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-8 col-xxl-8">
-                  <div class="input-group">
-                    <input type="search" name="" class="form-control" id="" placeholder="Type here to search ..." />
-                    <button type="submit" class="btn btn-primary">
-                      <i class="fas fa-magnifying-glass"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
-            <table class="table">
+          <div class="card-body py-5">
+            <table class="table data-table py-5">
               <thead class="table-dark">
                 <tr>
                   <th scope="col">SL</th>

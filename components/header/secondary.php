@@ -19,6 +19,8 @@
   <!-- Owl-Carousel (v2.3.4) -->
   <link rel="stylesheet" href="../plugins/owl-carousel-v2.3.4/css/owl.carousel.min.css" />
   <link rel="stylesheet" href="../plugins/owl-carousel-v2.3.4/css/owl.theme.default.min.css" />
+  <!-- Perfect Scrollbar (v1.5.0) -->
+  <link rel="stylesheet" href="../plugins/perfect-scrollbar-v1.5.0/css/perfect-scrollbar.css" />
   <!-- Custom CSS -->
   <link rel="stylesheet" href="../assets/scss/styles.css" />
   <!-- jQuery (v3.7.0) -->
@@ -31,6 +33,8 @@
   <script src="../plugins/owl-carousel-v2.3.4/js/owl.carousel.min.js"></script>
   <!-- Sweetalart2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Perfect Scrollbar (v1.5.0) -->
+  <script src="../plugins/perfect-scrollbar-v1.5.0/js/perfect-scrollbar.min.js"></script>
   <!-- Custom JS -->
   <script src="../assets/js/scripts.js"></script>
   <!-- Google Fonts : -->

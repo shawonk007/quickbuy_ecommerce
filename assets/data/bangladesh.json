@@ -72,36 +72,36 @@
     {
       "name": "Khulna Division",
       "districts": [
-          "Khulna",
-          "Bagerhat",
-          "Chuadanga",
-          "Jessore",
-          "Jhenaidah",
-          "Kushtia",
-          "Magura",
-          "Meherpur",
-          "Narail",
-          "Satkhira"
+        "Khulna",
+        "Bagerhat",
+        "Chuadanga",
+        "Jessore",
+        "Jhenaidah",
+        "Kushtia",
+        "Magura",
+        "Meherpur",
+        "Narail",
+        "Satkhira"
       ]
     },
     {
       "name": "Barisal Division",
       "districts": [
-          "Barisal",
-          "Barguna",
-          "Bhola",
-          "Jhalokati",
-          "Patuakhali",
-          "Pirojpur"
+        "Barisal",
+        "Barguna",
+        "Bhola",
+        "Jhalokati",
+        "Patuakhali",
+        "Pirojpur"
       ]
     },
     {
       "name": "Sylhet Division",
       "districts": [
-          "Sylhet",
-          "Habiganj",
-          "Moulvibazar",
-          "Sunamganj"
+        "Sylhet",
+        "Habiganj",
+        "Moulvibazar",
+        "Sunamganj"
       ]
     },
     {

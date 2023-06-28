@@ -19,6 +19,21 @@
   <!-- Owl-Carousel (v2.3.4) -->
   <link rel="stylesheet" href="../../plugins/owl-carousel-v2.3.4/css/owl.carousel.min.css" />
   <link rel="stylesheet" href="../../plugins/owl-carousel-v2.3.4/css/owl.theme.default.min.css" />
+  <!-- Chart.js (v4.3.0) -->
+  <!-- <link rel="stylesheet" href="../../plugins/chart.js-v4.3.0/charts.min.css" /> -->
+  <!-- Select2 Bootstrap 5 Theme (v1.3.0) -->
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" /> -->
+  <link rel="stylesheet" href="../../plugins/select2-bootstrap-5-theme-1.3.0/css/select2.min.css" />
+  <link rel="stylesheet" href="../../plugins/select2-bootstrap-5-theme-1.3.0/css/select2-bootstrap-5-theme.min.css" />
+  <!-- <link rel="stylesheet" href="../../plugins/select2-bootstrap-5-theme-1.3.0/select2-bootstrap-5-theme.rtl.min.css" /> -->
+  <!-- Summernote (v0.8.20) -->
+  <!-- <link rel="stylesheet" href="../../plugins/summernote-0.8.20/css/summernote-lite.min.css" /> -->
+  <link rel="stylesheet" href="../../plugins/summernote-0.8.20/summernote-lite.min.css" />
+  <!-- Perfect Scrollbar (v1.5.0) -->
+  <link rel="stylesheet" href="../../plugins/perfect-scrollbar-v1.5.0/css/perfect-scrollbar.css" />
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.css"> -->
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css"> -->
   <!-- Custom CSS -->
   <link rel="stylesheet" href="../../assets/scss/styles.css" />
   <!-- jQuery (v3.7.0) -->
@@ -29,8 +44,20 @@
   <script src="../../plugins/bootstrap-v5.3.0/js/bootstrap.bundle.min.js"></script>
   <!-- Owl-Carousel (v2.3.4) -->
   <script src="../../plugins/owl-carousel-v2.3.4/js/owl.carousel.min.js"></script>
+  <!-- Chart.js (v4.3.0) -->
+  <!-- <script src="../../plugins/chart.js-v4.3.0/chart.min.js"></script> -->
+  <!-- Select2 Bootstrap 5 Theme (v1.3.0) -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+  <script src="../../plugins/select2-bootstrap-5-theme-1.3.0/js/select2.min.js"></script>
   <!-- Sweetalart2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Summernote (v0.8.20) -->
+  <!-- <script src="../../plugins/summernote-0.8.20/js/summernote-lite.min.js"></script> -->
+  <script src="../../plugins/summernote-0.8.20/summernote-lite.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.js"></script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script> -->
+  <!-- Perfect Scrollbar (v1.5.0) -->
+  <script src="../../plugins/perfect-scrollbar-v1.5.0/js/perfect-scrollbar.min.js"></script>
   <!-- Custom JS -->
   <script src="../../assets/js/scripts.js"></script>
   <!-- Google Fonts : -->

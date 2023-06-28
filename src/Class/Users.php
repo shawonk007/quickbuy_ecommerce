@@ -26,7 +26,7 @@ class Users {
 
   public function create($fname, $lname, $uname, $email, $phone, $pass, $role, $status) {
     $sql = "INSERT INTO " .$this->table . "
-    (first_name, last_name, useraname, email_address, email_verified_at, cell_phone, password, role, user_status, created_at, updated_at)
+    (first_name, last_name, username, email_address, email_verified_at, cell_phone, password, role, user_status, created_at, updated_at)
     VALUES (?, ?, ?, ?, NULL, ?, ?, ?, ?, NOW(), NOW())";
     $statement = $this->conn->prepare($sql);
     // Bind Parameters
@@ -58,6 +58,18 @@ class Users {
     $sql = "UPDATE " . $this->table . " SET first_name = ?, last_name = ?, username = ?, email_address = ?, cell_phone = ?, password = ?, role = ?, user_status = ? WHERE id = ?";
     $statement = $this->conn->prepare($sql);
     $statement->bind_param("ssssssiii", $fname, $lname, $uname, $email, $phone, $pass, $role, $status, $id);
+    $statement->execute();
+    if ($statement->affected_rows === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function authorize($id, $role, $status) {
+    $sql = "UPDATE " . $this->table . " SET role = ?, user_status = ? WHERE id = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("iii", $role, $status, $id);
     $statement->execute();
     if ($statement->affected_rows === 1) {
       return true;

@@ -9,7 +9,7 @@ $pageName = "Add New Coupon";
 $pageGroup = "Coupons & Vouchers";
 $currentGroup = ["Promo", "promos/index.php"];
 $currentPage = "Create";
-require __DIR__ . '/../../components/header/tertiary.php';
+require __DIR__ . '/../../components/header.php';
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
@@ -39,7 +39,7 @@ require __DIR__ . '/../../components/header/tertiary.php';
               <div class="row g-3">
                 <div class="col">
                   <div class="input-group input-group-sm">
-                    <input type="text" name="" class="form-control" id="" placeholder="XXXX-XXXX-XXXX" required />
+                    <input type="text" name="" class="form-control" id="promoInput" placeholder="XXXX-XXXX-XXXX" required />
                   </div>
                 </div>
                 <div class="col">

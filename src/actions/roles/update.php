@@ -4,6 +4,7 @@ require __DIR__ . '../../../../vendor/autoload.php';
 
 use App\Database;
 use App\Class\Roles;
+
 $db = new Database();
 $roles = new Roles($db->conn);
 

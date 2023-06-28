@@ -6,7 +6,7 @@ class Profile {
   protected $conn;
 
   public function __construct($db) {
-    $db = $this->conn;
+    $this->conn = $db;
   }
 
   public static function hasProfile($user, $db) {

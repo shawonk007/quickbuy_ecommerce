@@ -17,10 +17,16 @@ $currentPage = "Dashboard";
 // }
 
 $root = config("app.admin");
-require __DIR__ . '/../components/header/secondary.php';
+require __DIR__ . '/../components/header.php';
 
 ?>
-<body>
+<style>
+  @import url("https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.5/jquery-jvectormap.min.css");
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.5/jquery-jvectormap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.5/jquery-jvectormap-world-mill.js"></script>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.5/jquery-jvectormap.min.css"> -->
+<body class="scrollable-content">
   <?php require __DIR__ . "/../components/sidebar/admin.php" ?>
   <main id="content">
     <!-- SCROLL UP BUTTON -->
@@ -34,7 +40,14 @@ require __DIR__ . '/../components/header/secondary.php';
             <div class="card-header pt-1 pb-0">
               <h5 class="card-title">Category</h5>
             </div>
-            <div class="card-body"></div>
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between">
+                <h1>
+                  <i class="fas fa-user-plus dashboard-icon"></i>
+                </h1>
+                <h1 class="font-cursive">99+</h1>
+              </div>
+            </div>
             <div class="card-footer py-0">
               <a href="<?= $root ?>category/index.php" class="nav-link text-center">
                 <span>More info</span>
@@ -48,7 +61,14 @@ require __DIR__ . '/../components/header/secondary.php';
             <div class="card-header pt-1 pb-0">
               <h5 class="card-title">Products</h5>
             </div>
-            <div class="card-body"></div>
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between">
+                <h1>
+                  <i class="fas fa-cubes dashboard-icon"></i>
+                </h1>
+                <h1 class="font-cursive">99+</h1>
+              </div>
+            </div>
             <div class="card-footer py-0">
               <a href="<?= $root ?>products/index.php" class="nav-link text-center">
                 <span>More info</span>
@@ -62,7 +82,14 @@ require __DIR__ . '/../components/header/secondary.php';
             <div class="card-header pt-1 pb-0">
               <h5 class="card-title">Merchants</h5>
             </div>
-            <div class="card-body"></div>
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between">
+                <h1>
+                  <i class="fas fa-store dashboard-icon"></i>
+                </h1>
+                <h1 class="font-cursive">99+</h1>
+              </div>
+            </div>
             <div class="card-footer py-0">
               <a href="<?= $root ?>stores/index.php" class="nav-link text-center">
                 <span>More info</span>
@@ -76,7 +103,14 @@ require __DIR__ . '/../components/header/secondary.php';
             <div class="card-header pt-1 pb-0">
               <h5 class="card-title">Users & Members</h5>
             </div>
-            <div class="card-body"></div>
+            <div class="card-body">
+              <div class="d-flex align-items-center justify-content-between">
+                <h1>
+                  <i class="fas fa-user-plus dashboard-icon"></i>
+                </h1>
+                <h1 class="font-cursive">99+</h1>
+              </div>
+            </div>
             <div class="card-footer py-0">
               <a href="<?= $root ?>users/index.php" class="nav-link text-center">
                 <span>More info</span>
@@ -195,7 +229,42 @@ require __DIR__ . '/../components/header/secondary.php';
         </div>
       </div>
     </section>
+    <section class="container-fluid my-5">
+      <div>
+        <canvas id="myChart"></canvas>
+      </div>
+    </section>
     <section class="container-fluid my-5"></section>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+  const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: (ctx) => 'Point Style: ' + ctx.chart.data.datasets[0].pointStyle,
+        }
+      }
+    }
+  });
+</script>
 </body>
 </html>

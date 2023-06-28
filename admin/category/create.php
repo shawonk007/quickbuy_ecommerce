@@ -15,7 +15,7 @@ $pageName = "Add New Category";
 $pageGroup = "Category & Product";
 $currentGroup = ["Category", "category/index.php"];
 $currentPage = "Create";
-require __DIR__ . '/../../components/header/tertiary.php';
+require __DIR__ . '/../../components/header.php';
 
 function logError($errorMessage) {
   global $pageName;
@@ -53,8 +53,9 @@ function logError($errorMessage) {
               <div class="row g-3 mb-3">
                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                   <div class="input-group input-group-sm">
-                    <select name="parent" class="form-control" id="" >
-                      <option value="">-- Main Category --</option>
+                    <!-- <select name="parent" class="form-control" id="mainCat" > -->
+                    <select name="parent" class="select2 select2-bootstrap-5-theme" id="mainCat" >
+                      <!-- <option value="">-- Main Category --</option> -->
                       <?php
                         $mainCat = $categories->index();
                         foreach ($mainCat as $main) {
@@ -68,7 +69,8 @@ function logError($errorMessage) {
                 </div>
                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                   <div class="input-group input-group-sm">
-                    <select name="sub-parent" class="form-control" id="">
+                    <!-- <select name="sub-parent" class="form-control" id="subCat"> -->
+                    <select name="sub-parent" class="select2 select2-bootstrap-5-theme" id="subCat">
                       <option value="">-- Sub Category --</option>
                       <?php
                         $subCat = $categories->index();
@@ -123,6 +125,12 @@ function logError($errorMessage) {
   </main>
   <script>
     $(document).ready(function() {
+      $( '#mainCat' ).select2( {
+        theme: 'bootstrap-5'
+      });
+      $( '#subCat' ).select2( {
+        theme: 'bootstrap-5'
+      });
       $('form').submit(function(e) {
         e.preventDefault();
         $.ajax({

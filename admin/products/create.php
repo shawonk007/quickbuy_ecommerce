@@ -9,7 +9,7 @@ $pageName = "Add New Product";
 $pageGroup = "Category & Product";
 $currentGroup = ["Products", "products/index.php"];
 $currentPage = "Create";
-require __DIR__ . '/../../components/header/tertiary.php';
+require __DIR__ . '/../../components/header.php';
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>

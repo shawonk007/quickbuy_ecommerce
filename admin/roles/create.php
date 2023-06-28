@@ -12,7 +12,7 @@ $pageName = "Add New Role";
 $pageGroup = "Users Settings";
 $currentGroup = ["Roles", "roles/index.php"];
 $currentPage = "Create";
-require __DIR__ . '/../../components/header/tertiary.php';
+require __DIR__ . '/../../components/header.php';
 
 $errors = [];
 

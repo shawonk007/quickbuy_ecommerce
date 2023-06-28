@@ -15,7 +15,7 @@ $pageName = "Edit Category";
 $pageGroup = "Category & Product";
 $currentGroup = ["Category", "category/index.php"];
 $currentPage = "Edit";
-require __DIR__ . '/../../components/header/tertiary.php';
+require __DIR__ . '/../../components/header.php';
 
 function logError($errorMessage) {
   global $pageName;

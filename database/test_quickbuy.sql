@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 21, 2023 at 03:13 PM
+-- Generation Time: Jun 28, 2023 at 07:25 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.2.0
 
@@ -43,6 +43,26 @@ CREATE TABLE IF NOT EXISTS `attributes` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `brands`
+--
+
+DROP TABLE IF EXISTS `brands`;
+CREATE TABLE IF NOT EXISTS `brands` (
+  `brand_id` int NOT NULL AUTO_INCREMENT,
+  `brand_title` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand_description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `brand_logo` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `brand_slug` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand_status` tinyint DEFAULT NULL,
+  `is_featured` tinyint DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`brand_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
@@ -51,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `cat_id` int NOT NULL AUTO_INCREMENT,
   `cat_title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `cat_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `parent_id` int DEFAULT NULL,
+  `parent_id` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `cat_slug` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `cat_status` tinyint DEFAULT NULL,
   `is_featured` tinyint(1) DEFAULT NULL,
@@ -251,6 +271,23 @@ CREATE TABLE IF NOT EXISTS `product_images` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_options`
+--
+
+DROP TABLE IF EXISTS `product_options`;
+CREATE TABLE IF NOT EXISTS `product_options` (
+  `option_id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `option_name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `option_value` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`option_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product_ratings`
 --
 
@@ -364,7 +401,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `first_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `last_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `username` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `email_address` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -389,12 +426,13 @@ CREATE TABLE IF NOT EXISTS `users_details` (
   `details_id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `user_biography` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `date_of_birth` date DEFAULT NULL,
   `user_image` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `alt_email_address` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `alt_cell_phone` varchar(19) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `user_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `user_division` tinyint DEFAULT NULL,
-  `user_district` tinyint DEFAULT NULL,
+  `user_division` varchar(25) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `user_district` varchar(25) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `postal_code` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `gender` tinyint DEFAULT NULL,
   `religion` tinyint DEFAULT NULL,
@@ -464,9 +502,10 @@ CREATE TABLE IF NOT EXISTS `vendor_contact` (
   `store_id` int NOT NULL,
   `store_email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `store_phone` varchar(19) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `store_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `store_division` int DEFAULT NULL,
-  `store_district` int DEFAULT NULL,
+  `store_address_one` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_address_two` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_division` varchar(25) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_district` varchar(25) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `store_postal_code` int DEFAULT NULL,
   `store_website` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `store_facebook` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,

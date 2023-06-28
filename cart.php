@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 use App\Database;
 $db = new Database();
 $pageName = "Cart";
-require __DIR__ . '/components/header/primary.php';
+require __DIR__ . '/components/header.php';
 
 ?>
 <body>

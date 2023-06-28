@@ -8,7 +8,7 @@ $db = new Database();
 $pageName = "Uploads";
 $pageGroup = "Uploads Center";
 $currentPage = "Uploads";
-require __DIR__ . '/../components/header/secondary.php';
+require __DIR__ . '/../components/header.php';
 ?>
 <body>
   <?php require __DIR__ . "/../components/sidebar/admin.php" ?>
