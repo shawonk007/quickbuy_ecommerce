@@ -1,12 +1,3 @@
-$(document).ready(function() {
-  console.log("Perfect Scrollbar");
-  $(".scrollable-content").perfectScrollbar({
-    wheelSpeed: 2,
-    wheelPropagation: true,
-    // Add more options as needed
-  });
-});
-
 // Toggle Sidebar
 $(document).ready(function() {
   var isMobile = false;
@@ -99,7 +90,10 @@ $(document).ready(function() {
   // When the value of the input field changes
   $('#promoInput').on('input', function() {
     // Get the current input value
-    const promoValue = $(this).val();
+    let promoValue = $(this).val();
+
+    // Limit the input value to a maximum of 14 characters
+    promoValue = promoValue.slice(0, 14);
 
     // Format the promo value
     const formattedPromoValue = formatPromoValue(promoValue);
@@ -121,7 +115,6 @@ function formatPromoValue(promo) {
 
   return formattedPromo;
 }
-
 
 // Product Card Gallery
 $(document).ready(function(){
@@ -151,10 +144,12 @@ $(document).ready(function() {
     autoWidth : false,
     info : true,
     // dom: 'Bfrtip',
-    dom: 'Bfrtlip',
+    // dom: 'Bfrtlip',
     // dom: 'lBfrtip', // Include 'l' for page length and 'B' for buttons
     // dom: 'Bfrtip<"bottom"l>tip',
     // dom: '<"bottom-pagination"l><"bottom-pagination"f>rtip',
+    // dom: '<"row"<"col-md-6"B><"col-md-6"f>>rtlip',
+    dom: '<"row"<"col-md-6"B><"col-md-6"f>>' + '<"row"<"col-md-12"rt>>' + '<"row align-items-center"<"col-md-6 pb-0 mb-0"l><"col-md-6 text-end pt-0 mt-0"i>>' + '<"row"<"col-md-12 mt-4"p>>',
     buttons: [
       {
         extend: 'copy',
@@ -200,10 +195,18 @@ $(document).ready(function() {
       { targets: 'no-sort', orderable: false }
     ],
     drawCallback: function(settings) {
-        if (settings.json) {
-          var pagination = $(this).closest('.dataTables_wrapper').find('.bottom-pagination');
-          pagination.html(settings._iDisplayStart + 1 + ' to ' + settings._iDisplayEnd + ' of ' + settings.fnRecordsTotal());
-        }
+      if (settings.json) {
+        var pagination = $(this).closest('.dataTables_wrapper').find('.bottom-pagination');
+        pagination.html(settings._iDisplayStart + 1 + ' to ' + settings._iDisplayEnd + ' of ' + settings.fnRecordsTotal());
       }
+    },
+    language: {
+      paginate: {
+        first: '<i class="fas fa-angle-double-left"></i>',
+        previous: '<i class="fas fa-angle-left"></i>',
+        next: '<i class="fas fa-angle-right"></i>',
+        last: '<i class="fas fa-angle-double-right"></i>'
+      }
+    }
   });
 });

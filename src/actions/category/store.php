@@ -2,6 +2,8 @@
 require __DIR__ . '../../../../vendor/autoload.php';
 use App\Database;
 use App\Class\Category;
+use App\Pathify;
+
 $db = new Database();
 $categories = new Category($db->conn);
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -9,10 +11,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
   $desc = $_POST['description'];
   $parent = $_POST['parent'];
   $sub = $_POST['sub-parent'];
-  $slug = $_POST['slug'];
+  $slug = Pathify::make($_POST['title']);
   $status = $_POST['status'];
   $mark = isset($_POST['mark']) ? $_POST['mark'] : NULL;
-  $cat = $parent . ',' . $sub;
+  if (isset($sub) && $sub != NULL) {
+    $cat = $parent . ',' . $sub;
+  } else {
+    $cat = $parent;
+  }
   if (empty($title)) {
     $errors[] = "Category title is required";
   }

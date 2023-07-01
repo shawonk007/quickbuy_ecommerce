@@ -48,18 +48,18 @@ function logError($errorMessage) {
                 <textarea name="description" class="form-control" id="" cols="30" rows="8" placeholder="Type category details here ..."></textarea>
               </div>
               <div class="input-group input-group-sm mb-3">
-                <input type="text" name="slug" class="form-control" id="" placeholder="Category Slug" required />
+                <input type="text" name="slug" class="form-control" id="" placeholder="Category Slug" />
               </div>
               <div class="row g-3 mb-3">
                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                   <div class="input-group input-group-sm">
                     <!-- <select name="parent" class="form-control" id="mainCat" > -->
                     <select name="parent" class="select2 select2-bootstrap-5-theme" id="mainCat" >
-                      <!-- <option value="">-- Main Category --</option> -->
+                      <option value="">-- Main Category --</option>
                       <?php
                         $mainCat = $categories->index();
                         foreach ($mainCat as $main) {
-                          if ($main['cat_status'] == 1 && $main['parent_id'] == ',') {  ?>
+                          if ($main['cat_status'] == 1 && $main['parent_id'] == NULL) {  ?>
                             <option value="<?= $main['cat_id'] ?>"><?= $main['cat_title'] ?></option>
                           <?php }
                         }
@@ -69,17 +69,13 @@ function logError($errorMessage) {
                 </div>
                 <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                   <div class="input-group input-group-sm">
-                    <!-- <select name="sub-parent" class="form-control" id="subCat"> -->
                     <select name="sub-parent" class="select2 select2-bootstrap-5-theme" id="subCat">
                       <option value="">-- Sub Category --</option>
-                      <?php
-                        $subCat = $categories->index();
+                      <?php  $subCat = $categories->index();
                         foreach ($subCat as $sub) {
-                          if ($sub['cat_status'] == 1 && $sub['parent_id'] > 0) {  ?>
-                            <option value="<?= $sub['cat_id'] ?>"><?= $sub['cat_title'] ?></option>
-                          <?php }
-                        }
-                      ?>
+                        if (Category::check($sub['parent_id'], $db)) { ?>
+                        <option value="<?= $sub['cat_id'] ?>"><?= $sub['cat_title'] ?></option>
+                      <?php } } ?>
                     </select>
                   </div>
                 </div>

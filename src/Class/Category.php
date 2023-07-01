@@ -95,5 +95,51 @@ class Category {
       return false;
     }
   }
+
+  public static function check($parent, $db) {
+    $conn = $db->conn;
+    $sub = explode(',', $parent);
+  
+    if (count($sub) > 1) {
+      $cat = end($sub);
+      $sql = "SELECT * FROM categories WHERE cat_id = ?";
+      $statement = $conn->prepare($sql);
+      $statement->bind_param("i", $cat);
+      $statement->execute();
+      $result = $statement->get_result();
+      
+      if ($result->num_rows === 1) {
+        $category = $result->fetch_assoc();
+        // return $category['cat_title'];
+        return $category;
+      }
+    }
+
+    return false;
+    // $conn = $db->conn;
+    // $sub = explode(',', $parent);
+    // $cat = end($sub);
+    // $sql = "SELECT * FROM categories WHERE cat_id = ?";
+    // $statement = $conn->prepare($sql);
+    // $statement->bind_param("i", $cat);
+    // $statement->execute();
+    // $result = $statement->get_result();
+    // if ($result->num_rows === 1) {
+    //   $category = $result->fetch_assoc();
+    //   return $category['cat_title'];
+    //   // $main = $category['parent_id'];
+    //   // $sub = explode(',', $main);
+    //   // if (count($sub) >= 1) {
+    //   //   $cat = end($sub);
+    //   //   return $cat;
+    //   // }
+    //   // return true;
+    //   // break;
+    // } 
+    // // else {
+    // //   return false;
+    // // }
+    // return false;
+  }
 }
 ?>

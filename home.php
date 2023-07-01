@@ -121,18 +121,6 @@ require __DIR__ . '/components/header.php';
                       <span class="ps-2">Beverages</span>
                     </a>
                   </li>
-                  <li class="list-group-item">
-                    <a href="javascript:void(0)" class="nav-link" >
-                      <i class="fas fa-hand-point-right"></i>
-                      <span class="ps-2">Frozen & Canned</span>
-                    </a>
-                  </li>
-                  <li class="list-group-item">
-                    <a href="javascript:void(0)" class="nav-link" >
-                      <i class="fas fa-hand-point-right"></i>
-                      <span class="ps-2">Diabetic Foods</span>
-                    </a>
-                  </li>
                 </ul>
               </div><!-- /.col -->
               <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9 ps-4 pe-4 ps-lg-0 pe-lg-4 ms-0">

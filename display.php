@@ -59,9 +59,9 @@ require __DIR__ . '/components/header.php';
           </div>
           <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
             <div class="card">
-              <div class="card-header pb-0 mb-0">
+              <div class="card-header bg-white pb-0 mb-0">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                  <ol class="breadcrumb">
+                  <ol class="breadcrumb" style="font-size: 0.85rem;">
                     <li class="breadcrumb-item">
                       <a href="javascript:void(0)">Home</a>
                     </li>
@@ -136,7 +136,7 @@ require __DIR__ . '/components/header.php';
                   </div>
                 </div>
               </div>
-              <div class="card-footer">
+              <div class="card-footer bg-white">
                 <div class="row">
                   <div class="col">
                     <a href="#" class="btn btn-outline-danger d-block">
@@ -160,38 +160,45 @@ require __DIR__ . '/components/header.php';
     <section class="py-5">
       <div class="container">
         <div class="card">
-          <div class="card-header pb-0">
-            <h5 class="card-title">Search Tags</h5>
+          <div class="card-header bg-white pb-0">
+            <h5 class="card-title py-0">Search Keywords :</h5>
           </div>
-          <div class="card-body py-0">
+          <div class="card-body py-3">
             <p></p>
           </div>
         </div>
       </div>
     </section>
-    <section class="py-5 mb-5">
-      <div class="container">
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" data-bs-toggle="tab" href="#description">Description</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#purchase">Purchase</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#replace">Replace Policy</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#comment">Comments</a>
-          </li>
-        </ul>
-
-        <!-- Tab panes -->
-        <div class="tab-content">
-          <div id="description" class="container tab-pane active"><br>
-            <h3>Description</h3>
-            <ul class="list-group mt-5">
+    <section class="container my-5">
+      <ul class="nav nav-pills flex-column flex-sm-row" id="pills-tab" role="tablist">
+        <li class="nav-item col-12 col-md-auto d-grid" role="presentation">
+          <button class="flex-sm-fill nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Description</button>
+        </li>
+        <li class="nav-item col-12 col-md-auto d-grid" role="presentation">
+          <button class="flex-sm-fill nav-link" id="pills-config-tab" data-bs-toggle="pill" data-bs-target="#pills-config" type="button" role="tab" aria-controls="pills-config" aria-selected="false">Specifications</button>
+        </li>
+        <li class="nav-item col-12 col-md-auto d-grid" role="presentation">
+          <button class="flex-sm-fill nav-link" id="pills-purchase-tab" data-bs-toggle="pill" data-bs-target="#pills-purchase" type="button" role="tab" aria-controls="pills-purchase" aria-selected="false">Purchase & Delivery</button>
+        </li>
+        <li class="nav-item col-12 col-md-auto d-grid" role="presentation">
+          <button class="flex-sm-fill nav-link" id="pills-replace-tab" data-bs-toggle="pill" data-bs-target="#pills-replace" type="button" role="tab" aria-controls="pills-replace" aria-selected="false">Return & Replace</button>
+        </li>
+        <li class="nav-item col-12 col-md-auto d-grid" role="presentation">
+          <button class="flex-sm-fill nav-link" id="pills-extra-tab" data-bs-toggle="pill" data-bs-target="#pills-extra" type="button" role="tab" aria-controls="pills-extra" aria-selected="false">Additional</button>
+        </li>
+        <li class="nav-item col-12 col-md-auto d-grid" role="presentation">
+          <button class="flex-sm-fill nav-link" id="pills-feedback-tab" data-bs-toggle="pill" data-bs-target="#pills-feedback" type="button" role="tab" aria-controls="pills-feedback" aria-selected="false">Feedback</button>
+        </li>
+      </ul>
+    </section>
+    <section class="container tab-content my-5" id="pills-tabContent">
+      <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+        <div class="card shadow">
+          <div class="card-header bg-white pb-0">
+            <h5 class="card-title py-0">Product Description</h5>
+          </div>
+          <div class="card-body py-5">
+            <ul class="list-group">
               <li class="list-group-item">
                 <i class="far fa-circle-check"></i>
                 <span class="ps-2">Horlicks Health and Nutrition Drink Jar.</span>
@@ -222,9 +229,24 @@ require __DIR__ . '/components/header.php';
               </li>
             </ul>
           </div>
-          <div id="purchase" class="container tab-pane fade"><br>
-            <h3>Purchase Step</h3>
-            <ul class="list-group my-5">
+        </div>
+      </div>
+      <div class="tab-pane fade" id="pills-config" role="tabpanel" aria-labelledby="pills-config-tab" tabindex="0">
+        <div class="card shadow">
+          <div class="card-header bg-white pb-0">
+            <h5 class="card-title py-0">Product Specifications</h5>
+          </div>
+          <div class="card-body py-5"></div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="pills-purchase" role="tabpanel" aria-labelledby="pills-purchase-tab" tabindex="0">
+        <div class="card shadow">
+          <div class="card-header bg-white pb-0">
+            <h5 class="card-title py-0">Purchase & Delivery Policy</h5>
+          </div>
+          <div class="card-body py-5">
+            <h6>Purchase Step</h6>
+            <ul class="list-group">
               <li class="list-group-item">
                 <i class="far fa-circle-check"></i>
                 <span class="ps-2">Select number of product you want to buy.</span>
@@ -274,8 +296,8 @@ require __DIR__ . '/components/header.php';
                 <span class="ps-2">The product will deliver based on product availability.</span>
               </li>
             </ul>
-            <h3>How to pay:</h3>
-            <ul class="list-group mt-5">
+            <h6 class="mt-5">How to pay:</h6>
+            <ul class="list-group">
               <li class="list-group-item">
                 <i class="far fa-circle-check"></i>
                 <span class="ps-2">Cash on Delivery</span>
@@ -286,34 +308,31 @@ require __DIR__ . '/components/header.php';
               </li>
             </ul>
           </div>
-          <div id="replace" class="container tab-pane fade"><br>
-            <h3>Product Replace</h3>
-            <ul class="list-group mt-5">
-              <li class="list-group-item">
-                <i class="far fa-circle-check"></i>
-                <span class="ps-2">Please check your products in front of riders or courier service agents.</span>
-              </li>
-              <li class="list-group-item">
-                <i class="far fa-circle-check"></i>
-                <span class="ps-2">Product will be replaced if it has any defect by its manufacturer.</span>
-              </li>
-              <li class="list-group-item">
-                <i class="far fa-circle-check"></i>
-                <span class="ps-2">Customer needs to inform us within 24 hours from the date of delivery*.</span>
-              </li>
-              <li class="list-group-item">
-                <i class="far fa-circle-check"></i>
-                <span class="ps-2">Products must be with the tags intact and in their original packaging, in an unwashed and undamaged condition.</span>
-              </li>
-              <li class="list-group-item">
-                <i class="far fa-circle-check"></i>
-                <span class="ps-2">Replacement for products is subject to inspection and checking by Groceria team.</span>
-              </li>
-            </ul>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="pills-replace" role="tabpanel" aria-labelledby="pills-replace-tab" tabindex="0">
+        <div class="card shadow">
+          <div class="card-header bg-white pb-0">
+            <h5 class="card-title py-0">Return & Replacement Policy</h5>
           </div>
-          <div id="comment" class="container tab-pane fade"><br>
-            <h3>Comment</h3>
-            <p>Your must <a href="./auth/index.html">login</a> to submit your comment</p>
+          <div class="card-body py-5"></div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="pills-extra" role="tabpanel" aria-labelledby="pills-extra-tab" tabindex="0">
+        <div class="card shadow">
+          <div class="card-header bg-white pb-0">
+            <h5 class="card-title py-0">Additional Informations</h5>
+          </div>
+          <div class="card-body py-5"></div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="pills-feedback" role="tabpanel" aria-labelledby="pills-feedback-tab" tabindex="0">
+        <div class="card shadow">
+          <div class="card-header bg-white pb-0">
+            <h5 class="card-title py-0">Submit Your Feeback</h5>
+          </div>
+          <div class="card-body py-5">
+            <p>Your must <a href="javascript:void(0)">login</a> to submit your comment</p>
             <form action="" aria-disabled="true" >
               <div class="row">
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
@@ -357,6 +376,12 @@ require __DIR__ . '/components/header.php';
               </div>
             </form>
           </div>
+        </div>
+        <div class="card shadow my-5">
+          <div class="card-header bg-white pb-0">
+            <h5 class="card-title py-0">Submit Your Feeback</h5>
+          </div>
+          <div class="card-body py-5"></div>
         </div>
       </div>
     </section>

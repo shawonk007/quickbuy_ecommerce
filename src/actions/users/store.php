@@ -53,7 +53,7 @@ foreach ($divisions as $division) {
 }
   
   $img = "IMG_" . time() . "_qb.jpg";
-  move_uploaded_file($avatar['tmp_name'], "../../../uploads/users" . $img);
+  move_uploaded_file($avatar['tmp_name'], "../../../uploads/users/" . $img);
 
   if ($pass1 == $pass2) {
     $pass = password_hash($pass1, PASSWORD_DEFAULT);

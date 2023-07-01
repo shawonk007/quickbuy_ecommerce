@@ -8,5 +8,4 @@ return [
     'admin'=> 'http://localhost/quickbuy_ecommerce/admin/',
     // 'merchant'=> 'http://localhost/R55/PWAD-PHP-R55/git-projects/quickbuy_ecommerce/merchant/',
     'merchant'=> 'http://localhost/quickbuy_ecommerce/merchant/',
-
 ];

@@ -22,15 +22,8 @@ require __DIR__ . '/../../components/header.php';
       <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-6">
         <form action="" method="post">
           <div class="card shadow">
-            <div class="card-header bg-primary">
-              <div class="row d-flex align-items-center">
-                <div class="col-10 ">
-                  <h4 class="card-title text-light">Create New Promo</h4>
-                </div>
-                <div class="col-2">
-                  <a href="#" class="btn btn-light" onclick="history.back()">Back</a>
-                </div>
-              </div>
+            <div class="card-header bg-primary pb-0">
+              <h4 class="card-title text-light">Create New Promo</h4>
             </div>
             <div class="card-body">
               <div class="input-group input-group-sm mb-3">
@@ -39,7 +32,7 @@ require __DIR__ . '/../../components/header.php';
               <div class="row g-3">
                 <div class="col">
                   <div class="input-group input-group-sm">
-                    <input type="text" name="" class="form-control" id="promoInput" placeholder="XXXX-XXXX-XXXX" required />
+                    <input type="text" name="" class="form-control" id="promoInput" placeholder="XXXX-XXXX-XXXX" style="text-transform: uppercase;" required />
                   </div>
                 </div>
                 <div class="col">
@@ -78,7 +71,7 @@ require __DIR__ . '/../../components/header.php';
                     <select name="" class="form-control" id="">
                       <option selected>-- Discount Type --</option>
                       <option value="1">Percent</option>
-                      <option value="0">Flat</option>
+                      <option value="2">Flat</option>
                     </select>
                   </div>
                 </div>

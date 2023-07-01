@@ -14,11 +14,11 @@ $currentPage = "Brands";
 require __DIR__ . '/../../components/header.php';
 ?>
 <style>
-  /* .dataTables_wrapper .dataTables_paginate {
+  .dataTables_wrapper .dataTables_paginate {
     display: flex;
     justify-content: center;
     align-items: center;
-  } */
+  }
 </style>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
@@ -62,13 +62,42 @@ require __DIR__ . '/../../components/header.php';
                 </tr>
               </thead>
               <tbody>
+                <?php
+                $brandList = $brands->index();
+                foreach ($brandList as $k => $brand) {
+                  $statusLabel = "";
+                  $statusClass = "";
+                  if ($brand['brand_status'] == 1) {
+                    $statusLabel = "Active";
+                    $statusClass = "bg-success";
+                  } elseif ($brand['brand_status'] == 0) {
+                    $statusLabel = "Deactive";
+                    $statusClass = "bg-danger";
+                  } else {
+                    $statusLabel = "Pending";
+                    $statusClass = "bg-secondary";
+                  }
+                }
+                ?>
                 <tr>
                   <th scope="row">1</th>
                   <td>Coupon</td>
                   <td>Coupon</td>
                   <td>Coupon</td>
                   <td>Active</td>
-                  <td>Active</td>
+                  <td>
+                      <!-- <a href="edit.php?id=<?= $brand['brand_id'] ?>" class="btn btn-outline-info btn-sm"> -->
+                      <a href="edit.php?id=" class="btn btn-outline-info btn-sm">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                      <!-- <button type="button" class="btn btn-outline-success btn-sm view-role" data-bs-toggle="modal" data-bs-target="#viewRole" data-role-id="<?= $role['role_id'] ?>" >
+                        <i class="fas fa-eye"></i>
+                      </button> -->
+                      <!-- <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteBrand(<?= $brand['brand_id'] ?>)" > -->
+                      <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteBrand()" >
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                  </td>
                 </tr>
               </tbody>
             </table>

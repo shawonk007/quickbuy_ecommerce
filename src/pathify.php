@@ -15,7 +15,7 @@ class Pathify {
    * @return string The generated slug.
    */
 
-   public static function make(string $title) {
+  public static function make(string $title) {
     // Convert the title to lowercase
     $slug = mb_strtolower($title);
     
@@ -30,5 +30,5 @@ class Pathify {
 
     // Return the generated slug
     return $slug;
-   }
+  }
 }

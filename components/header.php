@@ -36,7 +36,7 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="<?= $root ?>assets/scss/styles.css" />
   <!-- jQuery (v3.7.0) -->
-  <script src="<?= $root ?>plugins/jQuery-v2.7.0/jquery-3.7.0.min.js"></script>
+  <script src="<?= $root ?>plugins/jquery/jquery-3.7.0.min.js"></script>
   <!-- Font Awesome (v6.4.0) -->
   <script src="<?= $root ?>plugins/font-awesome-6.4.0/js/all.min.js"></script>
   <!-- Bootstap (v5.3.0) -->
@@ -54,7 +54,7 @@
   <script src="<?= $root ?>plugins/datatables-responsive-2.4.1/js/responsive.bootstrap5.min.js"></script>
   <script src="<?= $root ?>plugins/datatables-buttons-2.3.6/js/dataTables.buttons.min.js"></script>
   <script src="<?= $root ?>plugins/datatables-buttons-2.3.6/js/buttons.bootstrap5.min.js"></script>
-  <script src="<?= $root ?>plugins/jszip/jszip.min.js"></script>
+  <script src="<?= $root ?>plugins/jszip-2.5.0/jszip.min.js"></script>
   <script src="<?= $root ?>plugins/pdfmake-0.2.7/pdfmake.min.js"></script>
   <script src="<?= $root ?>plugins/pdfmake-0.2.7/vfs_fonts.js"></script>
   <script src="<?= $root ?>plugins/datatables-buttons-2.3.6/js/buttons.html5.min.js"></script>
