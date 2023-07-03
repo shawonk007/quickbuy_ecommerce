@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '../../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
@@ -43,14 +43,14 @@ $divisions = $data['divisions'];
               <div class="card-header bg-primary pb-0">
                 <h5 class="card-title text-light">Create New User</h5>
               </div>
-              <div class="card-body pt-2">
-                <label for="">
+              <div class="card-body pt-1">
+                <!-- <label for="">
                   <strong>User Avatar</strong>
-                </label>
-                <div class="row g-2 pt-0 mt-0">
-                  <div class="col">    
-                    <label for="imageInput" class="d-flex flex-column align-items-center justify-content-center bg-light" style="border: 3px solid lightgray; border-style: dashed;">
-                      <div class="d-flex flex-column align-items-center justify-content-center py-1 h-100">
+                </label> -->
+                <div class="row g-3 pt-0 mt-0">
+                  <div class="col-6">    
+                    <label for="imageInput" class="d-flex flex-column align-items-center justify-content-center bg-light h-100" style="border: 3px solid lightgray; border-style: dashed;">
+                      <div class="d-flex flex-column align-items-center justify-content-center py-1">
                         <h1 class="mb-0"><i class="fas fa-cloud-arrow-up"></i></h1>
                         <h6 class="my-1 text-dark text-center"><strong>Click to upload</strong></h6>
                         <p class="mb-2 text-dark text-center" style="font-size: 0.75rem;">
@@ -62,137 +62,67 @@ $divisions = $data['divisions'];
                       <input type="file" name="avatar" class="d-none" id="imageInput" required accept="image/*;capture=camera" />
                     </label>
                   </div>
-                  <div class="col">
+                  <div class="col-6">
                     <img id="dummy" src="../../assets/images/dummy-square.jpg" class="w-100" alt="" />
                   </div>
-                </div>
-                <hr class="py-0 mt-3 mb-2">
-                <div class="form-group mb-2">
-                  <label for="fName">
-                    <strong>Name of User</strong>
-                    <span class="text-danger">*</span>
-                  </label>
-                  <div class="input-group input-group-sm mt-1">
-                    <input type="text" name="fname" class="form-control" id="fName" placeholder="First Name" required />
-                    <input type="text" name="lname" class="form-control" id="lName" placeholder="Last Name" required />
+                  <div class="col-12">
+                    <hr class="py-0 my-0">
                   </div>
-                </div>
-                <div class="row g-2">
-                  <div class="col">
-                    <div class="form-group">
-                      <label for="uName">
-                        <strong>Username</strong>
-                        <span class="text-danger">*</span>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <input type="text" name="uname" class="form-control" id="uName" placeholder="Username" required />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="form-group">
-                      <label for="dob">
-                        <strong>Date of Birth</strong>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <input type="date" name="dob" class="form-control" id="dob" placeholder="" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <hr class="py-0 mt-3 mb-2">
-                <div class="form-group my-2">
-                  <label for="email">
-                    <strong>Primary Email</strong>
-                    <span class="text-danger">*</span>
-                  </label>
-                  <div class="input-group input-group-sm mt-1">
-                    <input type="email" name="email" class="form-control" id="email" placeholder="someone@example.com" required />
-                  </div>
-                </div>
-                <div class="form-group my-2">
-                  <label for="altEmail">
-                    <strong>Secondary Email</strong>
-                  </label>
-                  <div class="input-group input-group-sm mt-1">
-                    <input type="email" name="altEmail" class="form-control" id="altEmail" placeholder="someone@example.com" />
-                  </div>
-                </div>
-                <hr class="py-0 mt-3 mb-2">
-                <div class="row g-2">
-                  <div class="col-6">
-                    <div class="form-group">
-                      <label for="phone">
-                        <strong>Primary Phone</strong>
-                        <span class="text-danger">*</span>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <input type="tel" name="phone" class="form-control" id="phone" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" required />
-                      </div>
+                  <div class="col-12">
+                    <div class="input-group input-group-sm">
+                      <input type="text" name="fname" class="form-control" id="fName" placeholder="First Name" required />
+                      <input type="text" name="lname" class="form-control" id="lName" placeholder="Last Name" required />
                     </div>
                   </div>
                   <div class="col-6">
-                    <div class="form-group">
-                      <label for="altPhone">
-                        <strong>Secondary Phone</strong>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <input type="tel" name="altPhone" class="form-control" id="altPhone" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" />
-                      </div>
-                    </div>
+                    <input type="text" name="uname" class="form-control form-control-sm" id="uName" placeholder="Username" required />
                   </div>
                   <div class="col-6">
-                    <div class="form-group">
-                      <label for="pass">
-                        <strong>Passoword</strong>
-                        <span class="text-danger">*</span>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <input type="password" name="password" class="form-control" id="pass" placeholder="Password" required />
-                      </div>
-                    </div>
+                    <input type="date" name="dob" class="form-control form-control-sm" id="dob" placeholder="" />
+                  </div>
+                  <div class="col-12">
+                    <hr class="py-0 my-0">
+                  </div>
+                  <div class="col-12">
+                    <input type="email" name="email" class="form-control form-control-sm" id="email" placeholder="someone@example.com" required />
+                  </div>
+                  <div class="col-12">
+                    <input type="email" name="altEmail" class="form-control form-control-sm" id="altEmail" placeholder="someone@example.com" />
                   </div>
                   <div class="col-6">
-                    <div class="form-group">
-                      <label for="cPass">
-                        <strong>Confirm Password</strong>
-                        <span class="text-danger">*</span>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <input type="password" name="c_password" class="form-control" id="cPass" placeholder="Confirm Password" required />
-                      </div>
-                    </div>
+                    <input type="tel" name="phone" class="form-control form-control-sm" id="phone" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" required />
                   </div>
                   <div class="col-6">
-                    <div class="form-group">
-                      <label for="role">
-                        <strong>User Role</strong>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <select name="role" class="form-control" id="role">
-                          <option value="">-- Choose Role --</option>
-                          <?php $roleList = $roles->index();
-                            foreach ($roleList as $role) {
-                              if ($role['role_status'] == 1) { ?>
-                                <option value="<?= $role['role_id'] ?>"><?= $role['role_title'] ?></option>
-                          <?php } } ?>
-                        </select>
-                      </div>
-                    </div>
+                    <input type="tel" name="phone" class="form-control form-control-sm" id="phone" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" required />
+                  </div>
+                  <div class="col-12">
+                    <hr class="py-0 my-0">
                   </div>
                   <div class="col-6">
-                    <div class="form-group">
-                      <label for="status">
-                        <strong>User Status</strong>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <select name="status" class="form-control" id="status">
-                          <option value="">-- Choose Status --</option>
-                          <option value="1">Enable</option>
-                          <option value="0">Disable</option>
-                        </select>
-                      </div>
-                    </div>
+                    <input type="password" name="password" class="form-control form-control-sm" id="pass" placeholder="Password" required />
+                  </div>
+                  <div class="col-6">
+                    <input type="password" name="c_password" class="form-control form-control-sm" id="cPass" placeholder="Confirm Password" required />
+                  </div>
+                  <div class="col-12">
+                    <hr class="py-0 my-0">
+                  </div>
+                  <div class="col-6">
+                    <select name="role" class="form-control form-control-sm" id="role">
+                      <option value="">-- Choose Role --</option>
+                      <?php $roleList = $roles->index();
+                      foreach ($roleList as $role) {
+                        if ($role['role_status'] == 1) { ?>
+                        <option value="<?= $role['role_id'] ?>"><?= $role['role_title'] ?></option>
+                      <?php } } ?>
+                    </select>
+                  </div>
+                  <div class="col-6">
+                    <select name="status" class="form-control form-control-sm" id="status">
+                      <option value="">-- Choose Status --</option>
+                      <option value="1">Enable</option>
+                      <option value="0">Disable</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -216,115 +146,69 @@ $divisions = $data['divisions'];
           </div>
           <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8 col-xxl-8">
             <div class="card shadow">
-              <div class="card-body pt-2">
-                <div class="form-group">
-                  <label for="biography">
-                    <strong>Biography</strong>
-                  </label>
-                  <div class="input-group input-group-sm mt-1">
-                    <textarea name="biography" class="form-control" id="biography" cols="30" rows="24" placeholder="Type your details here"></textarea>
-                  </div>
-                </div>
-                <hr class="py-0 mt-3 mb-2">
-                <div class="form-group mb-2">
-                  <label for="">
-                    <strong>Address</strong>
-                  </label>
-                  <div class="input-group input-group-sm mt-1">
-                    <textarea name="address" class="form-control" id="" cols="30" rows="3" placeholder="Type your address here ..."></textarea>
-                  </div>
-                </div>
-                <div class="row g-2">
-                  <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                    <div class="form-group">
-                      <label for="">
-                        <strong>Division</strong>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <select name="division" class="form-control" id="division" onchange="populateDistricts()" >
-                          <option value="">-- Choose One --</option>
-                          <?php
-                            // Populate the division dropdown select menu
-                            foreach ($divisions as $division) {
-                              echo '<option value="' . $division['name'] . '">' . $division['name'] . '</option>';
-                            }
-                          ?>
-                        </select>
-                      </div>
+              <div class="card-body pt-3">
+                <div class="row g-3">
+                  <div class="col-12">
+                    <div class="input-group input-group-sm">
+                      <textarea name="biography" class="form-control" id="biography" cols="30" rows="20" placeholder="Type your details here"></textarea>
                     </div>
                   </div>
-                  <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                    <div class="form-group">
-                      <label for="">
-                        <strong>District</strong>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <select name="district" class="form-control" id="district">
-                          <option value="">-- Choose One --</option>
-                        </select>
-                      </div>
+                  <div class="col-12">
+                    <hr class="py-0 my-0">
+                  </div>
+                  <div class="col-12">
+                    <div class="input-group input-group-sm">
+                      <textarea name="address" class="form-control" id="" cols="30" rows="3" placeholder="Type your address here ..."></textarea>
                     </div>
                   </div>
-                  <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                    <div class="form-group">
-                      <label for="">
-                        <strong>Postal Code</strong>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <input type="text" name="postal" class="form-control" id="" placeholder="Postal Code" />
-                      </div>
-                    </div>
+                  <div class="col-4">
+                    <select name="division" class="form-control form-control-sm" id="division" onchange="populateDistricts()" >
+                      <option value="">-- Division --</option>
+                      <?php foreach ($divisions as $division) { ?>
+                        <option value="<?= $division['name']?>"><?= $division['name']?></option>;
+                      <?php } ?>
+                    </select>
                   </div>
-                  <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                    <div class="form-group">
-                      <label for="">
-                        <strong>Gender</strong>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <select name="gender" class="form-control" id="">
-                          <option value="">-- Choose One --</option>
-                          <option value="1">Male</option>
-                          <option value="2">Female</option>
-                          <option value="3">Others</option>
-                        </select>
-                      </div>
-                    </div>
+                  <div class="col-4">
+                    <select name="district" class="form-control form-control-sm" id="district">
+                      <option value="">-- Choose One --</option>
+                    </select>
                   </div>
-                  <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                    <div class="form-group">
-                      <label for="">
-                        <strong>Religion</strong>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <select name="religion" class="form-control" id="">
-                          <option value="">-- Choose One --</option>
-                          <option value="1">Islam</option>
-                          <option value="2">Hinduism</option>
-                          <option value="3">Christians</option>
-                          <option value="4">Buddhist</option>
-                          <option value="5">Others</option>
-                        </select>
-                      </div>
-                    </div>
+                  <div class="col-4">
+                    <input type="text" name="postal" class="form-control form-control-sm" id="" placeholder="Postal Code" />
                   </div>
-                  <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                    <div class="form-group">
-                      <label for="">
-                        <strong>Marital Status</strong>
-                      </label>
-                      <div class="input-group input-group-sm mt-1">
-                        <select name="marital" class="form-control" id="">
-                          <option value="">-- Choose One --</option>
-                          <option value="1">Single</option>
-                          <option value="2">Married</option>
-                          <option value="3">Unmarried</option>
-                          <option value="4">Engaged</option>
-                          <option value="5">Divorced</option>
-                          <option value="6">Separeted</option>
-                          <option value="7">Widowed</option>
-                        </select>
-                      </div>
-                    </div>
+                  <div class="col-12">
+                    <hr class="py-0 my-0">
+                  </div>
+                  <div class="col-4">
+                    <select name="gender" class="form-control form-control-sm" id="">
+                      <option value="">-- Choose One --</option>
+                      <option value="1">Male</option>
+                      <option value="2">Female</option>
+                      <option value="3">Others</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <select name="religion" class="form-control form-control-sm" id="">
+                      <option value="">-- Choose One --</option>
+                      <option value="1">Islam</option>
+                      <option value="2">Hinduism</option>
+                      <option value="3">Christians</option>
+                      <option value="4">Buddhist</option>
+                      <option value="5">Others</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <select name="marital" class="form-control form-control-sm" id="">
+                      <option value="">-- Choose One --</option>
+                      <option value="1">Single</option>
+                      <option value="2">Married</option>
+                      <option value="3">Unmarried</option>
+                      <option value="4">Engaged</option>
+                      <option value="5">Divorced</option>
+                      <option value="6">Separeted</option>
+                      <option value="7">Widowed</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -410,31 +294,6 @@ $divisions = $data['divisions'];
       }
     }
     var divisions = <?= json_encode($divisions); ?>;
-  </script>
-  <script>
-    // $(document).ready(function() {
-    //   $('#biography').summernote({
-    //     height: 400, // Specify the height of the editor
-    //     toolbar: [
-    //       ['heading', ['style']],
-    //       ['style', ['bold', 'italic', 'underline', 'clear']],
-    //       ['text', ['fontname', 'fontsize', 'color']]
-    //     ]
-    //     toolbar: [
-    //       ['style', ['bold', 'italic', 'underline', 'clear', 'style', ]],
-    //       ['fontsize', ['fontname', 'fontsize',]],
-    //       ['color', ['color']],
-    //       ['para', ['ul', 'ol', 'paragraph']],
-    //       ['insert', ['link', 'picture', 'video']],
-    //       // ['view', ['codeview', 'help']]
-    //     ],
-    //     callbacks: {
-    //       onChange: function(contents, $editable) {
-    //         console.log('Content changed:', contents);
-    //       }
-    //     }
-    //   });
-    // });
   </script>
 </body>
 </html>

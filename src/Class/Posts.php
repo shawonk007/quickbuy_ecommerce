@@ -24,14 +24,28 @@ class Posts {
     }
   }
 
-  public function create() {}
+  public function create($uid, $ptl, $pct, $pde, $pth, $psl, $pst) {
+    $sql = "INSERT INTO " . $this->table . "
+    (user_id, post_title, post_cat, post_description, post_thumbnail, post_slug, post_status, created_at, updated_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+    $statement = $this->conn->prepare($sql);
+    // Bind parameters
+    $statement->bind_param("isssssi", $uid, $ptl, $pct, $pde, $pth, $psl, $pst);
+    if ($statement->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-  public function show() {}
+  public function show($id, $slug) {}
 
-  public function edit() {}
+  public function edit($id) {}
 
-  public function update() {}
+  public function update($id) {}
 
-  public function destroy() {}
+  public function destroy($id) {}
+  
+  public function athorize($id) {}
 }
 ?>

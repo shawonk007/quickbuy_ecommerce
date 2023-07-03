@@ -1,7 +1,7 @@
 <?php
 if (!function_exists('info')) {
 function info() {
-  $path = "http://localhost/quickbuy/";
+  $path = "http://localhost/quickbuy_ecommerce/";
   return [
     'name' => "QuickBuy",
     'phone' => "102424",

@@ -1,29 +1,17 @@
 <?php
-
-require __DIR__ . '../../../vendor/autoload.php';
-
+require __DIR__ . '/../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
-
 use App\Database;
 use App\Class\Category;
 $db = new Database();
 $categories = new Category($db->conn);
-
 $pageName = "Add New Category";
 $pageGroup = "Category & Product";
 $currentGroup = ["Category", "category/index.php"];
 $currentPage = "Create";
 require __DIR__ . '/../../components/header.php';
-
-function logError($errorMessage) {
-  global $pageName;
-  $logFile = __DIR__ . '/errors.log'; // Specify the log file name and path
-  $logMessage = '['. date('Y-m-d H:i:s A') . ']' . ' | ' . 'ERROR from ' . $pageName . $errorMessage . PHP_EOL ;
-  file_put_contents($logFile, $logMessage, FILE_APPEND);
-  logError($logMessage); // Call the logError function recursively
-}
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
@@ -41,60 +29,49 @@ function logError($errorMessage) {
               <h4 class="card-title text-light">Create New Category</h4>
             </div>
             <div class="card-body">
-              <div class="input-group input-group-sm mb-3">
-                <input type="text" name="title" class="form-control" id="" placeholder="Category Title" required />
-              </div>
-              <div class="input-group input-group-sm my-3">
-                <textarea name="description" class="form-control" id="" cols="30" rows="8" placeholder="Type category details here ..."></textarea>
-              </div>
-              <div class="input-group input-group-sm mb-3">
-                <input type="text" name="slug" class="form-control" id="" placeholder="Category Slug" />
-              </div>
-              <div class="row g-3 mb-3">
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                  <div class="input-group input-group-sm">
-                    <!-- <select name="parent" class="form-control" id="mainCat" > -->
-                    <select name="parent" class="select2 select2-bootstrap-5-theme" id="mainCat" >
-                      <option value="">-- Main Category --</option>
-                      <?php
-                        $mainCat = $categories->index();
-                        foreach ($mainCat as $main) {
-                          if ($main['cat_status'] == 1 && $main['parent_id'] == NULL) {  ?>
-                            <option value="<?= $main['cat_id'] ?>"><?= $main['cat_title'] ?></option>
-                          <?php }
-                        }
-                      ?>
-                    </select>
-                  </div>
+              <div class="row g-3">
+                <div class="col-12">
+                  <input type="text" name="title" class="form-control form-control-sm" id="title" placeholder="Category Title" required />
                 </div>
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                  <div class="input-group input-group-sm">
-                    <select name="sub-parent" class="select2 select2-bootstrap-5-theme" id="subCat">
-                      <option value="">-- Sub Category --</option>
-                      <?php  $subCat = $categories->index();
-                        foreach ($subCat as $sub) {
-                        if (Category::check($sub['parent_id'], $db)) { ?>
-                        <option value="<?= $sub['cat_id'] ?>"><?= $sub['cat_title'] ?></option>
-                      <?php } } ?>
-                    </select>
-                  </div>
+                <div class="col-12">
+                  <textarea name="description" class="form-control form-control-sm" id="description" cols="30" rows="8" placeholder="Type category details here ..."></textarea>
                 </div>
-              </div>
-              <div class="row g-3 d-flex align-items-center">
-                <div class="col-7">
+                <div class="col-12">
+                  <input type="text" name="slug" class="form-control form-control-sm" id="slug" placeholder="Category Slug" />
+                </div>
+                <div class="col-6">
+                  <select name="parent" class="select2 select2-bootstrap-5-theme w-100" id="mainCat" >
+                    <option value="">-- Main Category --</option>
+                    <?php $mainCat = $categories->index();
+                    foreach ($mainCat as $main) {
+                      if ($main['cat_status'] == 1 && $main['parent_id'] == NULL) {  ?>
+                      <option value="<?= $main['cat_id'] ?>"><?= $main['cat_title'] ?></option>
+                    <?php } } ?>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <select name="sub-parent" class="select2 select2-bootstrap-5-theme w-100" id="subCat">
+                    <option value="">-- Sub Category --</option>
+                    <?php $subCat = $categories->index();
+                    $parent = $main['cat_id'];
+                    foreach ($subCat as $sub) {
+                      if (Category::check($sub['parent_id'], $db)) { ?>
+                      <option value="<?= $sub['cat_id'] ?>"><?= $sub['cat_title'] ?></option>
+                    <?php } } ?>
+                  </select>
+                </div>
+                <div class="col-6 d-flex align-items-center">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="mark" value="1" id="" />
+                    <input class="form-check-input" type="checkbox" name="mark" value="1" id="mark" />
                     <label class="form-check-label " for="" style="font-size: 0.9rem;">Mark as Featured Category</label>
                   </div>
                 </div>
-                <div class="col-5">
-                  <div class="input-group input-group-sm">
-                    <select name="status" class="form-control" id="">
-                      <option value="">-- Choose Status --</option>
-                      <option value="1">Enable</option>
-                      <option value="0">Disable</option>
-                    </select>
-                  </div>
+                <div class="col-6">
+                  <select name="status" class="form-control form-control-sm" id="status">
+                    <option value="">-- Choose Status --</option>
+                    <option value="1">Enable</option>
+                    <option value="0">Disable</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -121,10 +98,7 @@ function logError($errorMessage) {
   </main>
   <script>
     $(document).ready(function() {
-      $( '#mainCat' ).select2( {
-        theme: 'bootstrap-5'
-      });
-      $( '#subCat' ).select2( {
+      $('#mainCat').add('#subCat').select2({
         theme: 'bootstrap-5'
       });
       $('form').submit(function(e) {

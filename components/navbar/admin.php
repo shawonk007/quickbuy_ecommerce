@@ -12,7 +12,8 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="fas fa-plus"></i>
-          <span class="ps-1">New Items</span>
+          <!-- <span class="ps-1">New Items</span> -->
+          <span class="ps-1">New</span>
         </a>
         <ul class="dropdown-menu py-1">
           <li>
@@ -94,7 +95,8 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-user-circle"></i>
-            <span class="ps-1">My Account</span>
+            <!-- <span class="ps-1">My Account</span> -->
+            <span class="ps-1">Profile</span>
           </a>
           <ul class="dropdown-menu dropdown-menu-end py-0" style="min-width: 250px;">
             <div class="card">

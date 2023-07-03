@@ -37,20 +37,20 @@ require __DIR__ . '/../components/header.php';
       <div class="row">
         <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
           <div class="card">
-            <div class="card-header pt-1 pb-0">
-              <h5 class="card-title">Category</h5>
+            <div class="card-header bg-warning border-bottom-0 py-1">
+              <h5 class="card-title text-light font-bold py-0 my-0"><b>Category</b></h5>
             </div>
-            <div class="card-body">
+            <div class="card-body bg-warning">
               <div class="d-flex align-items-center justify-content-between">
                 <h1>
-                  <i class="fas fa-user-plus dashboard-icon"></i>
+                  <i class="fas fa-tags dashboard-icon" ></i>
                 </h1>
-                <h1 class="font-cursive">99+</h1>
+                <h1 class="font-cursive text-light">99+</h1>
               </div>
             </div>
-            <div class="card-footer py-0">
-              <a href="<?= $root ?>category/index.php" class="nav-link text-center">
-                <span>More info</span>
+            <div class="card-footer bg-warning py-0">
+              <a href="<?= $root ?>category/index.php" class="nav-link text-light text-center">
+                <strong>More info</strong>
                 <i class="fas fa-circle-arrow-right"></i>
               </a>
             </div>
@@ -58,20 +58,20 @@ require __DIR__ . '/../components/header.php';
         </div>
         <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
           <div class="card">
-            <div class="card-header pt-1 pb-0">
-              <h5 class="card-title">Products</h5>
+            <div class="card-header bg-primary border-bottom-0 py-1">
+              <h5 class="card-title text-light font-bold py-0 my-0"><b>Products</b></h5>
             </div>
-            <div class="card-body">
+            <div class="card-body bg-primary">
               <div class="d-flex align-items-center justify-content-between">
                 <h1>
                   <i class="fas fa-cubes dashboard-icon"></i>
                 </h1>
-                <h1 class="font-cursive">99+</h1>
+                <h1 class="font-cursive text-light">99+</h1>
               </div>
             </div>
-            <div class="card-footer py-0">
-              <a href="<?= $root ?>products/index.php" class="nav-link text-center">
-                <span>More info</span>
+            <div class="card-footer bg-primary py-0">
+              <a href="<?= $root ?>products/index.php" class="nav-link text-light text-center">
+                <strong>More info</strong>
                 <i class="fas fa-circle-arrow-right"></i>
               </a>
             </div>
@@ -79,20 +79,20 @@ require __DIR__ . '/../components/header.php';
         </div>
         <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
           <div class="card">
-            <div class="card-header pt-1 pb-0">
-              <h5 class="card-title">Merchants</h5>
+            <div class="card-header bg-success border-bottom-0 py-1">
+              <h5 class="card-title text-light font-bold py-0 my-0"><b>Merchants</b></h5>
             </div>
-            <div class="card-body">
+            <div class="card-body bg-success">
               <div class="d-flex align-items-center justify-content-between">
                 <h1>
                   <i class="fas fa-store dashboard-icon"></i>
                 </h1>
-                <h1 class="font-cursive">99+</h1>
+                <h1 class="font-cursive text-light">99+</h1>
               </div>
             </div>
-            <div class="card-footer py-0">
-              <a href="<?= $root ?>stores/index.php" class="nav-link text-center">
-                <span>More info</span>
+            <div class="card-footer bg-success py-0">
+              <a href="<?= $root ?>stores/index.php" class="nav-link text-light text-center">
+                <strong>More info</strong>
                 <i class="fas fa-circle-arrow-right"></i>
               </a>
             </div>
@@ -100,20 +100,20 @@ require __DIR__ . '/../components/header.php';
         </div>
         <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
           <div class="card">
-            <div class="card-header pt-1 pb-0">
-              <h5 class="card-title">Users & Members</h5>
+            <div class="card-header bg-danger border-bottom-0 py-1">
+              <h5 class="card-title text-light font-bold py-0 my-0"><b>Users & Members</b></h5>
             </div>
-            <div class="card-body">
+            <div class="card-body bg-danger">
               <div class="d-flex align-items-center justify-content-between">
                 <h1>
                   <i class="fas fa-user-plus dashboard-icon"></i>
                 </h1>
-                <h1 class="font-cursive">99+</h1>
+                <h1 class="font-cursive text-light">99+</h1>
               </div>
             </div>
-            <div class="card-footer py-0">
-              <a href="<?= $root ?>users/index.php" class="nav-link text-center">
-                <span>More info</span>
+            <div class="card-footer bg-danger py-0">
+              <a href="<?= $root ?>users/index.php" class="nav-link text-light text-center">
+                <strong>More info</strong>
                 <i class="fas fa-circle-arrow-right"></i>
               </a>
             </div>
@@ -125,12 +125,12 @@ require __DIR__ . '/../components/header.php';
       <div class="row row-col-3 g-3">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7 col-xxl-7">
           <div class="card">
-            <div class="card-header pt-1 pb-0">
-              <h5 class="card-title">Latest Orders</h5>
+            <div class="card-header bg-primary py-1">
+              <h5 class="card-title text-light font-bold py-0 my-0">Latest Orders</h5>
             </div>
-            <div class="card-body table-responsive p-2">
-              <table class="table table-hover table-sm font-condensed">
-                <thead class="table-dark">
+            <div class="card-body table-responsive-lg ps-2 pe-2 py-3">
+              <table class="table table-hover table-sm font-condensed home-data-table py-3">
+                <thead class="table-info">
                   <tr>
                     <th scope="col">Order ID</th>
                     <th scope="col">Customer Name</th>
@@ -152,12 +152,12 @@ require __DIR__ . '/../components/header.php';
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-5 col-xxl-5">
           <div class="card">
-            <div class="card-header pt-1 pb-0">
-              <h5 class="card-title">Best Sellers</h5>
+            <div class="card-header bg-primary py-1">
+              <h5 class="card-title text-light font-bold py-0 my-0">Best Sellers</h5>
             </div>
-            <div class="card-body table-responsive p-2">
-              <table class="table table-hover table-sm font-condensed">
-                <thead class="table-dark">
+            <div class="card-body table-responsive-lg ps-2 pe-2 py-3">
+              <table class="table table-hover table-sm font-condensed home-data-table py-3">
+                <thead class="table-secondary">
                   <tr>
                     <th scope="col">Store Name</th>
                     <th scope="col">Owner Name</th>
@@ -177,12 +177,12 @@ require __DIR__ . '/../components/header.php';
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7 col-xxl-7">
           <div class="card">
-            <div class="card-header pt-1 pb-0">
-              <h5 class="card-title">Top Products</h5>
+            <div class="card-header bg-primary py-1">
+              <h5 class="card-title text-light font-bold py-0 my-0">Top Products</h5>
             </div>
-            <div class="card-body table-responsive p-2">
-              <table class="table table-hover table-sm font-condensed">
-                <thead class="table-dark">
+            <div class="card-body table-responsive-lg ps-2 pe-2 py-3">
+              <table class="table table-hover table-sm font-condensed home-data-table py-3">
+                <thead class="table-secondary">
                   <tr>
                     <th scope="col">Product Title</th>
                     <th scope="col">SKU</th>
@@ -204,12 +204,12 @@ require __DIR__ . '/../components/header.php';
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-5 col-xxl-5">
           <div class="card">
-            <div class="card-header pt-1 pb-0">
-              <h5 class="card-title">Newly Registered</h5>
+            <div class="card-header bg-primary py-1">
+              <h5 class="card-title text-light font-bold py-0 my-0">Newly Registered</h5>
             </div>
-            <div class="card-body table-responsive p-2">
-              <table class="table table-hover table-sm font-condensed">
-                <thead class="table-dark">
+            <div class="card-body table-responsive-lg ps-2 pe-2 py-3">
+              <table class="table table-hover table-sm font-condensed home-data-table py-3">
+                <thead class="table-secondary">
                   <tr>
                     <th scope="col">Name of User</th>
                     <th scope="col">User Role</th>

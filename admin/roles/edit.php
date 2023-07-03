@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '../../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
@@ -48,28 +48,22 @@ if (isset($_GET['id'])) {
             </div>
             <div class="card-body">
               <input type="hidden" name="id" value="<?= isset($role['role_id']) ? $role['role_id'] : '' ?>" >
-              <div class="row g-3 mb-3">
-                <div class="input-group">
-                  <input type="text" name="title" class="form-control" id="" placeholder="Role Title" value="<?= isset($role['role_title']) ? $role['role_title'] : '' ?>" required />
-                </div>
-                <div class="input-group">
-                  <textarea name="description" class="form-control" id="" cols="30" rows="8" placeholder="Type role details here ..."><?= isset($role['role_description']) ? $role['role_description'] : '' ?></textarea>
-                </div>
-              </div>
               <div class="row g-3">
-                <div class="col-6">
-                  <div class="input-group">
-                    <input type="text" name="slug" class="form-control" id="" placeholder="Role Slug" value="<?= isset($role['role_slug']) ? $role['role_slug'] : '' ?>" required />
-                  </div>
+                <div class="col-12">
+                  <input type="text" name="title" class="form-control form-control-sm" id="" placeholder="Role Title" value="<?= isset($role['role_title']) ? $role['role_title'] : '' ?>" required />
+                </div>
+                <div class="col-12">
+                  <textarea name="description" class="form-control form-control-sm" id="" cols="30" rows="8" placeholder="Type role details here ..."><?= isset($role['role_description']) ? $role['role_description'] : '' ?></textarea>
                 </div>
                 <div class="col-6">
-                  <div class="input-group">
-                    <select name="status" class="form-control" id="">
-                      <option selected>-- Role Status --</option>
-                      <option value="1" <?= isset($role['role_status']) && $role['role_status'] == 1 ? 'selected' : ''; ?>>Enable</option>
-                      <option value="0" <?= isset($role['role_status']) && $role['role_status'] == 0 ? 'selected' : ''; ?>>Disable</option>
-                    </select>
-                  </div>
+                  <input type="text" name="slug" class="form-control form-control-sm" id="" placeholder="Role Slug" value="<?= isset($role['role_slug']) ? $role['role_slug'] : '' ?>" required />
+                </div>
+                <div class="col-6">
+                  <select name="status" class="form-control form-control-sm" id="">
+                    <option selected>-- Role Status --</option>
+                    <option value="1" <?= isset($role['role_status']) && $role['role_status'] == 1 ? 'selected' : ''; ?>>Enable</option>
+                    <option value="0" <?= isset($role['role_status']) && $role['role_status'] == 0 ? 'selected' : ''; ?>>Disable</option>
+                  </select>
                 </div>
               </div>
             </div>

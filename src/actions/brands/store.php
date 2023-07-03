@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '../../../../vendor/autoload.php';
+require __DIR__ . '/../../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
@@ -19,13 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       'success' => false,
       'message' => 'Invalid file type or size. Please upload a JPG, JPEG, PNG, or SVG file up to 1 MB in size.'
     ];
-    header("Content-Type: application/json");
-    echo json_encode($response);
-    exit();
+    // header("Content-Type: application/json");
+    // echo json_encode($response);
+    // exit();
   }
-  $title = $db->conn->escape_string($_POST['title']);
-  $desc = $db->conn->escape_string($_POST['desc']);
-  $slug = $db->conn->escape_string($_POST['slug']);
+  $title = $_POST['title'];
+  $desc = $_POST['desc'];
+  $slug = $_POST['slug'];
   $mark = isset($_POST['mark']) ? $_POST['mark'] : NULL;
   $status = $_POST['status'];
   $errors = [];
@@ -41,9 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       'message' => 'Field(s) cannot be empty.',
       'errors' => $errors
     ];
-    header("Content-Type: application/json");
-    echo json_encode($response);
-    exit();
+    // header("Content-Type: application/json");
+    // echo json_encode($response);
+    // exit();
   }
   if ($logo['error'] === UPLOAD_ERR_OK) {
     $img = "QBB_" . time() . "_qb.jpg";

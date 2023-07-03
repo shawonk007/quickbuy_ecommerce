@@ -210,3 +210,32 @@ $(document).ready(function() {
     }
   });
 });
+
+$(document).ready(function() {
+  $('.home-data-table').DataTable({
+    paging: true,
+    // pageLength: 10,
+    lengthMenu: [[10, 15, 20, 25], [10, 15, 20, 25]],
+    pagingType: "full_numbers",
+    searching: true,
+    search: 'Search records:',
+    searchDelay: 500,
+    searchPlaceholder: 'Search...',
+    ordering: true,
+    responsive: true,
+    autoWidth : false,
+    info : true,
+    dom: '<"row"<"col-6 d-flex justify-content-start"f><"col-6 d-flex justify-content-end"l>>' + '<"row"<"col-md-12"rt>>' + '<"row"<"col-md-12 d-flex justify-content-center"p>>',
+    language: {
+      paginate: {
+        first: '<i class="fas fa-angle-double-left"></i>',
+        previous: '<i class="fas fa-angle-left"></i>',
+        next: '<i class="fas fa-angle-right"></i>',
+        last: '<i class="fas fa-angle-double-right"></i>'
+      },
+      lengthMenu: "_MENU_",
+      search: "Search:",
+      info: "Showing _START_ to _END_ of _TOTAL_ entries"
+    }
+  });
+});

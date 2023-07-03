@@ -24,7 +24,14 @@ class Promos {
     }
   }
 
-  public function create() {}
+  public function create($me, $ti, $co, $de, $pt, $dt, $dv, $gn, $ex, $st, $ur) {
+    $sql = "INSERT INTO " . $this->table . "
+    (vendor_id, promo_title, promo_code, promo_description, promo_type, discount_type, discount_value, starting_date, expiration_date, promo_status, usage_restriction, created_at, updated_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("isssiisssis", $me, $ti, $co, $de, $pt, $dt, $dv, $gn, $ex, $st, $ur);
+
+  }
 
   public function show() {}
 

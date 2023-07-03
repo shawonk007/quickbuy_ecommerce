@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '../../../../vendor/autoload.php';
+require __DIR__ . '/../../../vendor/autoload.php';
 
 use App\Database;
 use App\Class\Users;

@@ -6,7 +6,7 @@
     <span>Admin Panel</span>
   </button>
   <nav class="nav-sidebar">
-    <ul class="font-condensed">
+    <ul class="font-ubuntu">
       <li class="sidebar-item">
         <a href="<?= $root ?>dashboard.php" class="sidebar-link">
           <i class="fas fa-tachometer-alt" style="width: 1.5rem;" ></i>

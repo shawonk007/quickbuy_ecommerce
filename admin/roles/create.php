@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '../../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -41,28 +41,22 @@ function logError($errorMessage) {
               <h4 class="card-title text-light">Create New Role</h4>
             </div>
             <div class="card-body">
-              <div class="row g-3 mb-3">
-                <div class="input-group">
-                  <input type="text" name="title" class="form-control" id="" placeholder="Role Title" required />
-                </div>
-                <div class="input-group">
-                  <textarea name="description" class="form-control" id="" cols="30" rows="8" placeholder="Type role details here ..."></textarea>
-                </div>
-              </div>
               <div class="row g-3">
-                <div class="col-6">
-                  <div class="input-group">
-                    <input type="text" name="slug" class="form-control" id="" placeholder="Role Slug" required />
-                  </div>
+                <div class="col-12">
+                  <input type="text" name="title" class="form-control form-control-sm" id="title" placeholder="Role Title" required />
+                </div>
+                <div class="col-12">
+                  <textarea name="description" class="form-control form-control-sm" id="description" cols="30" rows="8" placeholder="Type role details here ..."></textarea>
                 </div>
                 <div class="col-6">
-                  <div class="input-group">
-                    <select name="status" class="form-control" id="">
-                      <option selected>-- Role Status --</option>
-                      <option value="1">Enable</option>
-                      <option value="0">Disable</option>
-                    </select>
-                  </div>
+                  <input type="text" name="slug" class="form-control form-control-sm" id="slug" placeholder="Role Slug" required />
+                </div>
+                <div class="col-6">
+                  <select name="status" class="form-control form-control-sm" id="status">
+                    <option selected>-- Role Status --</option>
+                    <option value="1">Enable</option>
+                    <option value="0">Disable</option>
+                  </select>
                 </div>
               </div>
             </div>

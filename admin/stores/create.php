@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '../../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
@@ -10,6 +10,10 @@ $pageGroup = "Seller Center";
 $currentGroup = ["Stores", "stores/index.php"];
 $currentPage = "Create";
 require __DIR__ . '/../../components/header.php';
+
+$jsonData = file_get_contents(config("app.root") . 'assets/data/bangladesh.json');
+$data = json_decode($jsonData, true);
+$divisions = $data['divisions'];
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
@@ -29,22 +33,22 @@ require __DIR__ . '/../../components/header.php';
               </div>
               <div class="card-body">
                 <div class="row g-3">
-                  <div class="col">
-                    <label for="imageInput" class="d-flex flex-column align-items-center justify-content-center bg-light" style="border: 3px solid lightgray; border-style: dashed;">
-                      <div class="d-flex flex-column align-items-center justify-content-center py-3 h-100">
+                  <div class="col-6">
+                    <label for="imageInput" class="d-flex flex-column align-items-center justify-content-center bg-light h-100" style="border: 3px solid lightgray; border-style: dashed;">
+                      <div class="d-flex flex-column align-items-center justify-content-center">
                         <h1 class="mb-0"><i class="fas fa-cloud-arrow-up"></i></h1>
                         <h6 class="my-1 text-dark text-center"><strong>Click to upload</strong></h6>
                         <p class="mb-2 text-dark text-center" style="font-size: 0.75rem;">
                           <span>PNG, WEBP, JPG or JPEG</span><br />
                           <span>(MAX. UPLOAD SIZE 2MB)</span><br />
-                          <span>(MIN. RESOLUTION 700X700)</span>
+                          <span>(MIN. RES. 300X300)</span>
                         </p>
                       </div>
                       <input type="file" name="file" class="d-none" id="imageInput" required accept="image/*;capture=camera" />
                     </label>
                   </div>
-                  <div class="col">
-                    <img src="../../assets/images/dummy-square.jpg" class="w-100" alt="" />
+                  <div class="col-6">
+                    <img id="dummy" src="../../assets/images/dummy-square.jpg" class="w-100" alt="" />
                   </div>
                 </div>
               </div>
@@ -58,14 +62,14 @@ require __DIR__ . '/../../components/header.php';
               <div class="card-body">
                 <div class="row g-3">
                   <div class="col-3">
-                    <label for="imageInput" class="d-flex flex-column align-items-center justify-content-center bg-light" style="border: 3px solid lightgray; border-style: dashed;">
-                      <div class="d-flex flex-column align-items-center justify-content-center py-3 h-100">
+                    <label for="imageInput" class="d-flex flex-column align-items-center justify-content-center bg-light h-100" style="border: 3px solid lightgray; border-style: dashed;">
+                      <div class="d-flex flex-column align-items-center justify-content-center">
                         <h1 class="mb-0"><i class="fas fa-cloud-arrow-up"></i></h1>
                         <h6 class="my-1 text-dark text-center"><strong>Click to upload</strong></h6>
                         <p class="mb-2 text-dark text-center" style="font-size: 0.75rem;">
                           <span>PNG, WEBP, JPG or JPEG</span><br />
                           <span>(MAX. UPLOAD SIZE 2MB)</span><br />
-                          <span>(MIN. RESOLUTION 700X700)</span>
+                          <span>(MIN. RES. 1280X550)</span>
                         </p>
                       </div>
                       <input type="file" name="file" class="d-none" id="imageInput" required accept="image/*;capture=camera" />
@@ -98,9 +102,10 @@ require __DIR__ . '/../../components/header.php';
                 </div>
                 <div class="input-group input-group-sm mb-3">
                   <select name="" class="form-control" id="">
-                    <option selected>-- Choose Owner --</option>
+                    <option value="">-- Choose Owner --</option>
                   </select>
                 </div>
+                <hr>
                 <div class="input-group input-group-sm mb-3">
                   <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                   <input type="email" name="" class="form-control" id="" placeholder="info@example.com" />
@@ -121,12 +126,13 @@ require __DIR__ . '/../../components/header.php';
                   <span class="input-group-text"><i class="fab fa-whatsapp"></i></span>
                   <input type="tel" name="" class="form-control" id="" placeholder="+88 (01X) XX-XXXXXX" />
                 </div>
-                <div class="input-group input-group-sm mb-3">
+                <hr>
+                <div class="input-group input-group-sm">
                   <select name="" class="form-control" id="">
                     <option selected>-- Main Category --</option>
                   </select>
                 </div>
-                <div class="input-group input-group-sm mb-3">
+                <!-- <div class="input-group input-group-sm my-3">
                   <select name="" class="form-control" id="">
                     <option selected>-- Sub Category --</option>
                   </select>
@@ -135,7 +141,7 @@ require __DIR__ . '/../../components/header.php';
                   <select name="" class="form-control" id="">
                     <option selected>-- Product Type --</option>
                   </select>
-                </div>
+                </div> -->
               </div>
               <div class="card-footer">
                 <div class="row g-3">
@@ -162,7 +168,7 @@ require __DIR__ . '/../../components/header.php';
               </div>
               <div class="card-body">
                 <div class="input-group input-group-sm mb-3">
-                  <textarea name="" class="form-control" id="" cols="30" rows="20" placeholder="Type your details here ..."></textarea>
+                  <textarea name="" class="form-control" id="" cols="30" rows="17" placeholder="Type your details here ..."></textarea>
                 </div>
                 <hr>
                 <div class="input-group input-group-sm my-3">
@@ -171,15 +177,18 @@ require __DIR__ . '/../../components/header.php';
                 <div class="row g-3">
                   <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
                     <div class="input-group input-group-sm">
-                      <select name="" class="form-control" id="">
-                        <option selected>-- Choose Division --</option>
+                      <select name="" class="form-control" id="division" onchange="populateDistricts()" >
+                        <option value="">-- Choose Division --</option>
+                        <?php foreach ($divisions as $division) { ?>
+                          <option value="<?= $division['name']?>"><?= $division['name']?></option>;
+                        <?php } ?>
                       </select>
                     </div>
                   </div>
                   <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
                     <div class="input-group input-group-sm">
-                      <select name="" class="form-control" id="">
-                        <option selected>-- Choose District --</option>
+                      <select name="" class="form-control" id="district" >
+                        <option value="">-- Choose District --</option>
                       </select>
                     </div>
                   </div>
@@ -191,7 +200,7 @@ require __DIR__ . '/../../components/header.php';
                   <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
                     <div class="input-group input-group-sm">
                       <select name="" class="form-control" id="">
-                        <option selected>-- Choose Status --</option>
+                        <option value="">-- Choose Status --</option>
                       </select>
                     </div>
                   </div>
@@ -203,5 +212,16 @@ require __DIR__ . '/../../components/header.php';
       </form>
     </section>
   </main>
+  <script>
+    var imgInp = document.getElementById("imageInput");
+    var dummy = document.getElementById("dummy");
+    imgInp.onchange = evt => {
+      const [file] = imgInp.files
+      if (file) {
+        dummy.src = URL.createObjectURL(file)
+      }
+    }
+    var divisions = <?= json_encode($divisions); ?>;
+  </script>
 </body>
 </html>

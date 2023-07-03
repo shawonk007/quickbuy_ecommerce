@@ -1,13 +1,11 @@
 <?php
-require __DIR__ . '../../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
-
 use App\Database;
 use App\Class\Category;
 use Carbon\Carbon;
-
 $db = new Database();
 $categories = new Category($db->conn);
 $pageName = "Manage Categories";
@@ -72,15 +70,12 @@ function logError($errorMessage) {
               <tbody>
                 <?php
                   $catList = $categories->index();
-                  // $limit = 10;
-                  // $count = 0;
                   if (empty($catList)) { ?>
                     <tr>
                       <td class="text-center" colspan="6"><?= "No Data Available" ?></td>
                     </tr>
                   <?php } else {
                     foreach ($catList as $k => $category) {
-                      // $parent = $category['parent_id'];
                       $statusLabel = "";
                       $statusClass = "";
                       $parentTitle = Category::parent($category['parent_id'], $db);
@@ -95,10 +90,6 @@ function logError($errorMessage) {
                         $statusLabel = "Pending";
                         $statusClass = "bg-secondary";
                       }
-                      // if ($count >= $limit) {
-                      //   break;
-                      // }
-                      // $count++;
                       ?>
                     <tr>
                       <th scope="row"><?= $k+1 ?></th>

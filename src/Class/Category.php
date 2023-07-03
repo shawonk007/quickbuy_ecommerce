@@ -98,22 +98,25 @@ class Category {
 
   public static function check($parent, $db) {
     $conn = $db->conn;
-    $sub = explode(',', $parent);
+    // $sub = explode(',', $parent);
+    $sub = intval($parent);
   
-    if (count($sub) > 1) {
-      $cat = end($sub);
-      $sql = "SELECT * FROM categories WHERE cat_id = ?";
-      $statement = $conn->prepare($sql);
-      $statement->bind_param("i", $cat);
-      $statement->execute();
-      $result = $statement->get_result();
+    // if (count($sub) > 1) {
+      // $cat = end($sub);
+      // $sql = "SELECT * FROM categories WHERE cat_id = ?";
+      $sql = "SELECT * FROM categories WHERE cat_id = {$sub}";
+      // $statement = $conn->prepare($sql);
+      // $statement->bind_param("i", $sub);
+      // $statement->execute();
+      // $result = $statement->get_result();
+      $result = $conn->query($sql);
       
       if ($result->num_rows === 1) {
         $category = $result->fetch_assoc();
         // return $category['cat_title'];
         return $category;
       }
-    }
+    // }
 
     return false;
     // $conn = $db->conn;
@@ -140,6 +143,27 @@ class Category {
     // //   return false;
     // // }
     // return false;
+  }
+
+  public static function type($parent, $db) {
+    $conn = $db->conn;
+    $type = explode(',', $parent);
+  
+    if (count($type) > 1) {
+      $cat = end($type);
+      $sql = "SELECT * FROM categories WHERE cat_id = ?";
+      $statement = $conn->prepare($sql);
+      $statement->bind_param("i", $cat);
+      $statement->execute();
+      $result = $statement->get_result();
+      
+      if ($result->num_rows === 1) {
+        $category = $result->fetch_assoc();
+        // return $category['cat_title'];
+        return $category;
+      }
+    }
+    return false;
   }
 }
 ?>

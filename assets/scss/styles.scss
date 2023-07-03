@@ -29,7 +29,8 @@
   background-color: #c2410c;
 }
 #sidebar {
-  width: 250px;
+  // width: 250px;
+  width: 225px;
   // height: 100%;
   position: fixed;
   // border-right: 1px solid antiquewhite;
@@ -49,7 +50,8 @@
       list-style: none;
       li {
         a {
-          padding: 0.375rem 1rem;
+          // padding: 0.375rem 1rem;
+          padding: 0.25rem 1rem;
           color: #fff;
           text-decoration: none;
           display: flex;
@@ -141,6 +143,8 @@
     ul {
       li {
         a {
+          // padding: 0.9rem auto;
+          margin: 0.275rem auto;
           span {
             opacity: 0;
             display: none;
@@ -223,7 +227,8 @@
   }
 }
 #content {
-  margin-left: 250px;
+  // margin-left: 250px;
+  margin-left: 225px;
   transition: margin-left .5s;
   // padding: 1rem;
   @media screen and (max-width : 991.98px) {
@@ -368,5 +373,5 @@
 // }
 
 .dashboard-icon {
-  color : lightgray;
+  color : rgb(233, 233, 233);
 }
