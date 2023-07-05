@@ -28,8 +28,8 @@ $divisions = $data['divisions'];
         <div class="row row-cols-3 row-cols-lg-5 g-3 g-lg-3">
           <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-4 col-xxl-4">
             <div class="card shadow">
-              <div class="card-header bg-primary pb-0">
-                <h5 class="card-title text-light">Store Logo</h5>
+              <div class="card-header bg-primary py-1">
+                <h5 class="card-title text-light py-0 my-0">Store Logo</h5>
               </div>
               <div class="card-body">
                 <div class="row g-3">

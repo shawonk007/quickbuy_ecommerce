@@ -14,11 +14,11 @@ class Posts {
     $sql = "SELECT * FROM " . $this->table;
     $result = $this->conn->query($sql);
     if ($result->num_rows > 0) {
-      $roles = [];
+      $posts = [];
       while ($row = $result->fetch_assoc()) {
-        $roles[] = $row;
+        $posts[] = $row;
       }
-      return $roles;
+      return $posts;
     } else {
       return [];
     }
@@ -38,14 +38,69 @@ class Posts {
     }
   }
 
-  public function show($id, $slug) {}
+  public function show($id, $slug) {
+    $sql = "SELECT * FROM " . $this->table . " WHERE post_id = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("is", $id, $slug);
+    $statement->execute();
+    $result = $statement->get_result();
+    if ($result->num_rows === 1) {
+      $post = $result->fetch_assoc();
+      return $post;
+    } else {
+      return false;
+    }
+  }
 
-  public function edit($id) {}
+  public function edit($id) {
+    $sql = "SELECT * FROM " . $this->table . " WHERE post_id = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("i", $id);
+    $statement->execute();
+    $result = $statement->get_result();
+    if ($result->num_rows === 1) {
+      $post = $result->fetch_assoc();
+      return $post;
+    } else {
+      return false;
+    }
+  }
 
-  public function update($id) {}
+  public function update($pid, $uid, $ptl, $pct, $pde, $pth, $psl, $pst) {
+    $sql = "UPDATE " . $this->table . " SET
+    user_id = ?, post_title = ?, post_cat = ?, post_description = ?, post_thumbnail = ?, post_slug = ?, post_status = ?, updated_at = NOW() WHERE post_id = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("isssssii", $uid, $ptl, $pct, $pde, $pth, $psl, $pst, $pid);
+    $statement->execute();
+    if ($statement->affected_rows === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-  public function destroy($id) {}
+  public function destroy($id) {
+    $sql = "DELETE FROM " . $this->table . " WHERE post_id = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("i", $id);
+    $statement->execute();
+    if ($statement->affected_rows === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   
-  public function athorize($id) {}
+  public function athorize($pid, $pst) {
+    $sql = "UPDATE " . $this->table . " SET post_status = ? WHERE post_id = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("ii", $pst, $pid);
+    $statement->execute();
+    if ($statement->affected_rows === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 ?>

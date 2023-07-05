@@ -20,10 +20,10 @@ require __DIR__ . '/../../components/header.php';
     <?php include __DIR__ . '/../../components/breadcrumb/admin/secondary.php' ?>
     <section class="container-fluid d-flex align-items-center justify-content-center my-5">
       <div class="col-12 col-sm-12 col-md-8 col-lg-7 col-xl-7 col-xxl-7">
-        <form action="" method="post">
+        <form action="<?= config("app.root")?>src/actions/promo/store.php" method="post">
           <div class="card shadow">
-            <div class="card-header bg-primary pb-0">
-              <h4 class="card-title text-light">Create New Promo</h4>
+            <div class="card-header bg-primary py-1">
+              <h4 class="card-title text-light py-0 my-0">Create New Promo</h4>
             </div>
             <div class="card-body">
               <div class="row g-3">
@@ -31,7 +31,7 @@ require __DIR__ . '/../../components/header.php';
                   <input type="text" name="title" class="form-control form-control-sm" id="title" placeholder="Promo Title" required />
                 </div>
                 <div class="col-6">
-                  <div class="input-group">
+                  <div class="input-group input-group-sm">
                     <button class="btn bg-secondary-subtle" type="button" id="makePromo">
                       <i class="fas fa-refresh"></i>
                     </button>
@@ -106,6 +106,10 @@ require __DIR__ . '/../../components/header.php';
     $(document).ready(function() {
       $('#storeName').select2({
         theme: 'bootstrap-5'
+      });
+      $('.select2-container .select2-selection--single').css({
+        'padding': '5px 10px',
+        'font-size': '12px'
       });
       $("#makePromo").click(function() {
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';

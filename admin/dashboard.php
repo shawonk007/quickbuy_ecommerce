@@ -34,11 +34,11 @@ require __DIR__ . '/../components/header.php';
     <?php require __DIR__ . "/../components/navbar/admin.php" ?>
     <?php include __DIR__ . '/../components/breadcrumb/admin/primary.php' ?>
     <section class="container-fluid my-5">
-      <div class="row">
+      <div class="row g-2 g-md-3">
         <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
           <div class="card">
             <div class="card-header bg-warning border-bottom-0 py-1">
-              <h5 class="card-title text-light font-bold py-0 my-0"><b>Category</b></h5>
+              <h6 class="card-title text-light font-bold py-0 my-0"><b>Category</b></h6>
             </div>
             <div class="card-body bg-warning">
               <div class="d-flex align-items-center justify-content-between">
@@ -59,7 +59,7 @@ require __DIR__ . '/../components/header.php';
         <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
           <div class="card">
             <div class="card-header bg-primary border-bottom-0 py-1">
-              <h5 class="card-title text-light font-bold py-0 my-0"><b>Products</b></h5>
+              <h6 class="card-title text-light font-bold py-0 my-0"><b>Products</b></h6>
             </div>
             <div class="card-body bg-primary">
               <div class="d-flex align-items-center justify-content-between">
@@ -80,7 +80,7 @@ require __DIR__ . '/../components/header.php';
         <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
           <div class="card">
             <div class="card-header bg-success border-bottom-0 py-1">
-              <h5 class="card-title text-light font-bold py-0 my-0"><b>Merchants</b></h5>
+              <h6 class="card-title text-light font-bold py-0 my-0"><b>Merchants</b></h6>
             </div>
             <div class="card-body bg-success">
               <div class="d-flex align-items-center justify-content-between">
@@ -101,7 +101,7 @@ require __DIR__ . '/../components/header.php';
         <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-3">
           <div class="card">
             <div class="card-header bg-danger border-bottom-0 py-1">
-              <h5 class="card-title text-light font-bold py-0 my-0"><b>Users & Members</b></h5>
+              <h6 class="card-title text-light font-bold py-0 my-0"><b>Users & Members</b></h6>
             </div>
             <div class="card-body bg-danger">
               <div class="d-flex align-items-center justify-content-between">

@@ -14,11 +14,11 @@ class Promos {
     $sql = "SELECT * FROM " . $this->table;
     $result = $this->conn->query($sql);
     if ($result->num_rows > 0) {
-      $roles = [];
+      $promos = [];
       while ($row = $result->fetch_assoc()) {
-        $roles[] = $row;
+        $promos[] = $row;
       }
-      return $roles;
+      return $promos;
     } else {
       return [];
     }
@@ -30,15 +30,64 @@ class Promos {
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
     $statement = $this->conn->prepare($sql);
     $statement->bind_param("isssiisssis", $me, $ti, $co, $de, $pt, $dt, $dv, $gn, $ex, $st, $ur);
-
+    if ($statement->execute()) {
+      return true;
+    } else {
+        return false;
+    }
   }
 
-  public function show() {}
+  public function show($id) {
+    $sql = "SELECT * FROM " . $this->table . " WHERE promo_id = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("i", $id);
+    $statement->execute();
+    $result = $statement->get_result();
+    if ($result->num_rows === 1) {
+      $promo = $result->fetch_assoc();
+      return $promo;
+    } else {
+      return false;
+    }
+  }
 
-  public function edit() {}
+  public function edit($id) {
+    $sql = "SELECT * FROM " . $this->table . " WHERE promo_id = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("i", $id);
+    $statement->execute();
+    $result = $statement->get_result();
+    if ($result->num_rows === 1) {
+      $promo = $result->fetch_assoc();
+      return $promo;
+    } else {
+      return false;
+    }
+  }
 
-  public function update() {}
+  public function update($id, $me, $ti, $co, $de, $pt, $dt, $dv, $gn, $ex, $st, $ur) {
+    $sql = "UPDATE " . $this->table . " SET
+    vendor_id = ?, promo_title = ?, promo_code = ?, promo_description = ?, promo_type = ?, discount_type = ?, discount_value = ?, starting_date = ?, expiration_date = ?, promo_status = ?, usage_restriction = ?, updated_at = NOW() WHERE promo_id = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("isssiisssisi", $me, $ti, $co, $de, $pt, $dt, $dv, $gn, $ex, $st, $ur, $id);
+    $statement->execute();
+    if ($statement->affected_rows === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-  public function destroy() {}
+  public function destroy($id) {
+    $sql = "DELETE FROM " . $this->table . " WHERE promo_id = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("i", $id);
+    $statement->execute();
+    if ($statement->affected_rows === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 ?>

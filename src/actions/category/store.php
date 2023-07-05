@@ -15,7 +15,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
   $status = $_POST['status'];
   $mark = isset($_POST['mark']) ? $_POST['mark'] : NULL;
   if (isset($sub) && $sub != NULL) {
-    $cat = $parent . ',' . $sub;
+    $cat = $sub;
   } else {
     $cat = $parent;
   }

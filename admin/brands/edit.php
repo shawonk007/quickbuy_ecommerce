@@ -3,33 +3,13 @@ require __DIR__ . '/../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
-
-use App\Class\Roles;
 use App\Database;
 $db = new Database();
-$roles = new Roles($db->conn);
-$pageName = "Edit Role";
-$pageGroup = "Users Settings";
-$currentGroup = ["Roles", "roles/index.php"];
+$pageName = "Edit Brand";
+$pageGroup = "Brands & Manufacturer";
+$currentGroup = ["Brands", "brands/index.php"];
 $currentPage = "Edit";
 require __DIR__ . '/../../components/header.php';
-
-$errors = [];
-function logError($errorMessage) {
-  global $pageName;
-  $logFile = __DIR__ . '/errors.log'; // Specify the log file name and path
-  $logMessage = '['. date('Y-m-d H:i:s A') . ']' . ' | ' . 'ERROR from ' . $pageName . $errorMessage . PHP_EOL ;
-  file_put_contents($logFile, $logMessage, FILE_APPEND);
-  logError($logMessage); // Call the logError function recursively
-}
-if (isset($_GET['id'])) {
-  $id = $_GET['id'];
-  try {
-    $role = $roles->edit($id);
-  } catch (Exception $e) {
-    // exit();
-  }
-}
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
@@ -38,31 +18,52 @@ if (isset($_GET['id'])) {
     <?php include __DIR__ . '/../../components/navigation/scroll-to-top.php' ?>
     <?php require __DIR__ . "/../../components/navbar/admin.php" ?>
     <?php include __DIR__ . '/../../components/breadcrumb/admin/secondary.php' ?>
-    <section class="container-fluid my-5"></section>
-    <section class="container-fluid d-flex align-items-center justify-content-center py-5 my-5">
+    <section class="container-fluid d-flex align-items-center justify-content-center my-5">
       <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-6">
-        <form action="<?= config("app.root") ?>src/actions/roles/update.php" method="post" id="updateRole">
+        <form action="<?= config("app.root")?>src/actions/brands/store.php" method="post" enctype="multipart/form-data" id="createBrand" >
           <div class="card shadow">
             <div class="card-header bg-success py-1">
-              <h4 class="card-title text-light py-0 my-0">Update Role</h4>
+              <h4 class="card-title text-light py-0 my-0">Update Brand</h4>
             </div>
             <div class="card-body">
-              <input type="hidden" name="id" value="<?= isset($role['role_id']) ? $role['role_id'] : '' ?>" >
               <div class="row g-3">
-                <div class="col-12">
-                  <input type="text" name="title" class="form-control form-control-sm" id="" placeholder="Role Title" value="<?= isset($role['role_title']) ? $role['role_title'] : '' ?>" required />
-                </div>
-                <div class="col-12">
-                  <textarea name="description" class="form-control form-control-sm" id="" cols="30" rows="8" placeholder="Type role details here ..."><?= isset($role['role_description']) ? $role['role_description'] : '' ?></textarea>
+                <div class="col-6">
+                  <label for="imageInput" class="d-flex flex-column align-items-center justify-content-center bg-light h-100" style="border: 3px solid lightgray; border-style: dashed;">
+                    <div class="d-flex flex-column align-items-center justify-content-center py-3 h-100">
+                      <h1 class="mb-0"><i class="fas fa-cloud-arrow-up"></i></h1>
+                      <h6 class="my-1 text-dark text-center"><strong>Click to upload</strong></h6>
+                      <p class="mb-2 text-dark text-center" style="font-size: 0.75rem;">
+                        <span>PNG, WEBP, JPG or JPEG</span><br />
+                        <span>(MAX. UPLOAD SIZE 2MB)</span><br />
+                        <span>(MIN. RESOLUTION 300X300)</span>
+                      </p>
+                    </div>
+                    <input type="file" name="logo" class="d-none" id="imageInput" />
+                  </label>
                 </div>
                 <div class="col-6">
-                  <input type="text" name="slug" class="form-control form-control-sm" id="" placeholder="Role Slug" value="<?= isset($role['role_slug']) ? $role['role_slug'] : '' ?>" required />
+                  <img src="../../assets/images/dummy-square.jpg" class="w-100" alt="" id="dummy" />
+                </div>
+                <div class="col-12">
+                  <input type="text" name="title" class="form-control form-control-sm" id="title" placeholder="Brand Title"  required />
+                </div>
+                <div class="col-12">
+                  <textarea name="desc" class="form-control form-control-sm" id="desc" cols="30" rows="8"></textarea>
+                </div>
+                <div class="col-12">
+                <input type="text" name="slug" class="form-control form-control-sm" id="slug" placeholder="Brand Slug" />
+                </div>
+                <div class="col-6 d-flex align-items-center">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="mark" value="1" id="mark" />
+                    <label class="form-check-label " for="mark" style="font-size: 0.9rem;">Mark as Featured</label>
+                  </div>
                 </div>
                 <div class="col-6">
-                  <select name="status" class="form-control form-control-sm" id="">
-                    <option selected>-- Role Status --</option>
-                    <option value="1" <?= isset($role['role_status']) && $role['role_status'] == 1 ? 'selected' : ''; ?>>Enable</option>
-                    <option value="0" <?= isset($role['role_status']) && $role['role_status'] == 0 ? 'selected' : ''; ?>>Disable</option>
+                  <select name="status" class="form-control form-control-sm" id="status">
+                    <option value="">-- Choose Status --</option>
+                    <option value="1">Enable</option>
+                    <option value="0">Disable</option>
                   </select>
                 </div>
               </div>
@@ -90,18 +91,23 @@ if (isset($_GET['id'])) {
   </main>
   <script>
     $(document).ready(function() {
-      $('#updateRole').submit(function(e) {
+      $('#createBrand').submit(function(e) {
         e.preventDefault();
+        var formData = new FormData(this);
         $.ajax({
-          url: '<?= config("app.root") ?>src/actions/roles/update.php',
+          url: '<?= config("app.root") ?>src/actions/brands/store.php',
           type: 'POST',
-          data: $(this).serialize(),
+          // data: $(this).serialize(),
+          data: formData,
           dataType: 'json',
+          processData: false,
+          contentType: false,
           success: function(response) {
+            console.log(response);
             if (response.success) {
               Swal.fire({
                 icon: 'success',
-                title: 'Updated',
+                title: 'Created',
                 text: response.message,
                 timer: 2000,
                 showConfirmButton: false
@@ -152,6 +158,16 @@ if (isset($_GET['id'])) {
         });
       });
     });
+  </script>
+  <script>
+    var imgInp = document.getElementById("imageInput");
+    var dummy = document.getElementById("dummy");
+    imgInp.onchange = evt => {
+      const [file] = imgInp.files
+      if (file) {
+        dummy.src = URL.createObjectURL(file)
+      }
+    }
   </script>
 </body>
 </html>

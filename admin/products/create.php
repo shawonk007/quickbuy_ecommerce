@@ -56,7 +56,7 @@ require __DIR__ . '/../../components/header.php';
                       <option value="">-- Main Category --</option>
                       <?php $mainCat = $categories->index();
                       foreach ($mainCat as $main) {
-                        if ($main['cat_status'] == 1 && $main['parent_id'] == NULL) {  ?>
+                        if ($main['cat_status'] == 1 && $main['parent_id'] == 0) {  ?>
                         <option value="<?= $main['cat_id'] ?>"><?= $main['cat_title'] ?></option>
                       <?php } } ?>
                     </select>
@@ -64,21 +64,11 @@ require __DIR__ . '/../../components/header.php';
                   <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                     <select name="sub" class="select2 select2-bootstrap-5-theme w-100" id="subCat">
                       <option value="">-- Sub Category --</option>
-                      <?php $subCat = $categories->index();
-                      foreach ($subCat as $sub) {
-                        if (Category::check($sub['parent_id'], $db)) { ?>
-                        <option value="<?= $sub['cat_id'] ?>"><?= $sub['cat_title'] ?></option>
-                      <?php } } ?>
                     </select>
                   </div>
                   <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                     <select name="type" class="select2 select2-bootstrap-5-theme w-100" id="productType">
                       <option value="">-- Product Type --</option>
-                      <?php $productType = $categories->index();
-                      foreach ($productType as $type) {
-                        if (Category::type($type['parent_id'], $db)) { ?>
-                        <option value="<?= $type['cat_id'] ?>"><?= $type['cat_title'] ?></option>
-                      <?php } } ?>
                     </select>
                   </div>
                   <div class="col-12">
@@ -244,41 +234,7 @@ require __DIR__ . '/../../components/header.php';
                       </select>
                     </div>
                   </div>
-                  <!-- <div class="col-6">
-                    <div class="form-check mb-0">
-                      <input class="form-check-input" type="checkbox" value="" id="featured" />
-                      <label class="form-check-label " for="featured" style="font-size: 0.9rem;">Featured</label>
-                    </div>
-                    <div class="form-check mb-0">
-                      <input class="form-check-input" type="checkbox" value="" id="variable" />
-                      <label class="form-check-label " for="variable" style="font-size: 0.9rem;">Variable</label>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="input-group mt-2">
-                      <select name="" class="form-control" id="">
-                        <option value="">-- Status --</option>
-                        <option value="1">Publish</option>
-                        <option value="0">Disable</option>
-                        <option value="">Draft</option>
-                      </select>
-                    </div>
-                  </div> -->
                 </div>
-                <!-- <div class="row">
-                  <div class="col">
-                    <div class="form-check mb-0">
-                      <input class="form-check-input" type="checkbox" value="" id="" />
-                      <label class="form-check-label " for="" style="font-size: 0.9rem;">Featured Product</label>
-                    </div>
-                  </div>
-                  <div class="col d-flex justify-content-end">
-                    <div class="form-check mb-0">
-                      <input class="form-check-input" type="checkbox" value="" id="" />
-                      <label class="form-check-label " for="" style="font-size: 0.9rem;">Variable Product</label>
-                    </div>
-                  </div>
-                </div> -->
               </div>
               <div class="card-footer">
                 <div class="row g-3">
@@ -372,9 +328,46 @@ require __DIR__ . '/../../components/header.php';
   </main>
   <script>
     $(document).ready(function() {
-      $('#mainCat').add('#subCat').add('#productType').add('#brandName').add('#storeName').add('#productTags').select2({
+      $('#mainCat, #subCat, #productType, #brandName, #storeName, #productTags').select2({
         theme: 'bootstrap-5'
       });
+      $('.select2-container .select2-selection--single').css({
+        'padding': '5px 10px',
+        'font-size': '12px'
+      });
+
+      $('#mainCat').change(function() {
+        var mainCatId = $(this).val();
+        if (mainCatId !== '') {
+          var subCats = <?= json_encode($categories->index()); ?>;
+          var subCatOptions = '<option value="">-- Sub Category --</option>';
+          subCats.forEach(function(subCat) {
+            if (subCat.cat_status == 1 && subCat.parent_id == mainCatId) {
+              subCatOptions += '<option value="' + subCat.cat_id + '">' + subCat.cat_title + '</option>';
+            }
+          });
+          $('#subCat').html(subCatOptions);
+        } else {
+          $('#subCat').html('<option value="">-- Sub Category --</option>');
+        }
+      });
+
+      $('#subCat').change(function() {
+        var subCatId = $(this).val();
+        if (subCatId !== '') {
+          var productTypes = <?= json_encode($categories->index()); ?>;
+          var productTypeOptions = '<option value="">-- Sub Category --</option>';
+          productTypes.forEach(function(productType) {
+            if (productType.cat_status == 1 && productType.parent_id == subCatId) {
+              productTypeOptions += '<option value="' + productType.cat_id + '">' + productType.cat_title + '</option>';
+            }
+          });
+          $('#productType').html(productTypeOptions);
+        } else {
+          $('#productType').html('<option value="">-- Sub Category --</option>');
+        }
+      });
+
       $('#description').summernote({
         height: 500,
         width: '100%',

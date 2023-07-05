@@ -1,4 +1,4 @@
-<?php $root = "/quickbuy/admin/"; ?>
+<?php $root = config("app.admin") ?>
 <section class="container-fluid mt-3 mb-5" >
   <div class="card bg-secondary shadow pt-2 pb-1">
     <div class="card-body text-light d-md-flex align-items-center justify-content-between py-0">

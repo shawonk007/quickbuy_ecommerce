@@ -22,11 +22,11 @@ require __DIR__ . '/../../components/header.php';
       <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-6">
         <form action="<?= config("app.root")?>src/actions/brands/store.php" method="post" enctype="multipart/form-data" id="createBrand" >
           <div class="card shadow">
-            <div class="card-header bg-primary pb-0">
-              <h4 class="card-title text-light">Create New Brand</h4>
+            <div class="card-header bg-primary py-1">
+              <h4 class="card-title text-light py-0 my-0">Create New Brand</h4>
             </div>
             <div class="card-body">
-              <div class="row g-3 mb-3">
+              <div class="row g-3">
                 <div class="col-6">
                   <label for="imageInput" class="d-flex flex-column align-items-center justify-content-center bg-light h-100" style="border: 3px solid lightgray; border-style: dashed;">
                     <div class="d-flex flex-column align-items-center justify-content-center py-3 h-100">
@@ -93,11 +93,15 @@ require __DIR__ . '/../../components/header.php';
     $(document).ready(function() {
       $('#createBrand').submit(function(e) {
         e.preventDefault();
+        var formData = new FormData(this);
         $.ajax({
           url: '<?= config("app.root") ?>src/actions/brands/store.php',
           type: 'POST',
-          data: $(this).serialize(),
+          // data: $(this).serialize(),
+          data: formData,
           dataType: 'json',
+          processData: false,
+          contentType: false,
           success: function(response) {
             console.log(response);
             if (response.success) {

@@ -33,8 +33,8 @@ if (isset($_GET['id'])) {
       <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-6">
         <form action="<?= config("app.root") ?>src/actions/category/update.php" method="post">
           <div class="card shadow">
-            <div class="card-header bg-success pb-0">
-              <h4 class="card-title text-light">Update Category</h4>
+            <div class="card-header bg-success py-1">
+              <h4 class="card-title text-light py-0 my-0">Update Category</h4>
             </div>
             <div class="card-body">
               <input type="hidden" name="id" value="<?= isset($category['cat_id']) ? $category['cat_id'] : '' ?>" />
@@ -107,8 +107,12 @@ if (isset($_GET['id'])) {
   </main>
   <script>
     $(document).ready(function() {
-      $('#mainCat').add('#subCat').select2({
+      $('#mainCat, #subCat').select2({
         theme: 'bootstrap-5'
+      });
+      $('.select2-container .select2-selection--single').css({
+        'padding': '5px 10px',
+        'font-size': '12px'
       });
       $('form').submit(function(e) {
         e.preventDefault();

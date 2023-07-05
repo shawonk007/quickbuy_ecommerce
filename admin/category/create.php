@@ -25,8 +25,8 @@ require __DIR__ . '/../../components/header.php';
       <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-6">
         <form action="<?= config("app.root") ?>src/actions/category/store.php" method="post">
           <div class="card shadow">
-            <div class="card-header bg-primary pb-0">
-              <h4 class="card-title text-light">Create New Category</h4>
+            <div class="card-header bg-primary py-1">
+              <h4 class="card-title text-light py-0 my-0">Create New Category</h4>
             </div>
             <div class="card-body">
               <div class="row g-3">
@@ -44,7 +44,7 @@ require __DIR__ . '/../../components/header.php';
                     <option value="">-- Main Category --</option>
                     <?php $mainCat = $categories->index();
                     foreach ($mainCat as $main) {
-                      if ($main['cat_status'] == 1 && $main['parent_id'] == NULL) {  ?>
+                      if ($main['cat_status'] == 1 && $main['parent_id'] == 0) {  ?>
                       <option value="<?= $main['cat_id'] ?>"><?= $main['cat_title'] ?></option>
                     <?php } } ?>
                   </select>
@@ -52,12 +52,6 @@ require __DIR__ . '/../../components/header.php';
                 <div class="col-6">
                   <select name="sub-parent" class="select2 select2-bootstrap-5-theme w-100" id="subCat">
                     <option value="">-- Sub Category --</option>
-                    <?php $subCat = $categories->index();
-                    $parent = $main['cat_id'];
-                    foreach ($subCat as $sub) {
-                      if (Category::check($sub['parent_id'], $db)) { ?>
-                      <option value="<?= $sub['cat_id'] ?>"><?= $sub['cat_title'] ?></option>
-                    <?php } } ?>
                   </select>
                 </div>
                 <div class="col-6 d-flex align-items-center">
@@ -98,8 +92,29 @@ require __DIR__ . '/../../components/header.php';
   </main>
   <script>
     $(document).ready(function() {
-      $('#mainCat').add('#subCat').select2({
+      $('#mainCat, #subCat').select2({
         theme: 'bootstrap-5'
+      });
+
+      $('.select2-container .select2-selection--single').css({
+        'padding': '5px 10px',
+        'font-size': '12px'
+      });
+
+      $('#mainCat').change(function() {
+        var mainCatId = $(this).val();
+        if (mainCatId !== '') {
+          var subCats = <?= json_encode($categories->index()); ?>;
+          var subCatOptions = '<option value="">-- Sub Category --</option>';
+          subCats.forEach(function(subCat) {
+            if (subCat.cat_status == 1 && subCat.parent_id == mainCatId) {
+              subCatOptions += '<option value="' + subCat.cat_id + '">' + subCat.cat_title + '</option>';
+            }
+          });
+          $('#subCat').html(subCatOptions);
+        } else {
+          $('#subCat').html('<option value="">-- Sub Category --</option>');
+        }
       });
       $('form').submit(function(e) {
         e.preventDefault();

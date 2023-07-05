@@ -11,6 +11,11 @@ $currentGroup = ["Posts", "posts/index.php"];
 $currentPage = "Create";
 require __DIR__ . '/../../components/header.php';
 ?>
+<style>
+  .note-toolbar button, .note-toolbar select {
+    font-size: 10px;
+  }
+</style>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
   <main id="content">
@@ -117,14 +122,17 @@ require __DIR__ . '/../../components/header.php';
   </main>
   <script>
     $(document).ready(function() {
-      $('#mainCat').add('#subCat').add('#postTags').add('#brandName').add('#storeName').select2({
+      $('#mainCat, #subCat, #postTags').select2({
         theme: 'bootstrap-5'
       });
-      $('#description').summernote({
-        height: 508
+      $('.select2-container .select2-selection--single').css({
+        'padding': '5px 10px',
+        'font-size': '12px'
       });
-      $('#highlights').summernote({
-        height: 200
+      $('#description').summernote({
+        height: 540,
+        width: '100%',
+        placeholder: 'Type post destails here ...',
       });
     });
     var imgInp = document.getElementById("imageInput");

@@ -37,8 +37,8 @@ function logError($errorMessage) {
       <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-6">
         <form action="<?= config("app.root") ?>src/actions/roles/store.php" method="post" id="createRole">
           <div class="card shadow">
-            <div class="card-header bg-primary pb-0">
-              <h4 class="card-title text-light">Create New Role</h4>
+            <div class="card-header bg-primary py-1">
+              <h4 class="card-title text-light py-0 my-0">Create New Role</h4>
             </div>
             <div class="card-body">
               <div class="row g-3">
