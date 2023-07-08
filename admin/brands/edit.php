@@ -4,12 +4,22 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 use App\Database;
+use App\Class\Brands;
 $db = new Database();
+$brands = new Brands($db->conn);
 $pageName = "Edit Brand";
 $pageGroup = "Brands & Manufacturer";
 $currentGroup = ["Brands", "brands/index.php"];
 $currentPage = "Edit";
 require __DIR__ . '/../../components/header.php';
+if (isset($_GET['id'])) {
+  $id = $_GET['id'];
+  try {
+    $brand = $brands->edit($id);
+  } catch (Exception $e) {
+    //throw $th;
+  }
+}
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
@@ -20,12 +30,13 @@ require __DIR__ . '/../../components/header.php';
     <?php include __DIR__ . '/../../components/breadcrumb/admin/secondary.php' ?>
     <section class="container-fluid d-flex align-items-center justify-content-center my-5">
       <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6 col-xxl-6">
-        <form action="<?= config("app.root")?>src/actions/brands/store.php" method="post" enctype="multipart/form-data" id="createBrand" >
+        <form action="<?= config("app.root")?>src/actions/brands/update.php" method="post" enctype="multipart/form-data" id="createBrand" >
           <div class="card shadow">
             <div class="card-header bg-success py-1">
               <h4 class="card-title text-light py-0 my-0">Update Brand</h4>
             </div>
             <div class="card-body">
+              <input type="hidden" name="id" value="<?= isset($brand['brand_id']) ? $brand['brand_id'] : '' ?>" />
               <div class="row g-3">
                 <div class="col-6">
                   <label for="imageInput" class="d-flex flex-column align-items-center justify-content-center bg-light h-100" style="border: 3px solid lightgray; border-style: dashed;">
@@ -39,31 +50,32 @@ require __DIR__ . '/../../components/header.php';
                       </p>
                     </div>
                     <input type="file" name="logo" class="d-none" id="imageInput" />
+                    <!-- <input type="file" name="logo" class="d-none" id="imageInput" value="<?= isset($brand['brand_logo']) ? $brand['brand_logo'] : '' ?>" /> -->
                   </label>
                 </div>
                 <div class="col-6">
-                  <img src="../../assets/images/dummy-square.jpg" class="w-100" alt="" id="dummy" />
+                  <img src="<?= isset($brand['brand_logo']) ? config("app.root") . 'uploads/brands/' . $brand['brand_logo'] : '../../assets/images/dummy-square.jpg' ?>" class="w-100" alt="" id="dummy" />
                 </div>
                 <div class="col-12">
-                  <input type="text" name="title" class="form-control form-control-sm" id="title" placeholder="Brand Title"  required />
+                  <input type="text" name="title" class="form-control form-control-sm" id="title" placeholder="Brand Title" value="<?= isset($brand['brand_title']) ? $brand['brand_title'] : '' ?>" />
                 </div>
                 <div class="col-12">
-                  <textarea name="desc" class="form-control form-control-sm" id="desc" cols="30" rows="8"></textarea>
+                  <textarea name="desc" class="form-control form-control-sm" id="desc" cols="30" rows="8"><?= isset($brand['brand_description']) ? $brand['brand_description'] : '' ?></textarea>
                 </div>
                 <div class="col-12">
-                <input type="text" name="slug" class="form-control form-control-sm" id="slug" placeholder="Brand Slug" />
+                <input type="text" name="slug" class="form-control form-control-sm" id="slug" placeholder="Brand Slug" value="<?= isset($brand['brand_slug']) ? $brand['brand_slug'] : '' ?>" />
                 </div>
                 <div class="col-6 d-flex align-items-center">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="mark" value="1" id="mark" />
+                    <input class="form-check-input" type="checkbox" name="mark" value="1" id="mark" <?= isset($brand['is_featured']) == 1 ? 'checked' : '' ?> />
                     <label class="form-check-label " for="mark" style="font-size: 0.9rem;">Mark as Featured</label>
                   </div>
                 </div>
                 <div class="col-6">
                   <select name="status" class="form-control form-control-sm" id="status">
                     <option value="">-- Choose Status --</option>
-                    <option value="1">Enable</option>
-                    <option value="0">Disable</option>
+                    <option value="1" <?= isset($brand['brand_status']) && $brand['brand_status'] == 1 ? 'selected' : ''; ?>>Enable</option>
+                    <option value="0" <?= isset($brand['brand_status']) && $brand['brand_status'] == 0 ? 'selected' : ''; ?>>Disable</option>
                   </select>
                 </div>
               </div>
@@ -95,7 +107,7 @@ require __DIR__ . '/../../components/header.php';
         e.preventDefault();
         var formData = new FormData(this);
         $.ajax({
-          url: '<?= config("app.root") ?>src/actions/brands/store.php',
+          url: '<?= config("app.root") ?>src/actions/brands/update.php',
           type: 'POST',
           // data: $(this).serialize(),
           data: formData,
@@ -107,7 +119,7 @@ require __DIR__ . '/../../components/header.php';
             if (response.success) {
               Swal.fire({
                 icon: 'success',
-                title: 'Created',
+                title: 'Updated',
                 text: response.message,
                 timer: 2000,
                 showConfirmButton: false

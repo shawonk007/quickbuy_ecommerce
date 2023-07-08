@@ -104,5 +104,22 @@ class Roles {
       return false;
     }
   }
+
+  public function exists($column, $value) {
+    $sql = "SELECT COUNT(*) FROM " . $this->table . " WHERE {$column} = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param('s', $value);
+    $statement->execute();
+    $result = null;
+    $statement->bind_result($result);
+    $statement->fetch();
+    $statement->close(); // Close the statement
+
+    if ($result !== null) {
+        return $result > 0;
+    } else {
+        return false;
+    }
+  }
 }
 ?>

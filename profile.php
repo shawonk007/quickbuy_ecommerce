@@ -1,48 +1,51 @@
 <?php
-
-require __DIR__ . '/../../vendor/autoload.php';
-
+require __DIR__ . '/vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
-
+use App\Auth;
 use App\Database;
-use App\Class\Roles;
 $db = new Database();
-$roles = new Roles($db->conn);
 
-$pageName = "Add New User";
-$pageGroup = "Users & Members";
-$currentGroup = ["Users", "users/index.php"];
-$currentPage = "Create";
-require __DIR__ . '/../../components/header.php';
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isCustomer()) {
+    header("Location: auth/login.php");
+    exit();
+  }
+}
 
 $jsonData = file_get_contents(config("app.root") . 'assets/data/bangladesh.json');
 $data = json_decode($jsonData, true);
 $divisions = $data['divisions'];
+
+$userId = $_SESSION['user']['id'];
+$data = Auth::getUserById($userId);
+$profile = Auth::getProfile($userId);
+
+$pageName = "Edit Profile < {$data['first_name']} {$data['last_name']}";
+$pageGroup = "User Profile";
+$currentPage = "Profile";
+
+require __DIR__ . '/components/header.php';
 ?>
-<style>
-  label strong {
-    font-size: 0.85rem;
-  }
-</style>
 <body>
-  <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
-  <main id="content">
-    <!-- SCROLL UP BUTTON -->
-    <?php include __DIR__ . '/../../components/navigation/scroll-to-top.php' ?>
-    <?php require __DIR__ . "/../../components/navbar/admin.php" ?>
-    <?php include __DIR__ . '/../../components/breadcrumb/admin/secondary.php' ?>
-    <section class="container-fluid my-5"></section>
+  <?php require __DIR__ . "/components/sidebar/customer.php" ?>
+  <main id="content" class="bg-body-tertiary" >
+    <?php require __DIR__ . "/components/navbar/customer.php" ?>
+    <?php require __DIR__ . "/components/breadcrumb/customer/primary.php" ?>
+    <!-- YOUR CONTENT STARTS FROM HERE -->
     <section class="container-fluid my-5">
-      <form action="<?= config("app.root") ?>src/actions/users/store.php" method="post" enctype="multipart/form-data">
+      <form action="<?= config("app.root") ?>src/actions/users/update.php" method="post" enctype="multipart/form-data">
         <div class="row row-cols-3 row-cols-lg-5 g-3 g-lg-3">
           <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-4 col-xxl-4">
             <div class="card shadow">
-              <div class="card-header bg-primary py-1">
-                <h5 class="card-title text-light py-0 my-0">Create New User</h5>
+              <div class="card-header bg-success py-1">
+                <h5 class="card-title text-light py-0 my-0">Edit Profile</h5>
               </div>
-              <div class="card-body pt-1">
+              <div class="card-body pt-0">
+                <input type="hidden" name="user" value="<?= isset($data['id']) ? $data['id'] : " "  ?>">
                 <div class="row g-3 pt-0 mt-0">
                   <div class="col-6">    
                     <label for="imageInput" class="d-flex flex-column align-items-center justify-content-center bg-light h-100" style="border: 3px solid lightgray; border-style: dashed;">
@@ -55,23 +58,23 @@ $divisions = $data['divisions'];
                           <span>(MIN. RES. 300X300)</span>
                         </p>
                       </div>
-                      <input type="file" name="avatar" class="d-none" id="imageInput" required accept="image/*;capture=camera" />
+                      <input type="file" name="avatar" class="d-none" id="imageInput" accept="image/*;capture=camera" />
                     </label>
                   </div>
                   <div class="col-6">
-                    <img id="dummy" src="../../assets/images/dummy-square.jpg" class="w-100" alt="" />
+                    <img id="dummy" src="assets/images/dummy-square.jpg" class="w-100" alt="" />
                   </div>
                   <div class="col-12">
                     <hr class="py-0 my-0">
                   </div>
                   <div class="col-12">
                     <div class="input-group input-group-sm">
-                      <input type="text" name="fname" class="form-control" id="fName" placeholder="First Name" required />
-                      <input type="text" name="lname" class="form-control" id="lName" placeholder="Last Name" required />
+                      <input type="text" name="fname" class="form-control" id="fName" value="<?= isset($data['first_name']) ? $data['first_name'] : " "  ?>" placeholder="First Name" />
+                      <input type="text" name="lname" class="form-control" id="lName" value="<?= isset($data['last_name']) ? $data['last_name'] : " "  ?>" placeholder="Last Name" />
                     </div>
                   </div>
                   <div class="col-6">
-                    <input type="text" name="uname" class="form-control form-control-sm" id="uName" placeholder="Username" required />
+                    <input type="text" name="uname" class="form-control form-control-sm" id="uName" value="<?= isset($data['username']) ? $data['username'] : " "  ?>" placeholder="Username" />
                   </div>
                   <div class="col-6">
                     <input type="date" name="dob" class="form-control form-control-sm" id="dob" placeholder="" />
@@ -80,60 +83,52 @@ $divisions = $data['divisions'];
                     <hr class="py-0 my-0">
                   </div>
                   <div class="col-12">
-                    <input type="email" name="email" class="form-control form-control-sm" id="email" placeholder="someone@example.com" required />
+                    <input type="email" name="email" class="form-control form-control-sm" id="email" value="<?= isset($data['email_address']) ? $data['email_address'] : " "  ?>" placeholder="someone@example.com" />
                   </div>
                   <div class="col-12">
-                    <input type="email" name="altEmail" class="form-control form-control-sm" id="altEmail" placeholder="someone@example.com" />
+                    <input type="email" name="alt_email" class="form-control form-control-sm" id="altEmail" placeholder="someone@example.com" />
                   </div>
                   <div class="col-6">
-                    <input type="tel" name="phone" class="form-control form-control-sm" id="phone" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" required />
+                    <input type="tel" name="phone" class="form-control form-control-sm" id="phone" value="<?= isset($data['cell_phone']) ? $data['cell_phone'] : " "  ?>" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" />
                   </div>
                   <div class="col-6">
-                    <input type="tel" name="phone" class="form-control form-control-sm" id="phone" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" required />
-                  </div>
-                  <div class="col-12">
-                    <hr class="py-0 my-0">
-                  </div>
-                  <div class="col-6">
-                    <input type="password" name="password" class="form-control form-control-sm" id="pass" placeholder="Password" required />
-                  </div>
-                  <div class="col-6">
-                    <input type="password" name="c_password" class="form-control form-control-sm" id="cPass" placeholder="Confirm Password" required />
+                    <input type="tel" name="alt_phone" class="form-control form-control-sm" id="altPhone" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" />
                   </div>
                   <div class="col-12">
                     <hr class="py-0 my-0">
                   </div>
-                  <div class="col-6">
-                    <select name="role" class="form-control form-control-sm" id="role">
-                      <option value="">-- Choose Role --</option>
-                      <?php $roleList = $roles->index();
-                      foreach ($roleList as $role) {
-                        if ($role['role_status'] == 1) { ?>
-                        <option value="<?= $role['role_id'] ?>"><?= $role['role_title'] ?></option>
-                      <?php } } ?>
-                    </select>
+                  <div class="col-4 d-flex align-items-center">
+                    <small class="py-0 m-0"><b>Created At :</b></small>
                   </div>
-                  <div class="col-6">
-                    <select name="status" class="form-control form-control-sm" id="status">
-                      <option value="">-- Choose Status --</option>
-                      <option value="1">Enable</option>
-                      <option value="0">Disable</option>
-                    </select>
+                  <div class="col-8">
+                    <input type="datetime-local" name="" class="form-control form-control-sm" id="created" value="<?= isset($data['created_at']) ? $data['created_at'] : " "  ?>" disabled />
+                  </div>
+                  <div class="col-4 d-flex align-items-center">
+                    <small class="py-0 m-0"><b>Verified At :</b></small>
+                  </div>
+                  <div class="col-8">
+                    <input type="<?= isset($data['email_verified_at']) && $data['email_verified_at'] != NULL ? 'datetime-local' : 'text'  ?>" name="" class="form-control form-control-sm" id="verified" value="<?= isset($data['email_verified_at']) ? $data['email_verified_at'] : "Not Verified Yet"  ?>" disabled />
+                  </div>
+                  <div class="col-4 d-flex align-items-center">
+                    <small class="py-0 m-0"><b>Last Updated :</b></small>
+                  </div>
+                  <div class="col-8">
+                    <input type="datetime-local" name="" class="form-control form-control-sm" id="updated" value="<?= isset($data['updated_at']) ? $data['updated_at'] : " "  ?>" disabled />
                   </div>
                 </div>
               </div>
               <div class="card-footer">
                 <div class="row g-3">
                   <div class="col d-grid">
-                    <a href="index.php" class="btn btn-secondary btn-sm rounded-pill py-2">
+                    <a href="<?= config("app.root") ?>dashboard.php" class="btn btn-secondary btn-sm rounded-pill py-2">
                       <i class="fas fa-arrow-left"></i>
-                      <span class="ps-1">Previous</span>
+                      <span class="ps-1">Discard</span>
                     </a>
                   </div>
                   <div class="col d-grid">
-                    <button type="submit" class="btn btn-primary btn-sm rounded-pill py-2">
-                      <i class="fas fa-plus"></i>
-                      <span class="ps-1">Create New</span>
+                    <button type="submit" class="btn btn-success btn-sm rounded-pill py-2">
+                      <i class="fas fa-check"></i>
+                      <span class="ps-1">Update</span>
                     </button>
                   </div>
                 </div>
@@ -146,7 +141,7 @@ $divisions = $data['divisions'];
                 <div class="row g-3">
                   <div class="col-12">
                     <div class="input-group input-group-sm">
-                      <textarea name="biography" class="form-control" id="biography" cols="30" rows="20" placeholder="Type your details here"></textarea>
+                      <textarea name="biography" class="form-control" id="biography" cols="30" rows="21" placeholder="Type your details here"></textarea>
                     </div>
                   </div>
                   <div class="col-12">
@@ -167,7 +162,7 @@ $divisions = $data['divisions'];
                   </div>
                   <div class="col-4">
                     <select name="district" class="form-control form-control-sm" id="district">
-                      <option value="">-- Choose One --</option>
+                      <option value="">-- District --</option>
                     </select>
                   </div>
                   <div class="col-4">
@@ -178,7 +173,7 @@ $divisions = $data['divisions'];
                   </div>
                   <div class="col-4">
                     <select name="gender" class="form-control form-control-sm" id="">
-                      <option value="">-- Choose One --</option>
+                      <option value="">-- Gender --</option>
                       <option value="1">Male</option>
                       <option value="2">Female</option>
                       <option value="3">Others</option>
@@ -186,7 +181,7 @@ $divisions = $data['divisions'];
                   </div>
                   <div class="col-4">
                     <select name="religion" class="form-control form-control-sm" id="">
-                      <option value="">-- Choose One --</option>
+                      <option value="">-- Religion --</option>
                       <option value="1">Islam</option>
                       <option value="2">Hinduism</option>
                       <option value="3">Christians</option>
@@ -196,7 +191,7 @@ $divisions = $data['divisions'];
                   </div>
                   <div class="col-4">
                     <select name="marital" class="form-control form-control-sm" id="">
-                      <option value="">-- Choose One --</option>
+                      <option value="">-- Marital Status --</option>
                       <option value="1">Single</option>
                       <option value="2">Married</option>
                       <option value="3">Unmarried</option>
@@ -214,26 +209,25 @@ $divisions = $data['divisions'];
       </form>
     </section>
   </main>
-  <script>
+  <!-- <script>
     $(document).ready(function() {
       $('form').submit(function(e) {
         e.preventDefault();
         $.ajax({
-          url: '<?= config("app.root") ?>src/actions/users/store.php',
+          url: '<?= config("app.root") ?>src/actions/users/update.php',
           type: 'POST',
           data: $(this).serialize(),
           dataType: 'json',
           success: function(response) {
-            console.log(response);
             if (response.success) {
               Swal.fire({
                 icon: 'success',
-                title: 'Created',
+                title: 'Updated',
                 text: response.message,
                 timer: 2000,
                 showConfirmButton: false
               }).then(function() {
-                window.location.href = 'index.php';
+                location.reload();
               });
             } else {
               Swal.fire({
@@ -279,7 +273,7 @@ $divisions = $data['divisions'];
         });
       });
     });
-  </script>
+  </script> -->
   <script>
     var imgInp = document.getElementById("imageInput");
     var dummy = document.getElementById("dummy");

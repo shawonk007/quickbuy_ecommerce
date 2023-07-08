@@ -78,14 +78,9 @@ class Category {
 
   public static function parent($parent, $db) {
     $conn = $db->conn;
-    $parents = explode(',', $parent);
-    $main = end($parents);
-    if (empty($main)) {
-      $main = reset($parents);
-    }
     $sql = "SELECT * FROM categories WHERE cat_id = ?";
     $statement = $conn->prepare($sql);
-    $statement->bind_param("i", $main);
+    $statement->bind_param("i", $parent);
     $statement->execute();
     $result = $statement->get_result();
     if ($result->num_rows === 1) {
@@ -96,74 +91,21 @@ class Category {
     }
   }
 
-  public static function check($parent, $db) {
-    $conn = $db->conn;
-    // $sub = explode(',', $parent);
-    $sub = intval($parent);
-  
-    // if (count($sub) > 1) {
-      // $cat = end($sub);
-      // $sql = "SELECT * FROM categories WHERE cat_id = ?";
-      $sql = "SELECT * FROM categories WHERE cat_id = {$sub}";
-      // $statement = $conn->prepare($sql);
-      // $statement->bind_param("i", $sub);
-      // $statement->execute();
-      // $result = $statement->get_result();
-      $result = $conn->query($sql);
-      
-      if ($result->num_rows === 1) {
-        $category = $result->fetch_assoc();
-        // return $category['cat_title'];
-        return $category;
-      }
-    // }
-
-    return false;
-    // $conn = $db->conn;
-    // $sub = explode(',', $parent);
-    // $cat = end($sub);
-    // $sql = "SELECT * FROM categories WHERE cat_id = ?";
-    // $statement = $conn->prepare($sql);
-    // $statement->bind_param("i", $cat);
-    // $statement->execute();
-    // $result = $statement->get_result();
-    // if ($result->num_rows === 1) {
-    //   $category = $result->fetch_assoc();
-    //   return $category['cat_title'];
-    //   // $main = $category['parent_id'];
-    //   // $sub = explode(',', $main);
-    //   // if (count($sub) >= 1) {
-    //   //   $cat = end($sub);
-    //   //   return $cat;
-    //   // }
-    //   // return true;
-    //   // break;
-    // } 
-    // // else {
-    // //   return false;
-    // // }
-    // return false;
-  }
-
-  public static function type($parent, $db) {
-    $conn = $db->conn;
-    $type = explode(',', $parent);
-  
-    if (count($type) > 1) {
-      $cat = end($type);
-      $sql = "SELECT * FROM categories WHERE cat_id = ?";
-      $statement = $conn->prepare($sql);
-      $statement->bind_param("i", $cat);
-      $statement->execute();
-      $result = $statement->get_result();
-      
-      if ($result->num_rows === 1) {
-        $category = $result->fetch_assoc();
-        // return $category['cat_title'];
-        return $category;
-      }
+  public function exists($column, $value) {
+    $sql = "SELECT COUNT(*) FROM categories WHERE {$column} = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param('s', $value);
+    $statement->execute();
+    $result = null;
+    $statement->bind_result($result);
+    $statement->fetch();
+    $statement->close();
+    if ($result !== null) {
+      return $result > 0;
+    } else {
+      return false;
     }
-    return false;
   }
+
 }
 ?>

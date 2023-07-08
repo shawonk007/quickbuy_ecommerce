@@ -68,49 +68,41 @@ function logError($errorMessage) {
                 </tr>
               </thead>
               <tbody>
-                <?php
-                  $catList = $categories->index();
-                  if (empty($catList)) { ?>
-                    <tr>
-                      <td class="text-center" colspan="6"><?= "No Data Available" ?></td>
-                    </tr>
-                  <?php } else {
-                    foreach ($catList as $k => $category) {
-                      $statusLabel = "";
-                      $statusClass = "";
-                      $parentTitle = Category::parent($category['parent_id'], $db);
-                      $parent = $parentTitle !== false ? $parentTitle : "No Parent";
-                      if ($category['cat_status'] == 1) {
-                        $statusLabel = "Active";
-                        $statusClass = "bg-success";
-                      } elseif ($category['cat_status'] == 0) {
-                        $statusLabel = "Deactive";
-                        $statusClass = "bg-danger";
-                      } else {
-                        $statusLabel = "Pending";
-                        $statusClass = "bg-secondary";
-                      }
-                      ?>
-                    <tr>
-                      <th scope="row"><?= $k+1 ?></th>
-                      <td><?= $category['cat_title'] ?></td>
-                      <td><?= $parent ?>
-                      </td>
-                      <td><?= $category['cat_slug'] ?></td>
-                      <td>
-                        <span class="badge <?= $statusClass ?>"><?= $statusLabel ?></span>
-                      </td>
-                      <td><?= Carbon::parse($category['created_at'])->diffForHumans() ?></td>
-                      <td>
-                        <a href="edit.php?id=<?= $category['cat_id'] ?>" class="btn btn-info btn-sm">
-                          <i class="fas fa-edit"></i>
-                        </a>
-                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteCat(<?= $category['cat_id'] ?>)" >
-                          <i class="fas fa-trash-alt"></i>
-                        </button>
-                      </td>
-                  </tr>
-                <?php } } ?>
+                <?php $catList = $categories->index();
+                foreach ($catList as $k => $category) {
+                  $statusLabel = "";
+                  $statusClass = "";
+                  $parentTitle = Category::parent($category['parent_id'], $db);
+                  $parent = $parentTitle !== false ? $parentTitle : "No Parent";
+                  if ($category['cat_status'] == 1) {
+                    $statusLabel = "Active";
+                    $statusClass = "bg-success";
+                  } elseif ($category['cat_status'] == 0) {
+                    $statusLabel = "Deactive";
+                    $statusClass = "bg-danger";
+                  } else {
+                  $statusLabel = "Pending";
+                  $statusClass = "bg-secondary";
+                } ?>
+                <tr>
+                  <th scope="row"><?= $k+1 ?></th>
+                  <td><?= $category['cat_title'] ?></td>
+                  <td><?= $parent ?></td>
+                  <td><?= $category['cat_slug'] ?></td>
+                  <td>
+                    <span class="badge <?= $statusClass ?>"><?= $statusLabel ?></span>
+                  </td>
+                  <td><?= Carbon::parse($category['created_at'])->diffForHumans() ?></td>
+                  <td>
+                    <a href="edit.php?id=<?= $category['cat_id'] ?>" class="btn btn-info btn-sm">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteCat(<?= $category['cat_id'] ?>)" >
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+                <?php } ?>
               </tbody>
             </table>
           </div>

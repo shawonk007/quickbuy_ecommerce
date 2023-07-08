@@ -97,7 +97,6 @@ require __DIR__ . '/../../components/header.php';
         $.ajax({
           url: '<?= config("app.root") ?>src/actions/brands/store.php',
           type: 'POST',
-          // data: $(this).serialize(),
           data: formData,
           dataType: 'json',
           processData: false,
@@ -126,7 +125,6 @@ require __DIR__ . '/../../components/header.php';
           },
           error: function(xhr, status, error) {
             if (xhr.status === 400) {
-              // Bad request error
               Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -135,7 +133,6 @@ require __DIR__ . '/../../components/header.php';
                 showConfirmButton: false
               });
             } else if (xhr.status === 500) {
-              // Internal server error
               Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -144,7 +141,6 @@ require __DIR__ . '/../../components/header.php';
                 showConfirmButton: false
               });
             } else {
-              // Other errors
               console.error(error);
               Swal.fire({
                 icon: 'error',

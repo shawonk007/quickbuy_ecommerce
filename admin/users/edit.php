@@ -48,7 +48,7 @@ if (isset($_GET['id'])) {
     <?php include __DIR__ . '/../../components/breadcrumb/admin/secondary.php' ?>
     <section class="container-fluid my-5"></section>
     <section class="container-fluid my-5">
-      <form action="<?= config("app.root") ?>src/actions/users/update.php" method="post" enctype="multipart/form-data">
+      <form action="<?= config("app.root") ?>src/actions/users/authorize.php" method="post" enctype="multipart/form-data">
       <!-- <form action="" method="post" enctype="multipart/form-data"> -->
         <div class="row row-cols-3 row-cols-lg-5 g-3 g-lg-3">
           <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-4 col-xxl-4">
@@ -361,7 +361,7 @@ if (isset($_GET['id'])) {
       $('form').submit(function(e) {
         e.preventDefault();
         $.ajax({
-          url: '<?= config("app.root") ?>src/actions/users/update.php',
+          url: '<?= config("app.root") ?>src/actions/users/authorize.php',
           type: 'POST',
           data: $(this).serialize(),
           dataType: 'json',

@@ -53,7 +53,7 @@ use App\Auth;
             <li><a class="dropdown-item" href="admin/dashboard.php">Admin</a></li>
             <li><hr class="dropdown-divider"></li>
             <?php
-            if (Auth::check()) { ?>
+            if (isset($_SESSION['login'])) { ?>
               <li><a class="dropdown-item" href="<?= $auth ?>logout.php">Logout</a></li>
             <?php } else { ?>
               <li><a class="dropdown-item" href="<?= $auth ?>login.php">Login</a></li>

@@ -28,6 +28,9 @@
 .vendor-navbar {
   background-color: #c2410c;
 }
+.customer-navbar {
+  background-color: #7dd3fc;
+}
 #sidebar {
   // width: 250px;
   width: 225px;
@@ -211,6 +214,7 @@
 }
 .customer-sidebar {
   background-color: #7dd3fc;
+  border-right: 2px solid whitesmoke;
   nav {
     ul {
       li {

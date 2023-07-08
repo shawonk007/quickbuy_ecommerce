@@ -75,18 +75,19 @@ require __DIR__ . '/../../components/header.php';
                   } else {
                     $statusLabel = "Pending";
                     $statusClass = "bg-secondary";
-                  }
-                }
-                ?>
+                  } ?>
                 <tr>
-                  <th scope="row">1</th>
-                  <td>Coupon</td>
-                  <td>Coupon</td>
-                  <td>Coupon</td>
-                  <td>Active</td>
+                  <th scope="row"><?= $k+1 ?></th>
                   <td>
-                      <!-- <a href="edit.php?id=<?= $brand['brand_id'] ?>" class="btn btn-outline-info btn-sm"> -->
-                      <a href="edit.php?id=" class="btn btn-outline-info btn-sm">
+                    <img src="<?= isset($brand['brand_logo']) ? config("app.root") . 'uploads/brands/' . $brand['brand_logo'] : config("app.root") . 'assets/images/dummy-square.jpg' ?>" width="30" alt="" />
+                  </td>
+                  <td><?= $brand['brand_title'] ?></td>
+                  <td><?= $brand['brand_slug'] ?></td>
+                  <td>
+                    <span class="badge <?= $statusClass ?>"><?= $statusLabel ?></span>
+                  </td>
+                  <td>
+                      <a href="edit.php?id=<?= $brand['brand_id'] ?>" class="btn btn-outline-info btn-sm">
                         <i class="fas fa-edit"></i>
                       </a>
                       <!-- <button type="button" class="btn btn-outline-success btn-sm view-role" data-bs-toggle="modal" data-bs-target="#viewRole" data-role-id="<?= $role['role_id'] ?>" >
@@ -98,6 +99,7 @@ require __DIR__ . '/../../components/header.php';
                       </button>
                   </td>
                 </tr>
+                <?php } ?>
               </tbody>
             </table>
           </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 28, 2023 at 07:25 AM
+-- Generation Time: Jul 07, 2023 at 04:42 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.2.0
 
@@ -49,15 +49,17 @@ CREATE TABLE IF NOT EXISTS `attributes` (
 DROP TABLE IF EXISTS `brands`;
 CREATE TABLE IF NOT EXISTS `brands` (
   `brand_id` int NOT NULL AUTO_INCREMENT,
-  `brand_title` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `brand_description` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `brand_logo` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `brand_slug` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `brand_title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `brand_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `brand_logo` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `brand_slug` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `brand_status` tinyint DEFAULT NULL,
   `is_featured` tinyint DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`brand_id`)
+  PRIMARY KEY (`brand_id`),
+  UNIQUE KEY `brand_title` (`brand_title`,`brand_slug`),
+  KEY `brand_title_2` (`brand_title`,`brand_slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -71,13 +73,16 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `cat_id` int NOT NULL AUTO_INCREMENT,
   `cat_title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `cat_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `parent_id` varchar(15) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `parent_id` int DEFAULT NULL,
   `cat_slug` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `cat_status` tinyint DEFAULT NULL,
   `is_featured` tinyint(1) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`cat_id`)
+  PRIMARY KEY (`cat_id`),
+  UNIQUE KEY `cat_title_2` (`cat_title`),
+  UNIQUE KEY `cat_slug` (`cat_slug`),
+  KEY `cat_title` (`cat_title`,`cat_slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -278,8 +283,8 @@ DROP TABLE IF EXISTS `product_options`;
 CREATE TABLE IF NOT EXISTS `product_options` (
   `option_id` int NOT NULL AUTO_INCREMENT,
   `product_id` int NOT NULL,
-  `option_name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `option_value` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `option_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `option_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`option_id`)
@@ -356,7 +361,9 @@ CREATE TABLE IF NOT EXISTS `promos` (
   `usage_restriction` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`promo_id`)
+  PRIMARY KEY (`promo_id`),
+  UNIQUE KEY `promo_code` (`promo_code`),
+  KEY `vendor_id` (`vendor_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -389,7 +396,8 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `role_status` tinyint DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`role_id`)
+  PRIMARY KEY (`role_id`),
+  UNIQUE KEY `role_slug` (`role_slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -412,7 +420,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_status` tinyint DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`,`email_address`,`cell_phone`),
+  KEY `role` (`role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -431,15 +441,16 @@ CREATE TABLE IF NOT EXISTS `users_details` (
   `alt_email_address` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `alt_cell_phone` varchar(19) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `user_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `user_division` varchar(25) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `user_district` varchar(25) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `user_division` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `user_district` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `postal_code` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `gender` tinyint DEFAULT NULL,
   `religion` tinyint DEFAULT NULL,
   `marital_status` tinyint DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`details_id`)
+  PRIMARY KEY (`details_id`),
+  UNIQUE KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -487,7 +498,9 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   `is_featured` int DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`store_id`)
+  PRIMARY KEY (`store_id`),
+  UNIQUE KEY `user_id` (`user_id`,`store_slug`),
+  KEY `store_name` (`store_name`,`store_slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -503,14 +516,15 @@ CREATE TABLE IF NOT EXISTS `vendor_contact` (
   `store_email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `store_phone` varchar(19) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `store_address_one` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `store_address_two` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `store_division` varchar(25) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `store_district` varchar(25) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_address_two` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_division` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `store_district` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `store_postal_code` int DEFAULT NULL,
   `store_website` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `store_facebook` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `store_whatsapp` varchar(19) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`contact_id`)
+  PRIMARY KEY (`contact_id`),
+  UNIQUE KEY `store_id` (`store_id`,`store_email`,`store_phone`,`store_website`,`store_facebook`,`store_whatsapp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -527,8 +541,51 @@ CREATE TABLE IF NOT EXISTS `vendor_ratings` (
   `vrating_value` float NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`vrating_id`)
+  PRIMARY KEY (`vrating_id`),
+  KEY `user_id` (`user_id`),
+  KEY `vendor_id` (`vendor_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `promos`
+--
+ALTER TABLE `promos`
+  ADD CONSTRAINT `promos_ibfk_1` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`store_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role`) REFERENCES `roles` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `users_details`
+--
+ALTER TABLE `users_details`
+  ADD CONSTRAINT `users_details_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `vendors`
+--
+ALTER TABLE `vendors`
+  ADD CONSTRAINT `vendors_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `vendor_contact`
+--
+ALTER TABLE `vendor_contact`
+  ADD CONSTRAINT `vendor_contact_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `vendors` (`store_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `vendor_ratings`
+--
+ALTER TABLE `vendor_ratings`
+  ADD CONSTRAINT `vendor_ratings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `vendor_ratings_ibfk_2` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`store_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -30,6 +30,10 @@
   background-color: #c2410c;
 }
 
+.customer-navbar {
+  background-color: #7dd3fc;
+}
+
 #sidebar {
   width: 225px;
   position: fixed;
@@ -173,6 +177,7 @@
 
 .customer-sidebar {
   background-color: #7dd3fc;
+  border-right: 2px solid whitesmoke;
 }
 .customer-sidebar nav ul li a:hover, .customer-sidebar nav ul li a.active {
   background-color: #38bdf8;

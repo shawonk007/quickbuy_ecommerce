@@ -54,10 +54,13 @@ class Users {
     }
   }
 
-  public function update($id, $fname, $lname, $uname, $email, $phone, $pass, $role, $status) {
-    $sql = "UPDATE " . $this->table . " SET first_name = ?, last_name = ?, username = ?, email_address = ?, cell_phone = ?, password = ?, role = ?, user_status = ? WHERE id = ?";
+  public function update($id, $fname, $lname, $uname, $email, $phone) {
+    $sql = "UPDATE " . $this->table . " SET first_name = ?, last_name = ?, username = ?, email_address = ?, cell_phone = ? WHERE id = ?";
     $statement = $this->conn->prepare($sql);
-    $statement->bind_param("ssssssiii", $fname, $lname, $uname, $email, $phone, $pass, $role, $status, $id);
+    $statement->bind_param("sssssi", $fname, $lname, $uname, $email, $phone, $id);
+    // Debugging statements
+    echo $sql; // Display the generated SQL statement
+    var_dump([$fname, $lname, $uname, $email, $phone, $id]); // Display the bound parameters
     $statement->execute();
     if ($statement->affected_rows === 1) {
       return true;

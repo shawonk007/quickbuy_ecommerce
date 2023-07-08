@@ -1,7 +1,7 @@
 <?php
 if (!function_exists('info')) {
 function info() {
-  $path = "http://localhost/quickbuy_ecommerce/";
+  $path = config("app.root");
   return [
     'name' => "QuickBuy",
     'phone' => "102424",

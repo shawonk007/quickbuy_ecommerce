@@ -1,56 +1,57 @@
 <?php $root = config("app.root") ?>
 <aside id="sidebar" class="customer-sidebar" >
   <button id="toggleSidebar" >
-        <i class="fas fa-bars" style="width: 1.5rem; height: 1.5rem; font-size: 1.5rem; color: white;"></i>
-        <span>Customer Panel</span>
+    <i class="fas fa-bars" style="width: 1.5rem; height: 1.5rem; font-size: 1.5rem; color: white;"></i>
+    <span>Customer Panel</span>
   </button>
-  <nav class="nav-sidebar">
-    <ul>
-      <li >
-        <a href="javascript:void(0)" class="active">
-          <i class="fas fa-tachometer-alt"></i>
+  <nav class="nav-sidebar" >
+    <ul class="font-ubuntu" >
+      <hr class="border border-2 border-top border-white py-0 ms-3 me-3 my-0">
+      <li class="sidebar-item" >
+        <a href="<?= $root ?>dashboard.php" class="sidebar-link" >
+          <i class="fas fa-tachometer-alt" style="width: 1.5rem;" ></i>
           <span class="sidebar-link-span" >Dashboard</span>
         </a>
       </li>
-      <li>
-        <a href="<?= $root ?>edit-profile.php">
-          <i class="fas fa-user-edit"></i>
-          <span class="sidebar-link-span" >Edit Profile</span>
-        </a>
-      </li>
-      <li>
-        <a href="<?= $root ?>notification.php">
-          <i class="fas fa-bell"></i>
+      <hr class="border border-2 border-top border-white py-0 ms-3 me-3 my-0">
+      <li class="sidebar-item" >
+        <a href="<?= $root ?>notification.php" class="sidebar-link" >
+          <i class="fas fa-bell" style="width: 1.5rem;" ></i>
           <span class="sidebar-link-span" >Notifications</span>
         </a>
       </li>
-      <li>
-        <a href="<?= $root ?>messages.php">
-          <i class="fas fa-envelope"></i>
+      <hr class="border border-2 border-top border-white py-0 ms-3 me-3 my-0">
+      <li class="sidebar-item" >
+        <a href="<?= $root ?>messages.php" class="sidebar-link" >
+          <i class="fas fa-envelope" style="width: 1.5rem;" ></i>
           <span class="sidebar-link-span" >Messages</span>
         </a>
       </li>
-      <li>
-        <a href="<?= $root ?>my-order.php">
-          <i class="fas fa-shopping-cart"></i>
+      <hr class="border border-2 border-top border-white py-0 ms-3 me-3 my-0">
+      <li class="sidebar-item" >
+        <a href="<?= $root ?>my-order.php" class="sidebar-link" >
+          <i class="fas fa-shopping-cart" style="width: 1.5rem;" ></i>
           <span class="sidebar-link-span" >My Orders</span>
         </a>
       </li>
-      <li>
-        <a href="<?= $root ?>my-wishlist.php">
-          <i class="fas fa-heart"></i>
+      <hr class="border border-2 border-top border-white py-0 ms-3 me-3 my-0">
+      <li class="sidebar-item" >
+        <a href="<?= $root ?>my-wishlist.php" class="sidebar-link" >
+          <i class="fas fa-heart" style="width: 1.5rem;" ></i>
           <span class="sidebar-link-span" >My Wishlist</span>
         </a>
       </li>
-      <li >
-        <a href="<?= $root ?>feedback.php">
-          <i class="fas fa-comments"></i>
+      <hr class="border border-2 border-top border-white py-0 ms-3 me-3 my-0">
+      <li class="sidebar-item" >
+        <a href="<?= $root ?>feedback.php" class="sidebar-link" >
+          <i class="fas fa-comments" style="width: 1.5rem;" ></i>
           <span class="sidebar-link-span" >Feedback</span>
         </a>
       </li>
-      <li >
-        <a href="javascript:void(0)">
-          <i class="fas fa-cog"></i>
+      <hr class="border border-2 border-top border-white py-0 ms-3 me-3 my-0">
+      <li class="sidebar-item" >
+        <a href="<?= $root ?>settings.php" class="sidebar-link" >
+          <i class="fas fa-cog" style="width: 1.5rem;" ></i>
           <span class="sidebar-link-span" >Settings</span>
         </a>
       </li>

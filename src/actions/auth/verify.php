@@ -5,38 +5,38 @@ require __DIR__ . '/../../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
-
-use App\Database;
 use App\Auth;
+use App\Database;
 $db = new Database();
-// $user = new Auth($db->conn);
 
 $root = config("app.root");
 $admin = config("app.admin");
 $merchant = config("app.merchant");
 
-$errors = [];
+Auth::initialize();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $auth = $_POST['auth'];
   $pass = $_POST['password'];
   try {
-    if (Auth::isAuthenticated($auth, $pass, $db)) {
-      // $_SESSION['login'] = true;
+    if (Auth::isAuthenticated($auth, $pass)) {
       $_SESSION['login'] = true;
+      $_SESSION['user'] = Auth::getUser();
       if (Auth::isAdmin()) {
         $redirect = "{$admin}dashboard.php";
       } elseif (Auth::isMerchant()) {
         $redirect = "{$merchant}welcome.php";
       } else {
         // $redirect = "{$root}/$uname/home.php";
-        $redirect = "{$root}home.php";
+        $redirect = "{$root}dashboard.php";
       }
       $response = [
         'success' => true,
         'message' => 'Login Successfull!',
         'redirect' => $redirect
       ];
+      // header("Location: $redirect");
+      // exit();
     } else {
       $response = [
         'success' => false,

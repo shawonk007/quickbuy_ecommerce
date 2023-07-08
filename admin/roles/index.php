@@ -62,11 +62,6 @@ require __DIR__ . '/../../components/header.php';
               <tbody>
                 <?php
                   $roleList = $roles->index();
-                  if (empty($roleList)) { ?>
-                    <tr>
-                      <td class="text-center" colspan="6"><?= "No Data Available" ?></td>
-                    </tr>
-                  <?php } else {
                   foreach ($roleList as $k => $role) { 
                     $statusLabel = "";
                     $statusClass = "";
@@ -101,7 +96,7 @@ require __DIR__ . '/../../components/header.php';
                       </button>
                     </td>
                   </tr>
-                  <?php } } ?>
+                  <?php } ?>
               </tbody>
             </table>
             <div class="row mt-5">

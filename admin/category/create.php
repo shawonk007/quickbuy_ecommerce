@@ -57,7 +57,7 @@ require __DIR__ . '/../../components/header.php';
                 <div class="col-6 d-flex align-items-center">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" name="mark" value="1" id="mark" />
-                    <label class="form-check-label " for="" style="font-size: 0.9rem;">Mark as Featured Category</label>
+                    <label class="form-check-label " for="mark" style="font-size: 0.9rem;">Mark as Featured Category</label>
                   </div>
                 </div>
                 <div class="col-6">
@@ -129,7 +129,7 @@ require __DIR__ . '/../../components/header.php';
                 icon: 'success',
                 title: 'Created',
                 text: response.message,
-                timer: 2000,
+                timer: 1500,
                 showConfirmButton: false
               }).then(function() {
                 window.location.href = 'index.php';

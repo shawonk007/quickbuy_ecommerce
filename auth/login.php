@@ -5,12 +5,21 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
+use App\Auth;
 use App\Database;
 $db = new Database();
 $pageName = "Login";
 $root = config("app.root");
 $auth = config("app.auth");
-require __DIR__ . '/../components/header/secondary.php';
+
+Auth::initialize();
+
+if (isset($_SESSION['login'])) {
+  header("Location: ../home.php");
+  exit();
+}
+
+require __DIR__ . '/../components/header.php';
 ?>
 <style>
   .gradient-custom-2 {

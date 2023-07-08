@@ -5,9 +5,9 @@
     <i class="fas fa-bars" style="width: 1.5rem; height: 1.5rem; font-size: 1.5rem; color: white;"></i>
     <span>Admin Panel</span>
   </button>
-  <nav class="nav-sidebar">
-    <ul class="font-ubuntu">
-      <li class="sidebar-item">
+  <nav class="nav-sidebar" >
+    <ul class="font-ubuntu" >
+      <li class="sidebar-item" >
         <a href="<?= $root ?>dashboard.php" class="sidebar-link">
           <i class="fas fa-tachometer-alt" style="width: 1.5rem;" ></i>
           <span class="sidebar-link-span" >Dashboard</span>

@@ -11,19 +11,45 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
   $desc = $_POST['description'];
   $parent = $_POST['parent'];
   $sub = $_POST['sub-parent'];
-  $slug = Pathify::make($_POST['title']);
+  // $slug = isset($_POST['slug']) ? $_POST['slug'] : Pathify::make($title);
   $status = $_POST['status'];
   $mark = isset($_POST['mark']) ? $_POST['mark'] : NULL;
+  // if (isset($_POST['slug'])) {
+  //   $slug = $_POST['slug'];
+  // } else {
+    $slug = Pathify::make($title);
+  // }
   if (isset($sub) && $sub != NULL) {
     $cat = $sub;
   } else {
     $cat = $parent;
   }
   if (empty($title)) {
-    $errors[] = "Category title is required";
+    $response = [
+      'success' => false,
+      'message' => 'Title cannot be empty.',
+    ];
+    header("Content-Type: application/json");
+    echo json_encode($response);
+    exit();
   }
-  if (empty($slug)) {
-    $errors[] = "Category slug is required";
+  if ($categories->exists('cat_title', $title)) {
+    $response = [
+      'success' => false,
+      'message' => 'Category already exists.'
+    ];
+    header("Content-Type: application/json");
+    echo json_encode($response);
+    exit();
+  }
+  if ($categories->exists('cat_slug', $slug)) {
+    $response = [
+      'success' => false,
+      'message' => 'Slug is not avaiable.'
+    ];
+    header("Content-Type: application/json");
+    echo json_encode($response);
+    exit();
   }
   if (empty($errors)) {
     try {
@@ -39,8 +65,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
       }
     } catch (\Throwable $e) {
-    //   $errorMessage = $e->getMessage();
-    //   logError($errorMessage);
       $response = [
         'success' => false,
         'message' => 'An error occurred: ' . $e->getMessage()

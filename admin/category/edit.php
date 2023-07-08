@@ -53,7 +53,7 @@ if (isset($_GET['id'])) {
                     <option value="">-- Main Category --</option>
                     <?php $mainCat = $categories->index();
                     foreach ($mainCat as $main) {
-                      if ($main['cat_status'] == 1 && $main['parent_id'] == NULL) {  ?>
+                      if ($main['cat_status'] == 1 && $main['parent_id'] == 0) {  ?>
                       <option value="<?= $main['cat_id'] ?>"><?= $main['cat_title'] ?></option>
                     <?php } } ?>
                   </select>
@@ -61,12 +61,6 @@ if (isset($_GET['id'])) {
                 <div class="col-6">
                   <select name="sub-parent" class="select2 select2-bootstrap-5-theme w-100" id="subCat">
                     <option value="">-- Sub Category --</option>
-                    <?php $subCat = $categories->index();
-                    $parent = $main['cat_id'];
-                    foreach ($subCat as $sub) {
-                      if (Category::check($sub['parent_id'], $db)) { ?>
-                      <option value="<?= $sub['cat_id'] ?>"><?= $sub['cat_title'] ?></option>
-                    <?php } } ?>
                   </select>
                 </div>
                 <div class="col-6 d-flex align-items-center">

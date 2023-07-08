@@ -9,7 +9,7 @@ $db = new Database();
 $pageName = "Register";
 $root = config("app.root");
 $auth = config("app.auth");
-require __DIR__ . '/../components/header/secondary.php';
+require __DIR__ . '/../components/header.php';
 ?>
 <style>
   .gradient-custom-3 {
@@ -60,7 +60,7 @@ require __DIR__ . '/../components/header/secondary.php';
                   </div>
                 </div>
                 <div class="col-lg-6">
-                  <div class="card-body p-md-5 mx-md-4">
+                  <div class="card-body p-md-5 mx-md-0">
                     <div class="text-center pt-5 pt-lg-0">
                       <a href="<?= $root ?>home.php">
                         <img src="<?= info()['logo'] ?>" style="width: 250px;" alt="logo" />

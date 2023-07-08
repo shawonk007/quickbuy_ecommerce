@@ -49,7 +49,7 @@ function logError($errorMessage) {
                   <textarea name="description" class="form-control form-control-sm" id="description" cols="30" rows="8" placeholder="Type role details here ..."></textarea>
                 </div>
                 <div class="col-6">
-                  <input type="text" name="slug" class="form-control form-control-sm" id="slug" placeholder="Role Slug" required />
+                  <input type="text" name="slug" class="form-control form-control-sm" id="slug" placeholder="Role Slug" />
                 </div>
                 <div class="col-6">
                   <select name="status" class="form-control form-control-sm" id="status">
