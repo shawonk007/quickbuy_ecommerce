@@ -104,7 +104,7 @@ class Brands {
   }
 
   public function exists($column, $value) {
-    $sql = "SELECT COUNT(*) FROM brands WHERE {$column} = ?";
+    $sql = "SELECT COUNT(*) FROM " . $this->table . " WHERE {$column} = ?";
     $statement = $this->conn->prepare($sql);
     $statement->bind_param('s', $value);
     $statement->execute();
@@ -112,13 +112,11 @@ class Brands {
     $statement->bind_result($result);
     $statement->fetch();
     $statement->close(); // Close the statement
-
     if ($result !== null) {
         return $result > 0;
     } else {
         return false;
     }
   }
-
 }
 ?>

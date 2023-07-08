@@ -14,11 +14,11 @@ class Users {
     $sql = "SELECT * FROM " . $this->table;
     $result = $this->conn->query($sql);
     if ($result->num_rows > 0) {
-      $roles = [];
+      $users = [];
       while ($row = $result->fetch_assoc()) {
-        $roles[] = $row;
+        $users[] = $row;
       }
-      return $roles;
+      return $users;
     } else {
       return [];
     }
@@ -29,7 +29,6 @@ class Users {
     (first_name, last_name, username, email_address, email_verified_at, cell_phone, password, role, user_status, created_at, updated_at)
     VALUES (?, ?, ?, ?, NULL, ?, ?, ?, ?, NOW(), NOW())";
     $statement = $this->conn->prepare($sql);
-    // Bind Parameters
     $statement->bind_param("ssssssii", $fname, $lname, $uname, $email, $phone, $pass, $role, $status);
     if ($statement->execute()) {
       return true;
@@ -55,12 +54,11 @@ class Users {
   }
 
   public function update($id, $fname, $lname, $uname, $email, $phone) {
-    $sql = "UPDATE " . $this->table . " SET first_name = ?, last_name = ?, username = ?, email_address = ?, cell_phone = ? WHERE id = ?";
+    $sql = "UPDATE " . $this->table . " SET first_name = ?, last_name = ?, username = ?, email_address = ?, cell_phone = ?, updated_at = NOW() WHERE id = ?";
     $statement = $this->conn->prepare($sql);
     $statement->bind_param("sssssi", $fname, $lname, $uname, $email, $phone, $id);
-    // Debugging statements
-    echo $sql; // Display the generated SQL statement
-    var_dump([$fname, $lname, $uname, $email, $phone, $id]); // Display the bound parameters
+    // echo $sql; // Display the generated SQL statement
+    // var_dump([$fname, $lname, $uname, $email, $phone, $id]); // Display the bound parameters
     $statement->execute();
     if ($statement->affected_rows === 1) {
       return true;
@@ -90,6 +88,22 @@ class Users {
       return true;
     } else {
       return false;
+    }
+  }
+
+  public function exists($column, $value) {
+    $sql = "SELECT COUNT(*) FROM " . $this->table . " WHERE {$column} = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param('s', $value);
+    $statement->execute();
+    $result = null;
+    $statement->bind_result($result);
+    $statement->fetch();
+    $statement->close(); // Close the statement
+    if ($result !== null) {
+        return $result > 0;
+    } else {
+        return false;
     }
   }
 }

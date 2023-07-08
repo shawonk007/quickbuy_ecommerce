@@ -67,7 +67,7 @@ class Roles {
   }
 
   public function update($id, $title, $desc, $slug, $status) {
-    $sql = "UPDATE " . $this->table . " SET role_title = ?, role_description = ?, role_slug = ?, role_status = ? WHERE role_id = ?";
+    $sql = "UPDATE " . $this->table . " SET role_title = ?, role_description = ?, role_slug = ?, role_status = ?, updated_at = NOW() WHERE role_id = ?";
     $statement = $this->conn->prepare($sql);
     $statement->bind_param("ssssi", $title, $desc, $slug, $status, $id);
     $statement->execute();
@@ -113,8 +113,7 @@ class Roles {
     $result = null;
     $statement->bind_result($result);
     $statement->fetch();
-    $statement->close(); // Close the statement
-
+    $statement->close();
     if ($result !== null) {
         return $result > 0;
     } else {

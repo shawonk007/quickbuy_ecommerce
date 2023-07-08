@@ -1,4 +1,4 @@
-# [QuickBuy - Multivendor System Ecommerce Platform]
+# QuickBuy - Multivendor System Ecommerce Platform
 
 **[QuickBuy](https://quickbuy.shawon-khan.com/)** is a fully responsive multivendor system ecommerce platform/web application. It is developed using **[Object-Oriented PHP]** and utilizes the **[Bootstrap 5.3.0](https://getbootstrap.com/)** framework along with JavaScript/jQuery plugins. The platform is designed to be compatible with various screen resolutions, providing optimal user experience across small mobile devices to large desktops.
 
@@ -59,7 +59,7 @@ composer dump-autoload
 After the installation, you can access **[QuickBuy](https://quickbuy.shawon-khan.com/)** through your web browser. As an administrator, you will have access to the admin panel to manage the system settings, merchants, and products. Merchants can create their stores and manage their products and orders through their dedicated merchant panel. Customers can browse products, add items to their shopping cart, and proceed to checkout.
 
 #### Configure Path
-After clone or installation this project please make sure you configure your path on **([config/app.php])**. Please change **["YOUR_DIRECTORY"]** to your to the directory of this project on your local server as given below :
+After clone or installation this project please make sure you configure your path on **(config/app.php)**. Please change **["YOUR_DIRECTORY"]** to your to the directory of this project on your local server as given below :
 
 ```bash
 'root'=> 'http://localhost/YOUR_DIRECTORY/',

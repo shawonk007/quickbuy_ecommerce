@@ -28,7 +28,7 @@ class Category {
     (cat_title, cat_description, parent_id, cat_slug, cat_status, is_featured, created_at, updated_at)
     VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())";
     $statement = $this->conn->prepare($sql);
-    $statement->bind_param("sssssi", $title, $desc, $parent, $slug, $status, $mark);
+    $statement->bind_param("ssissi", $title, $desc, $parent, $slug, $status, $mark);
     if ($statement->execute()) {
       return true;
     } else {
@@ -36,7 +36,19 @@ class Category {
     }
   }
 
-  public function show() {}
+  public function show($slug) {
+    $sql = "SELECT * FROM ". $this->table . " WHERE cat_slug = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("s", $slug);
+    $statement->execute();
+    $result = $statement->get_result();
+    if ($result->num_rows === 1) {
+      $category = $result->fetch_assoc();
+      return $category;
+    } else {
+      return false;
+    }
+  }
 
   public function edit($id) {
     $sql = "SELECT * FROM ". $this->table . " WHERE cat_id = ?";
@@ -55,7 +67,7 @@ class Category {
   public function update($id, $title, $desc, $parent, $slug, $status, $mark) {
     $sql = "UPDATE " . $this->table . " SET cat_title = ?, cat_description = ?, parent_id = ?, cat_slug = ?, cat_status = ?, is_featured =?, updated_at = NOW() WHERE cat_id = ?";
     $statement = $this->conn->prepare($sql);
-    $statement->bind_param("ssssiii", $title, $desc, $parent, $slug, $status, $mark, $id);
+    $statement->bind_param("ssisiii", $title, $desc, $parent, $slug, $status, $mark, $id);
     $statement->execute();
     if ($statement->affected_rows === 1) {
       return true;
@@ -92,20 +104,19 @@ class Category {
   }
 
   public function exists($column, $value) {
-    $sql = "SELECT COUNT(*) FROM categories WHERE {$column} = ?";
+    $sql = "SELECT COUNT(*) FROM " . $this->table . " WHERE {$column} = ?";
     $statement = $this->conn->prepare($sql);
     $statement->bind_param('s', $value);
     $statement->execute();
     $result = null;
     $statement->bind_result($result);
     $statement->fetch();
-    $statement->close();
+    $statement->close(); // Close the statement
     if ($result !== null) {
-      return $result > 0;
+        return $result > 0;
     } else {
-      return false;
+        return false;
     }
   }
-
 }
 ?>

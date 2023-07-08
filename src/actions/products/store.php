@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   try {
     if ($products->create($title, $desc, $type, $sku, $brand, $rPrice, $oPrice, $shorts, $slug, $pStatus, $featured)) {
       $productId = $db->conn->insert_id;
-      if (ProductStock::create($productId, $qty, $db)) {
+      if (ProductStock::createStock($productId, $qty, $db)) {
         $response = [
           'success' => true,
           'message' => 'Product created successfully!'
