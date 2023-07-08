@@ -2,7 +2,7 @@
 
 namespace App\Class;
 
-class ProductImages {
+class ProductStock {
   protected $conn, $table = "product_stock";
 
   public function __construct($db) {
@@ -11,7 +11,18 @@ class ProductImages {
 
   public function index() {}
 
-  public function create() {}
+  public static function create($product, $qty, $db) {
+    $conn = $db->conn;
+    $sql = "INSERT INTO product_stock (product_id, stock_quantity) VALUES (?, ?)";
+    $statement = $conn->prepare($sql);
+    $statement->bind_param("ii", $product, $qty);
+    if ($statement->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
 
   public function show($id) {}
 

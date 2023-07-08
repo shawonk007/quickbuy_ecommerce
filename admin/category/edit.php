@@ -16,6 +16,7 @@ if (isset($_GET['id'])) {
   $id = $_GET['id'];
   try {
     $category = $categories->edit($id);
+    $parent = $category['parent_id'];
   } catch (Exception $e) {
     //throw $th;
   }
@@ -53,8 +54,9 @@ if (isset($_GET['id'])) {
                     <option value="">-- Main Category --</option>
                     <?php $mainCat = $categories->index();
                     foreach ($mainCat as $main) {
-                      if ($main['cat_status'] == 1 && $main['parent_id'] == 0) {  ?>
-                      <option value="<?= $main['cat_id'] ?>"><?= $main['cat_title'] ?></option>
+                      if ($main['cat_status'] == 1 && $main['parent_id'] == 0) { 
+                        $selected = ($main['cat_id'] == $parent) ? 'selected' : ''; ?>
+                      <option value="<?= $main['cat_id'] ?>" <?= $selected ?> ><?= $main['cat_title'] ?></option>
                     <?php } } ?>
                   </select>
                 </div>
@@ -107,6 +109,24 @@ if (isset($_GET['id'])) {
       $('.select2-container .select2-selection--single').css({
         'padding': '5px 10px',
         'font-size': '12px'
+      });
+      $('#mainCat').change(function() {
+        var mainCatId = $(this).val();
+        if (mainCatId !== '') {
+          var subCats = <?= json_encode($categories->index()); ?>;
+          var subCatOptions = '<option value="">-- Sub Category --</option>';
+          subCats.forEach(function(subCat) {
+            if (subCat.cat_status == 1 && subCat.parent_id == mainCatId) {
+              subCatOptions += '<option value="' + subCat.cat_id + '">' + subCat.cat_title + '</option>';
+              if (subCat.parent_id !== '') {
+                subCatOptions += ' selected';
+              }
+            }
+          });
+          $('#subCat').html(subCatOptions);
+        } else {
+          $('#subCat').html('<option value="">-- Sub Category --</option>');
+        }
       });
       $('form').submit(function(e) {
         e.preventDefault();

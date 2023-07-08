@@ -24,7 +24,18 @@ class Products {
     }
   }
 
-  public function create() {}
+  public function create($title, $desc, $cat, $sku, $brand, $rPrice, $oPrice, $shorts, $slug, $status, $featured) {
+    $sql = "INSERT INTO " . $this->table . "
+    (product_title, product_description, product_category, product_sku, product_brand, regular_price, offer_price, product_highlights, product_slug, product_status, is_featured, created_at, updated_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("ssisiiissii", $title, $desc, $cat, $sku, $brand, $rPrice, $oPrice, $shorts, $slug, $status, $featured);
+    if ($statement->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   public function show() {}
 

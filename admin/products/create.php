@@ -27,7 +27,7 @@ require __DIR__ . '/../../components/header.php';
     <?php include __DIR__ . '/../../components/breadcrumb/admin/secondary.php' ?>
     <section class="container-fluid my-5"></section>
     <section class="container-fluid my-5">
-      <form action="" method="post" enctype="multipart/form-data">
+      <form action="<?= config("app.root") ?>src/actions/products/store.php" method="post" enctype="multipart/form-data">
         <div class="row g-3">
           <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8 col-xxl-8">
             <div class="card shadow">
@@ -79,81 +79,49 @@ require __DIR__ . '/../../components/header.php';
             </div>
             <div class="card shadow my-3">
               <div class="card-header bg-primary py-1">
-                <h5 class="card-title text-light font-bold py-0 my-0">Product Shipment</h5>
+                <h5 class="card-title text-light font-bold py-0 my-0">Product Option</h5>
               </div>
-              <div class="card-body">
-                <div class="row row-cols-3 g-3">
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                    <input type="text" name="weight" class="form-control form-control-sm" id="weight" placeholder="Weight (kg.)" />
+              <div class="card-body ">
+                <div class="card mb-3" id="option" >
+                  <div class="card-header bg-white">
+                    <div class="row row-cols-3 g-3">
+                      <div class="col-3 d-flex align-items-center">
+                        <strong>Option Name</strong>
+                      </div>
+                      <div class="col-5">
+                        <input type="text" name="o_name" class="form-control form-control-sm" id="length" placeholder="Enter Name" />
+                      </div>
+                      <div class="col-4 d-flex justify-content-end ">
+                        <button type="button" class="btn btn-primary btn-sm ms-1 me-1" id="new" >
+                          <i class="fas fa-plus"></i>
+                          <span class="ps-1">Add New</span>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm ms-1 me-0" id="delete" >
+                          <i class="fas fa-trash-alt"></i>
+                          <span class="ps-1">Delete</span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                    <input type="text" name="length" class="form-control form-control-sm" id="length" placeholder="Length (cm.)" />
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                    <input type="text" name="width" class="form-control form-control-sm" id="width" placeholder="Width (cm.)" />
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                    <input type="text" name="height" class="form-control form-control-sm" id="height" placeholder="Height (cm.)" />
+                  <div class="card-body pt-0 pb-2 my-0">
+                    <div class="row g-3 py-1 mt-0 mb-1" id="optionSet" >
+                      <div class="col-3">
+                        <input type="text" name="o_type" class="form-control form-control-sm" id="length" placeholder="Option Type" />
+                      </div>
+                      <div class="col-7">
+                        <input type="text" name="o_value" class="form-control form-control-sm" id="length" placeholder="Option Value" />
+                      </div>
+                      <div class="col-2 d-flex justify-content-end ">
+                        <button type="button" class="btn btn-primary btn-sm ms-1 me-1" id="add" >
+                          <i class="fas fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm ms-1 me-0" id="remove" >
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="card shadow">
-              <div class="card-header bg-primary py-1">
-                <div class="row d-flex align-items-center justify-content-between py-0">
-                  <div class="col-9">
-                    <h5 class="card-title text-light font-bold py-0 my-0">Product Attributes</h5>
-                  </div>
-                  <div class="col-3 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-light btn-sm py-0">
-                      <i class="fas fa-plus"></i>
-                      <strong class="ps-1">Add New</strong>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body">
-                <table class="table pb-0 mb-0">
-                  <thead class="table-info">
-                    <tr>
-                      <th class="py-1" >Attribute Set</th>
-                      <th class="py-1" >Attribute Type</th>
-                      <th class="py-1" >Arrtibute Value</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="input-group input-group-sm">
-                          <select name="" class="form-control" id="" disabled >
-                            <option value="">-- Choose One --</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="input-group input-group-sm">
-                          <select name="" class="form-control" id="" disabled >
-                            <option value="">-- Choose One --</option>
-                          </select>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="input-group input-group-sm">
-                          <input type="text" name="" class="form-control" id="" placeholder="Product Title" disabled />
-                        </div>
-                      </td>
-                      <td>
-                        <form action="" method="post">
-                          <input type="hidden" name="" value="" />
-                          <button type="submit" class="btn btn-danger btn-sm" disabled >
-                            <i class="fas fa-trash-alt"> </i>
-                          </button>
-                        </form>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
             </div>
           </div>
@@ -207,7 +175,7 @@ require __DIR__ . '/../../components/header.php';
                   </div>
                   <div class="col-12">
                     <div class="input-group input-group-sm">
-                      <select name="" class="form-control" id="brandName" >
+                      <select name="brand" class="form-control" id="brandName" >
                         <option value="">-- Brand Name --</option>
                       </select>
                     </div>
@@ -226,7 +194,7 @@ require __DIR__ . '/../../components/header.php';
                   </div>
                   <div class="col-4">
                     <div class="input-group input-group-sm">
-                      <select name="" class="form-control" id="">
+                      <select name="status" class="form-control" id="">
                         <option value="">-- Status --</option>
                         <option value="1">Publish</option>
                         <option value="0">Disable</option>
@@ -279,7 +247,7 @@ require __DIR__ . '/../../components/header.php';
                           <small>(MAX. UPLOAD SIZE 2MB)</small>
                         </p>
                       </div>
-                      <input type="file" name="file" class="d-none" id="imageInput" required accept="image/*;capture=camera" />
+                      <input type="file" name="file" class="d-none" id="imageInput" accept="image/*;capture=camera" />
                     </label>
                   </div>
                   <div class="col">
@@ -288,7 +256,7 @@ require __DIR__ . '/../../components/header.php';
                 </div>
               </div>
             </div>
-            <div class="card shadow">
+            <div class="card shadow my-3">
               <div class="card-header bg-primary py-1">
                 <h5 class="card-title text-light font-bold py-0 my-0">Product Gallery</h5>
               </div>
@@ -300,7 +268,7 @@ require __DIR__ . '/../../components/header.php';
                         <h1 class="mb-0"><i class="fas fa-cloud-arrow-up"></i></h1>
                         <h6 class="my-0 text-dark text-center"><small>Upload</small></h6>
                       </div>
-                      <input type="file" name="file" class="d-none" id="imageInput" required accept="image/*;capture=camera" />
+                      <input type="file" name="file" class="d-none" id="imageInput" accept="image/*;capture=camera" />
                     </label>
                   </div>
                   <div class="col-4">
@@ -317,6 +285,27 @@ require __DIR__ . '/../../components/header.php';
                   </div>
                   <div class="col-4">
                     <img src="../../assets/images/dummy-square.jpg" class="w-100" alt="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card shadow my-3">
+              <div class="card-header bg-primary py-1">
+                <h5 class="card-title text-light font-bold py-0 my-0">Product Shipment</h5>
+              </div>
+              <div class="card-body">
+                <div class="row row-cols-3 g-3">
+                  <div class="col-6">
+                    <input type="text" name="weight" class="form-control form-control-sm" id="weight" placeholder="Weight (kg.)" />
+                  </div>
+                  <div class="col-6">
+                    <input type="text" name="length" class="form-control form-control-sm" id="length" placeholder="Length (cm.)" />
+                  </div>
+                  <div class="col-6">
+                    <input type="text" name="width" class="form-control form-control-sm" id="width" placeholder="Width (cm.)" />
+                  </div>
+                  <div class="col-6">
+                    <input type="text" name="height" class="form-control form-control-sm" id="height" placeholder="Height (cm.)" />
                   </div>
                 </div>
               </div>
@@ -356,7 +345,7 @@ require __DIR__ . '/../../components/header.php';
         var subCatId = $(this).val();
         if (subCatId !== '') {
           var productTypes = <?= json_encode($categories->index()); ?>;
-          var productTypeOptions = '<option value="">-- Sub Category --</option>';
+          var productTypeOptions = '<option value="">-- Product Type --</option>';
           productTypes.forEach(function(productType) {
             if (productType.cat_status == 1 && productType.parent_id == subCatId) {
               productTypeOptions += '<option value="' + productType.cat_id + '">' + productType.cat_title + '</option>';
@@ -364,7 +353,7 @@ require __DIR__ . '/../../components/header.php';
           });
           $('#productType').html(productTypeOptions);
         } else {
-          $('#productType').html('<option value="">-- Sub Category --</option>');
+          $('#productType').html('<option value="">-- Product Type --</option>');
         }
       });
 
@@ -377,6 +366,18 @@ require __DIR__ . '/../../components/header.php';
         height: 200,
         width: '100%',
         placeholder: 'Type product highlights here ...',
+      });
+
+      $(document).on("click", "#new", function() {
+        var option = $("#option");
+        var newOption = option.clone(true);
+        option.parent().append(newOption);
+      });
+
+      $(document).on("click", "#add", function() {
+        var optionSet = $("#optionSet");
+        var newOptionSet = optionSet.clone(true);
+        optionSet.parent().append(newOptionSet);
       });
     });
   </script>

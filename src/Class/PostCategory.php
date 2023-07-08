@@ -24,7 +24,18 @@ class PostCategory {
     }
   }
 
-  public function create() {}
+  public function create($title, $desc, $parent, $slug, $status, $mark) {
+    $sql = "INSERT INTO " . $this->table . "
+    (cat_title, cat_description, parent_id, cat_slug, cat_status, is_featured, created_at, updated_at)
+    VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("sssssi", $title, $desc, $parent, $slug, $status, $mark);
+    if ($statement->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   public function show() {}
 

@@ -11,7 +11,7 @@ class ProductImages {
 
   public function index() {}
 
-  public function create() {}
+  public function create($product, $images) {}
 
   public function show($id) {}
 
