@@ -1,10 +1,10 @@
-<?php $admin = config("app.admin") ?>
-<nav class="navbar navbar-expand-lg navbar-dark admin-navbar sticky-top">
+<?php $merchant = config("app.merchant") ?>
+<nav class="navbar navbar-expand-lg navbar-dark vendor-navbar sticky-top">
   <div class="container-fluid">
     <!-- <a class="navbar-brand" href="#">Navbar</a> -->
     <ul class="navbar-nav flex-row mb-2 mb-lg-0">
       <li class="nav-item me-3 me-lg-0">
-        <a class="nav-link" aria-current="page" href="<?= $admin ?>dashboard.php">
+        <a class="nav-link" aria-current="page" href="<?= $merchant ?>dashboard.php">
           <i class="fas fa-house"></i>
           <span class="ps-1">Home</span>
         </a>
@@ -17,7 +17,7 @@
         </a>
         <ul class="dropdown-menu py-1">
           <li>
-            <a class="dropdown-item text-dark" href="<?= $admin ?>posts/create.php">
+            <a class="dropdown-item text-dark" href="<?= $merchant ?>posts/create.php">
               <i class="fas fa-plus"></i>
               <span class="ps-2">Add New Post</span>
             </a>
@@ -26,16 +26,7 @@
             <hr class="dropdown-divider my-1">
           </li>
           <li>
-            <a class="dropdown-item text-dark" href="<?= $admin ?>brands/create.php">
-              <i class="fas fa-plus"></i>
-              <span class="ps-2">Add New Brand</span>
-            </a>
-          </li>
-          <li>
-            <hr class="dropdown-divider my-1">
-          </li>
-          <li>
-            <a class="dropdown-item text-dark" href="<?= $admin ?>promos/create.php">
+            <a class="dropdown-item text-dark" href="<?= $merchant ?>promos/create.php">
               <i class="fas fa-plus"></i>
               <span class="ps-2">Add New Promo</span>
             </a>
@@ -44,36 +35,9 @@
             <hr class="dropdown-divider my-1">
           </li>
           <li>
-            <a class="dropdown-item text-dark" href="<?= $admin ?>category/create.php">
-              <i class="fas fa-plus"></i>
-              <span class="ps-2">Add New Category</span>
-            </a>
-          </li>
-          <li>
-            <hr class="dropdown-divider my-1">
-          </li>
-          <li>
-            <a class="dropdown-item text-dark" href="<?= $admin ?>products/create.php">
+            <a class="dropdown-item text-dark" href="<?= $merchant ?>products/create.php">
               <i class="fas fa-plus"></i>
               <span class="ps-2">Add New Product</span>
-            </a>
-          </li>
-          <li>
-            <hr class="dropdown-divider my-1">
-          </li>
-          <li>
-            <a class="dropdown-item text-dark" href="<?= $admin ?>stores/create.php">
-              <i class="fas fa-plus"></i>
-              <span class="ps-2">Add New Mechant</span>
-            </a>
-          </li>
-          <li>
-            <hr class="dropdown-divider my-1">
-          </li>
-          <li>
-            <a class="dropdown-item text-dark" href="<?= $admin ?>users/create.php">
-              <i class="fas fa-plus"></i>
-              <span class="ps-2">Add New User</span>
             </a>
           </li>
         </ul>
@@ -86,7 +50,7 @@
       <form action="" method="post" class="d-flex ms-auto col-lg-7" role="search">
         <div class="input-group">
           <input type="search" class="form-control" placeholder="Search" aria-label="Search">
-          <button class="btn btn-primary" type="submit">
+          <button class="btn btn-danger text-white" type="submit">
             <i class="fas fa-magnifying-glass"></i>
           </button>
         </div>
@@ -113,12 +77,12 @@
                 </div>
               </div>
               <div class="card-body p-2">
-                <a class="dropdown-item" href="javascript:void(0)">Edit Profile</a>
+                <a class="dropdown-item" href="#">Edit Profile</a>
                 <hr class="dropdown-divider my-0">
-                <a class="dropdown-item" href="javascript:void(0)">Settings</a>
+                <a class="dropdown-item" href="#">Settings</a>
               </div>
               <div class="card-footer bg-danger py-0">
-                <a class="dropdown-item bg-danger text-center" href="<?= $admin ?>logout.php">
+                <a class="dropdown-item bg-danger text-center" href="#">
                   <i class="fas fa-power-off"></i>
                   <span>Logout</span>
                 </a>

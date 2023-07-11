@@ -3,11 +3,25 @@ require __DIR__ . '/vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Class\Products;
 use App\Database;
 $db = new Database();
-$pageName = "Product Display";
-require __DIR__ . '/components/header.php';
+$products = new Products($db->conn);
 
+if (isset($_GET['product'])) {
+  $slug = $_GET['product'];
+  // $product = $products->show($slug);
+  try {
+    $product = $products->show($slug);
+  } catch (Exception $e) {
+    //throw $th;
+  }
+}
+
+$pageName = $product['product_title'];
+
+require __DIR__ . '/components/header.php';
 ?>
 <body>
   <?php require __DIR__ . '/components/navbar/primary.php' ?>
@@ -73,7 +87,7 @@ require __DIR__ . '/components/header.php';
                 </nav>
               </div>
               <div class="card-body py-2">
-                <h4 class="card-title">Standard Horlicks</h4>
+                <h4 class="card-title"><?= isset($product['product_title']) ? $product['product_title'] : '' ?></h4>
                 <p class="card-text py-0">
                   <span class="badge bg-success">
                     <i class="fas fa-star"></i>
@@ -145,7 +159,7 @@ require __DIR__ . '/components/header.php';
                     </a>
                   </div>
                   <div class="col">
-                    <a href="cart.html" class="btn btn-outline-primary d-block">
+                    <a href="cart.php" class="btn btn-outline-primary d-block">
                       <i class="fas fa-shopping-cart"></i>
                       <span class="ps-1">Add to Cart</span>
                     </a>

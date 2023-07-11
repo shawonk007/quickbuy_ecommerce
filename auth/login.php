@@ -69,14 +69,14 @@ require __DIR__ . '/../components/header.php';
                       <div class="form-outline mb-4">
                         <div class="input-group">
                           <span class="input-group-text"><i class="fas fa-user"></i></span>
-                          <input type="text" name="auth" class="form-control" id="" placeholder="Username, Phone or Email" />
+                          <input type="email" name="auth" class="form-control" id="auth" placeholder="Email Address" />
                         </div>
                         <!-- <label class="form-label" for="form2Example11">Username</label> -->
                       </div>
                       <div class="form-outline mb-4">
                         <div class="input-group">
                           <span class="input-group-text"><i class="fas fa-key"></i></span>
-                          <input type="password" name="password" class="form-control" id="" placeholder="Password" />
+                          <input type="password" name="password" class="form-control" id="password" placeholder="Password" />
                         </div>
                         <!-- <label class="form-label" for="form2Example22">Password</label> -->
                       </div>

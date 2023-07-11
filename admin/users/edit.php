@@ -6,23 +6,24 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
+use App\Auth;
 use App\Class\Profile;
 use App\Database;
 use App\Class\Roles;
 use App\Class\Users;
+
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isAdmin()) {
+    header("Location: ../login.php");
+    exit();
+  }
+}
+
 $db = new Database();
 $roles = new Roles($db->conn);
 $users = new Users($db->conn);
-
-$pageName = "Edit User";
-$pageGroup = "Users & Members";
-$currentGroup = ["Users", "users/index.php"];
-$currentPage = "Edit";
-require __DIR__ . '/../../components/header.php';
-
-$jsonData = file_get_contents(config("app.root") . 'assets/data/bangladesh.json');
-$data = json_decode($jsonData, true);
-$divisions = $data['divisions'];
 
 if (isset($_GET['id'])) {
   $id = $_GET['id'];
@@ -33,6 +34,17 @@ if (isset($_GET['id'])) {
     //throw $th;
   }
 }
+
+$pageName = "Edit User";
+$pageGroup = "Users & Members";
+$currentGroup = ["Users", "users/index.php"];
+$currentPage = "Edit";
+
+$jsonData = file_get_contents(config("app.root") . 'assets/data/bangladesh.json');
+$data = json_decode($jsonData, true);
+$divisions = $data['divisions'];
+
+require __DIR__ . '/../../components/header.php';
 ?>
 <style>
   label strong {

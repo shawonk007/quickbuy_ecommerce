@@ -7,16 +7,16 @@ class ProductStock
     private static $conn;
     private static $table = 'product_stock';
 
-    public static function setConnection($db)
+    public static function initialize($db)
     {
         self::$conn = $db;
     }
 
-    public static function addProductStock($productId, $quantity)
+    public static function addProductStock($productId, $quantity, $status)
     {
-        $sql = "INSERT INTO " . self::$table . " (product_id, quantity) VALUES (?, ?)";
+        $sql = "INSERT INTO " . self::$table . " (product_id, stock_quantity, stock_status, created_at) VALUES (?, ?, ?, NOW())";
         $stmt = self::$conn->prepare($sql);
-        $stmt->bind_param("ii", $productId, $quantity);
+        $stmt->bind_param("iii", $productId, $quantity, $status);
         $stmt->execute();
         $productStockId = $stmt->insert_id;
         $stmt->close();
@@ -24,11 +24,11 @@ class ProductStock
         return $productStockId;
     }
 
-    public static function updateProductStock($productStockId, $quantity)
+    public static function updateProductStock($productStockId, $quantity, $status)
     {
-        $sql = "UPDATE " . self::$table . " SET quantity = ? WHERE product_stock_id = ?";
+        $sql = "UPDATE " . self::$table . " SET stock_quantity = ?, stock_status = ? WHERE stock_id = ?";
         $stmt = self::$conn->prepare($sql);
-        $stmt->bind_param("ii", $quantity, $productStockId);
+        $stmt->bind_param("iii", $quantity, $status, $productStockId);
         $stmt->execute();
         $affectedRows = $stmt->affected_rows;
         $stmt->close();
@@ -38,7 +38,7 @@ class ProductStock
 
     public static function getProductStock($productStockId)
     {
-        $sql = "SELECT * FROM " . self::$table . " WHERE product_stock_id = ?";
+        $sql = "SELECT * FROM " . self::$table . " WHERE stock_id = ?";
         $stmt = self::$conn->prepare($sql);
         $stmt->bind_param("i", $productStockId);
         $stmt->execute();
@@ -52,7 +52,7 @@ class ProductStock
     public static function checkStockAvailability($productStockId)
     {
         $productStock = self::getProductStock($productStockId);
-        if ($productStock && $productStock['quantity'] > 0) {
+        if ($productStock && $productStock['stock_quantity'] > 0) {
             return true; // Stock is available
         }
         return false; // Stock is not available
@@ -61,7 +61,7 @@ class ProductStock
     public static function sendStockNotification($productStockId)
 {
     $productStock = self::getProductStock($productStockId);
-    if ($productStock && $productStock['quantity'] == 0) {
+    if ($productStock && $productStock['stock_quantity'] == 0) {
         // Send notification that the product is out of stock
         $productId = $productStock['product_id'];
         $productName = self::getProductName($productId);
@@ -71,11 +71,11 @@ class ProductStock
         // You would need to implement the actual notification sending code here
 
         return true; // Notification sent
-    } elseif ($productStock && $productStock['quantity'] < 10) {
+    } elseif ($productStock && $productStock['stock_quantity'] < 10) {
         // Send notification that the product stock is running low
         $productId = $productStock['product_id'];
         $productName = self::getProductName($productId);
-        $remainingStock = $productStock['quantity'];
+        $remainingStock = $productStock['stock_quantity'];
         $notificationMessage = "The stock for product '{$productName}' is running low. Remaining stock: {$remainingStock}.";
 
         // Logic for sending notification (e.g., email, SMS, push notification)

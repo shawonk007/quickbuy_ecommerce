@@ -7,12 +7,22 @@ if (session_status() === PHP_SESSION_NONE) {
 use App\Auth;
 use App\Database;
 
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isAdmin()) {
+    header("Location: ../../auth/login.php");
+    exit();
+  }
+}
+
 $db = new Database();
+
 $pageName = "Settings";
 $pageGroup = "Settings";
 $currentPage = "Settings";
+
 require __DIR__ . '/../../components/header.php';
-// require_once "../connection.php";
 ?>
 
 <head>

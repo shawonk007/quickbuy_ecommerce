@@ -4,24 +4,22 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
+use App\Auth;
 use App\Class\Roles;
 use App\Database;
+
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isAdmin()) {
+    header("Location: ../login.php");
+    exit();
+  }
+}
+
 $db = new Database();
 $roles = new Roles($db->conn);
-$pageName = "Edit Role";
-$pageGroup = "Users Settings";
-$currentGroup = ["Roles", "roles/index.php"];
-$currentPage = "Edit";
-require __DIR__ . '/../../components/header.php';
 
-$errors = [];
-function logError($errorMessage) {
-  global $pageName;
-  $logFile = __DIR__ . '/errors.log'; // Specify the log file name and path
-  $logMessage = '['. date('Y-m-d H:i:s A') . ']' . ' | ' . 'ERROR from ' . $pageName . $errorMessage . PHP_EOL ;
-  file_put_contents($logFile, $logMessage, FILE_APPEND);
-  logError($logMessage); // Call the logError function recursively
-}
 if (isset($_GET['id'])) {
   $id = $_GET['id'];
   try {
@@ -30,6 +28,13 @@ if (isset($_GET['id'])) {
     // exit();
   }
 }
+
+$pageName = "Edit Role";
+$pageGroup = "Users Settings";
+$currentGroup = ["Roles", "roles/index.php"];
+$currentPage = "Edit";
+
+require __DIR__ . '/../../components/header.php';
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>

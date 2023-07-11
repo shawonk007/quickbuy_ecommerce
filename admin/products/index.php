@@ -3,11 +3,28 @@ require __DIR__ . '/../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Auth;
+use App\Class\Category;
 use App\Database;
+use App\Class\Products;
+
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isAdmin()) {
+    header("Location: ../login.php");
+    exit();
+  }
+}
+
 $db = new Database();
+$products = new Products($db->conn);
+
 $pageName = "Manage Products";
 $pageGroup = "Product Catalogue";
 $currentPage = "Products";
+
 require __DIR__ . '/../../components/header.php';
 ?>
 <body>
@@ -48,20 +65,47 @@ require __DIR__ . '/../../components/header.php';
               <thead class="table-dark">
                 <tr>
                   <th scope="col">SL</th>
-                  <th scope="col">Name of Users</th>
-                  <th scope="col">Promo Code</th>
-                  <th scope="col">User Role</th>
+                  <th scope="col">Product Title</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Price</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
+                <?php $productList = $products->index();
+                foreach ($productList as $k => $product) {
+                  $statusLabel = "";
+                  $statusClass = "";
+                  if ($product['product_status'] == 1) {
+                    $statusLabel = "Active";
+                    $statusClass = "bg-success";
+                  } elseif ($product['product_status'] == 0) {
+                    $statusLabel = "Deactive";
+                    $statusClass = "bg-danger";
+                  } else {
+                    $statusLabel = "Pending";
+                    $statusClass = "bg-secondary";
+                  }
+                ?>
                 <tr>
-                  <th scope="row">1</th>
-                  <td>Coupon</td>
-                  <td>XXXX-XXXX-XXXX</td>
-                  <td>Coupon</td>
-                  <td>Active</td>
+                  <th scope="row"><?= $k+1 ?></th>
+                  <td><?= $product['product_title'] ?></td>
+                  <td><?= Category::parent($product['product_category'], $db) ?></td>
+                  <td><?= $product['regular_price'] ?></td>
+                  <td>
+                    <span class="badge <?= $statusClass ?>"><?= $statusLabel ?></span>
+                  </td>
+                  <td>
+                    <a href="edit.php?id=<?= $product['product_id'] ?>" class="btn btn-outline-info btn-sm">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteProduct(<?= $product['product_id'] ?>)" >
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </td>
                 </tr>
+                <?php } ?>
               </tbody>
             </table>
           </div>
@@ -121,5 +165,43 @@ require __DIR__ . '/../../components/header.php';
       </div>
     </section>
   </main>
+  <script>
+    function deleteProduct(productId) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: '',
+            type: 'POST',
+            data: { id: productId },
+            success: function(response) {
+              console.log(response);
+              Swal.fire({
+                title: 'Deleted!',
+                text: 'Product has been deleted',
+                icon: 'success'
+              }).then(() => {
+                location.reload();
+              });
+            },
+            error: function() {
+              Swal.fire({
+                title: 'Error',
+                text: 'An error occurred while deleting the role.',
+                icon: 'error'
+              });
+            }
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>

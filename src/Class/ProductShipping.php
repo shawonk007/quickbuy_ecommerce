@@ -5,18 +5,18 @@ namespace App\Class;
 class ProductShipping
 {
     private static $conn;
-    private static $table = 'product_shipping';
+    private static $table = 'product_shippings';
 
-    public static function setConnection($db)
+    public static function initialize($db)
     {
         self::$conn = $db;
     }
 
-    public static function addProductShipping($productId, $weight, $length, $width, $height, $shippingClass)
+    public static function addProductShipping($productId, $weight, $length, $width, $height)
     {
-        $sql = "INSERT INTO " . self::$table . " (product_id, weight, length, width, height, shipping_class, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())";
+        $sql = "INSERT INTO " . self::$table . " (product_id, product_weight, product_length, product_width, product_height) VALUES (?, ?, ?, ?, ?)";
         $stmt = self::$conn->prepare($sql);
-        $stmt->bind_param("iddddd", $productId, $weight, $length, $width, $height, $shippingClass);
+        $stmt->bind_param("idddd", $productId, $weight, $length, $width, $height);
         $stmt->execute();
         $productShippingId = $stmt->insert_id;
         $stmt->close();
@@ -24,11 +24,12 @@ class ProductShipping
         return $productShippingId;
     }
 
-    public static function updateProductShipping($productShippingId, $weight, $length, $width, $height, $shippingClass)
+
+    public static function updateProductShipping($productShippingId, $weight, $length, $width, $height)
     {
-        $sql = "UPDATE " . self::$table . " SET weight = ?, length = ?, width = ?, height = ?, shipping_class = ? WHERE product_shipping_id = ?";
+        $sql = "UPDATE " . self::$table . " SET product_weight = ?, product_length = ?, product_width = ?, product_height = ? WHERE product_shipping_id = ?";
         $stmt = self::$conn->prepare($sql);
-        $stmt->bind_param("dddds", $weight, $length, $width, $height, $shippingClass, $productShippingId);
+        $stmt->bind_param("ddddi", $weight, $length, $width, $height, $productShippingId);
         $stmt->execute();
         $affectedRows = $stmt->affected_rows;
         $stmt->close();
@@ -38,7 +39,7 @@ class ProductShipping
 
     public static function getProductShipping($productShippingId)
     {
-        $sql = "SELECT * FROM " . self::$table . " WHERE product_shipping_id = ?";
+        $sql = "SELECT * FROM " . self::$table . " WHERE pship_id = ?";
         $stmt = self::$conn->prepare($sql);
         $stmt->bind_param("i", $productShippingId);
         $stmt->execute();

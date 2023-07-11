@@ -7,7 +7,7 @@ class Report
     private static $conn;
     private static $table = 'reports';
 
-    public static function setConnection($db)
+    public static function initialize($db)
     {
         self::$conn = $db;
     }
@@ -26,7 +26,7 @@ class Report
 
     public static function getReports()
     {
-        $sql = "SELECT * FROM " . self::$table . " ORDER BY created_at ASC";
+        $sql = "SELECT * FROM " . self::$table . " ORDER BY created_at DESC";
         $result = self::$conn->query($sql);
         $reports = [];
 

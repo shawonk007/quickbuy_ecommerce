@@ -11,7 +11,7 @@ require __DIR__ . '/../components/header.php';
 <body>
   <main>
     <section class="d-flex align-items-center justify-content-center vh-100">
-        <form action="" method="post">
+        <form action="<?= $root ?>/src/actions/auth/admin.php" method="post">
           <div class="card shadow" style="width: 25rem;">
             <div class="card-header bg-primary pb-0">
               <h4 class="card-title text-white py-0" style="text-align: center;"><b>Admin Login</b></h4>
@@ -26,10 +26,7 @@ require __DIR__ . '/../components/header.php';
                   <span class="input-group-text" id="auth">
                     <i class="fas fa-user"></i>
                   </span>
-                  <input type="text" class="form-control" id="auth" placeholder="Username" required />
-                </div>
-                <div class="mt-1">
-                  <p class="text-danger">Invalid Email or Username!</p>
+                  <input type="email" name="auth" class="form-control" id="auth" placeholder="Email Address" required />
                 </div>
               </div>
               <div class="from-group my-3">
@@ -38,10 +35,7 @@ require __DIR__ . '/../components/header.php';
                   <span class="input-group-text" id="basic-addon1">
                     <i class="fas fa-key"></i>
                   </span>
-                  <input type="password" class="form-control" id="password" placeholder="Password" required />
-                </div>
-                <div class="mt-1">
-                  <p class="text-danger">Invalid Password!</p>
+                  <input type="password" name="password" class="form-control" id="password" placeholder="Password" required />
                 </div>
               </div>
               <div class="row d-flex align-items-center justify-content-between">
@@ -68,5 +62,71 @@ require __DIR__ . '/../components/header.php';
         </form>
     </section>
   </main>
+  <script>
+    $(document).ready(function() {
+      $('form').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+          url: '<?= config("app.root") ?>src/actions/auth/admin.php',
+          type: 'POST',
+          data: $(this).serialize(),
+          dataType: 'json',
+          success: function(response) {
+            console.log(response);
+            if (response.success) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Access Granted',
+                text: response.message,
+                timer: 1000,
+                showConfirmButton: false
+              }).then(function() {
+                if (response.redirect) {
+                  window.location.href = response.redirect;
+                } else {
+                  location .reload();
+                }
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: response.message,
+                timer: 2000,
+                showConfirmButton: false,
+              });
+            }
+          },
+          error: function(xhr, status, error) {
+            if (xhr.status === 400) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: 'Bad request. Please check your credentials.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            } else if (xhr.status === 500) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: 'Internal server error. Please try again later.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: 'An error occurred while processing the request.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            }
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>

@@ -7,7 +7,7 @@ class Reviews
     private static $conn;
     private static $table = 'reviews';
 
-    public static function setConnection($db)
+    public static function initialize($db)
     {
         self::$conn = $db;
     }

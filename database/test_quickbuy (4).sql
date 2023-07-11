@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 07, 2023 at 04:42 PM
+-- Generation Time: Jul 11, 2023 at 02:01 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.2.0
 
@@ -65,6 +65,23 @@ CREATE TABLE IF NOT EXISTS `brands` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cart`
+--
+
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE IF NOT EXISTS `cart` (
+  `cart_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `quantity` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`cart_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
@@ -83,6 +100,66 @@ CREATE TABLE IF NOT EXISTS `categories` (
   UNIQUE KEY `cat_title_2` (`cat_title`),
   UNIQUE KEY `cat_slug` (`cat_slug`),
   KEY `cat_title` (`cat_title`,`cat_slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`cat_id`, `cat_title`, `cat_description`, `parent_id`, `cat_slug`, `cat_status`, `is_featured`, `created_at`, `updated_at`) VALUES
+(1, 'Phone & Accessories', '', 0, 'phone-and-accessories', 1, NULL, '2023-07-07 17:05:26', '2023-07-07 17:13:16'),
+(2, 'Mobile & Tablets', '', 1, 'mobile-and-tablets', 1, NULL, '2023-07-07 17:05:47', '2023-07-07 17:14:00'),
+(3, 'Feature Phone', '', 2, 'feature-phone', 1, NULL, '2023-07-07 17:06:06', '2023-07-07 17:06:06'),
+(4, 'Rugged Phone', '', 2, 'rugged-phone', 1, NULL, '2023-07-07 17:06:22', '2023-07-07 17:06:22'),
+(5, 'Smartphone', '', 2, 'smartphone', 1, NULL, '2023-07-07 17:08:28', '2023-07-07 17:08:28'),
+(6, 'Gaming Phone', '', 2, 'gaming-phone', 1, NULL, '2023-07-07 17:09:08', '2023-07-07 17:09:08'),
+(7, 'Tablet', '', 2, 'tablet', 1, NULL, '2023-07-07 17:09:34', '2023-07-07 17:09:34'),
+(8, 'Power & Chargers', '', 1, 'power-and-chargers', 1, NULL, '2023-07-07 17:09:52', '2023-07-07 17:14:10'),
+(9, 'Power Bank', '', 8, 'power-bank', 1, NULL, '2023-07-07 17:10:41', '2023-07-07 17:10:41'),
+(10, 'Battery', '', 8, 'battery', 1, NULL, '2023-07-07 17:10:57', '2023-07-07 17:10:57'),
+(11, 'Mobile Charger', '', 8, 'mobile-charger', 1, NULL, '2023-07-07 17:11:24', '2023-07-07 17:11:24'),
+(12, 'Battery Accessories', '', 8, 'battery-accessories', 0, NULL, '2023-07-07 17:12:08', '2023-07-07 17:12:08'),
+(13, 'Charging Adapters', '', 8, 'charging-adapters', 1, NULL, '2023-07-07 17:12:23', '2023-07-07 17:12:23'),
+(14, 'Charging Station', '', 8, 'charging-station', 1, NULL, '2023-07-07 17:12:37', '2023-07-07 17:12:37'),
+(15, 'Phone Accessories', '', 1, 'phone-accessories', 1, NULL, '2023-07-07 17:14:32', '2023-07-07 17:14:32'),
+(16, 'Phone Bags & Cases', '', 15, 'phone-bags-cases', 1, NULL, '2023-07-07 17:15:08', '2023-07-07 17:15:08'),
+(17, 'Phone Holders', '', 15, 'phone-holders', 1, NULL, '2023-07-07 17:15:27', '2023-07-07 17:15:27'),
+(18, 'Phone Straps', '', 15, 'phone-straps', 1, NULL, '2023-07-07 17:15:46', '2023-07-07 17:15:46'),
+(19, 'Parts & Components', '', 1, 'parts-components', 1, NULL, '2023-07-07 17:16:22', '2023-07-07 17:16:22'),
+(20, 'Mobile Antenna', '', 19, 'mobile-antenna', 1, NULL, '2023-07-07 17:16:48', '2023-07-07 17:16:48'),
+(21, 'Motherboard', '', 19, 'motherboard', 1, NULL, '2023-07-07 17:17:01', '2023-07-07 17:17:01'),
+(22, 'Phone LCDs', '', 19, 'phone-lcds', 1, NULL, '2023-07-07 17:17:16', '2023-07-07 17:17:16'),
+(23, 'Phone Keypads', '', 19, 'phone-keypads', 1, NULL, '2023-07-07 17:17:30', '2023-07-07 17:17:30'),
+(24, 'Phone Housing', '', 19, 'phone-housing', 1, NULL, '2023-07-07 17:17:46', '2023-07-07 17:17:46'),
+(25, 'Phone Flex Cables', '', 19, 'phone-flex-cables', 1, NULL, '2023-07-07 17:18:01', '2023-07-07 17:18:01'),
+(26, 'Other Phones', '', 1, 'other-phones', 1, NULL, '2023-07-07 17:18:14', '2023-07-07 17:18:14'),
+(27, 'Telephones', '', 26, 'telephones', 1, NULL, '2023-07-07 17:18:28', '2023-07-07 17:18:28'),
+(28, 'Pagers', '', 26, 'pagers', 1, NULL, '2023-07-07 17:18:40', '2023-07-07 17:18:40'),
+(29, 'Walkie Talkie', '', 26, 'walkie-talkie', 1, NULL, '2023-07-07 17:19:30', '2023-07-07 17:19:30'),
+(30, 'Computer & Peripherals', '', 0, 'computer-and-peripherals', 1, 1, '2023-07-07 17:19:44', '2023-07-07 17:20:27'),
+(31, 'Personal Computer', '', 30, 'personal-computer', 1, NULL, '2023-07-07 17:21:36', '2023-07-07 17:21:36'),
+(32, 'All-in-One Computer', '', 31, 'all-in-one-computer', 1, NULL, '2023-07-07 17:21:50', '2023-07-07 17:21:50'),
+(33, 'Laptop', '', 31, 'laptop', 1, NULL, '2023-07-07 17:22:03', '2023-07-07 17:22:03'),
+(34, 'Notebook', '', 31, 'notebook', 1, NULL, '2023-07-07 17:22:17', '2023-07-07 17:22:17'),
+(35, 'Desktop', '', 31, 'desktop', 1, NULL, '2023-07-07 17:22:36', '2023-07-07 17:22:36'),
+(36, 'Hardware Components', '', 30, 'hardware-components', 1, NULL, '2023-07-07 17:23:29', '2023-07-07 17:23:29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE IF NOT EXISTS `comments` (
+  `comment_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `post_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `comment_note` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`comment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -137,6 +214,25 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   `item_quantity` int NOT NULL,
   `item_price` double(10,2) NOT NULL,
   PRIMARY KEY (`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+DROP TABLE IF EXISTS `payments`;
+CREATE TABLE IF NOT EXISTS `payments` (
+  `payment_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `order_id` int NOT NULL,
+  `payment_amount` decimal(10,2) NOT NULL,
+  `payment_method` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `transaction_id` varchar(25) COLLATE utf8mb4_general_ci NOT NULL,
+  `payment_status` tinyint NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`payment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -222,7 +318,31 @@ CREATE TABLE IF NOT EXISTS `products` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`product_id`, `user_id`, `vendor_id`, `product_title`, `product_description`, `product_category`, `product_sku`, `product_brand`, `regular_price`, `offer_price`, `product_highlights`, `product_slug`, `product_status`, `is_featured`, `created_at`, `updated_at`) VALUES
+(1, 0, 0, 'Test Product 01', '<p>lorem ipsum</p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum</p>', 'test-product-01', 1, NULL, '2023-07-09 12:48:54', '2023-07-09 12:48:54'),
+(2, 0, 0, 'Test Product 01', '<p>Lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>Lorem ipsum</p>', 'test-product-01', 1, NULL, '2023-07-09 12:57:28', '2023-07-09 12:57:28'),
+(3, 0, 0, 'Test Product 01', '<p>lorep ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorep ipsum</p>', 'test-product-01', 1, NULL, '2023-07-09 13:01:10', '2023-07-09 13:01:10'),
+(4, 0, 0, 'Test Product 01', '<p>lorep ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorep ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 13:02:08', '2023-07-09 13:02:08'),
+(5, 0, 0, 'Test Product 01', '<p>lorep ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorep ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 13:13:58', '2023-07-09 13:13:58'),
+(6, 0, 0, 'Test Product 01', '<p>lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 13:14:59', '2023-07-09 13:14:59'),
+(7, 0, 0, 'Test Product 01', '<p>lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 13:16:28', '2023-07-09 13:16:28'),
+(8, 0, 0, 'Test Product 01', '<p>lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 13:17:01', '2023-07-09 13:17:01'),
+(9, 0, 0, 'Test Product 01', '<p>lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 13:17:31', '2023-07-09 13:17:31'),
+(10, 0, 0, 'Test Product 01', '<p>lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 13:18:39', '2023-07-09 13:18:39'),
+(11, 0, 0, 'Test Product 01', '<p>lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 13:19:15', '2023-07-09 13:19:15'),
+(12, 0, 0, 'Test Product 01', '<p>lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 13:19:45', '2023-07-09 13:19:45'),
+(13, 0, 0, 'Test Product 01', '<p>lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 13:20:36', '2023-07-09 13:20:36'),
+(14, 0, 0, 'Test Product 01', '<p>lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 13:21:17', '2023-07-09 13:21:17'),
+(15, 0, 0, 'Test Product 01', '<p>lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 13:22:34', '2023-07-09 13:22:34'),
+(16, 0, 0, 'Test Product 01', '<p>lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 13:23:17', '2023-07-09 13:23:17'),
+(17, 0, 0, 'Test Product 01', '<p>lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum<br></p>', 'test-product-01', 1, NULL, '2023-07-09 14:17:55', '2023-07-09 14:17:55'),
+(18, 0, 0, 'Test Product 01', '<p>lorem ipsum<br></p>', 5, 'QBP-00001', 0, 1111.00, 1000.00, '<p>lorem ipsum</p>', 'test-product-01', 1, NULL, '2023-07-09 14:21:44', '2023-07-09 14:21:44');
 
 -- --------------------------------------------------------
 
@@ -283,10 +403,9 @@ DROP TABLE IF EXISTS `product_options`;
 CREATE TABLE IF NOT EXISTS `product_options` (
   `option_id` int NOT NULL AUTO_INCREMENT,
   `product_id` int NOT NULL,
-  `option_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `option_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `option_set` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `option_type` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `option_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`option_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -328,6 +447,33 @@ CREATE TABLE IF NOT EXISTS `product_reports` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_shippings`
+--
+
+DROP TABLE IF EXISTS `product_shippings`;
+CREATE TABLE IF NOT EXISTS `product_shippings` (
+  `pship_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `product_weight` decimal(10,2) DEFAULT NULL,
+  `product_length` decimal(10,2) DEFAULT NULL,
+  `product_width` decimal(10,2) DEFAULT NULL,
+  `product_height` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_shippings`
+--
+
+INSERT INTO `product_shippings` (`pship_id`, `product_id`, `product_weight`, `product_length`, `product_width`, `product_height`) VALUES
+(0, 10, '10.00', '20.00', '10.00', '20.00'),
+(0, 11, '10.00', '20.00', '10.00', '20.00'),
+(0, 12, '10.00', '20.00', '10.00', '20.00'),
+(0, 13, '10.00', '20.00', '10.00', '20.00'),
+(0, 15, '10.00', '20.00', '10.00', '20.00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product_stock`
 --
 
@@ -336,8 +482,27 @@ CREATE TABLE IF NOT EXISTS `product_stock` (
   `stock_id` int NOT NULL AUTO_INCREMENT,
   `product_id` int NOT NULL,
   `stock_quantity` int NOT NULL,
+  `stock_status` tinyint DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`stock_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_stock`
+--
+
+INSERT INTO `product_stock` (`stock_id`, `product_id`, `stock_quantity`, `stock_status`, `created_at`) VALUES
+(1, 3, 100, NULL, '2023-07-09 13:01:11'),
+(2, 4, 10, NULL, '2023-07-09 13:02:08'),
+(3, 10, 10, 0, '2023-07-09 13:18:39'),
+(4, 11, 10, 0, '2023-07-09 13:19:15'),
+(5, 12, 10, 0, '2023-07-09 13:19:45'),
+(6, 13, 10, 1, '2023-07-09 13:20:36'),
+(7, 14, 10, 1, '2023-07-09 13:21:17'),
+(8, 15, 10, 1, '2023-07-09 13:22:34'),
+(9, 16, 10, 1, '2023-07-09 13:23:17'),
+(10, 17, 10, 0, '2023-07-09 14:17:55'),
+(11, 18, 10, 0, '2023-07-09 14:21:44');
 
 -- --------------------------------------------------------
 
@@ -384,6 +549,43 @@ CREATE TABLE IF NOT EXISTS `promo_usage` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reports`
+--
+
+DROP TABLE IF EXISTS `reports`;
+CREATE TABLE IF NOT EXISTS `reports` (
+  `report_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `post_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `vendor_id` int NOT NULL,
+  `report_reaseon` text COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`report_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reviews`
+--
+
+DROP TABLE IF EXISTS `reviews`;
+CREATE TABLE IF NOT EXISTS `reviews` (
+  `review_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `vendor_id` int NOT NULL,
+  `ratings` int NOT NULL,
+  `review_note` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`review_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `roles`
 --
 
@@ -398,7 +600,20 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`role_id`),
   UNIQUE KEY `role_slug` (`role_slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`role_id`, `role_title`, `role_description`, `role_slug`, `role_status`, `created_at`, `updated_at`) VALUES
+(1, 'Administrator', '', 'administrator', 1, '2023-07-07 16:54:15', '2023-07-07 16:54:15'),
+(2, 'Moderator', '', 'moderator', 1, '2023-07-07 16:54:29', '2023-07-07 16:54:29'),
+(3, 'Editor', '', 'editor', 1, '2023-07-07 16:54:44', '2023-07-07 16:54:44'),
+(4, 'Contributor', '', 'contributor', 1, '2023-07-07 16:54:55', '2023-07-07 16:54:55'),
+(5, 'Author', '', 'author', 1, '2023-07-07 16:56:43', '2023-07-07 16:56:43'),
+(6, 'Merchant', '', 'merchant', 1, '2023-07-07 16:56:55', '2023-07-07 16:56:55'),
+(7, 'Customer', '', 'customer', 1, '2023-07-07 16:57:06', '2023-07-07 16:57:06');
 
 -- --------------------------------------------------------
 
@@ -423,7 +638,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`,`email_address`,`cell_phone`),
   KEY `role` (`role`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `email_address`, `email_verified_at`, `cell_phone`, `password`, `role`, `user_status`, `created_at`, `updated_at`) VALUES
+(1, 'Shawon', 'Khan', 'shawonk007', 'shawonk007@gmail.com', NULL, '+88 (016) 88-947741', '$2y$10$bcdEFMKRKRDDtXDru7du6OGfv6tGL3hdwu3i0qxuD9hUkLE1IjwAm', 6, NULL, '2023-07-09 14:55:46', '2023-07-09 14:55:46');
 
 -- --------------------------------------------------------
 
@@ -501,7 +723,7 @@ CREATE TABLE IF NOT EXISTS `vendors` (
   PRIMARY KEY (`store_id`),
   UNIQUE KEY `user_id` (`user_id`,`store_slug`),
   KEY `store_name` (`store_name`,`store_slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -544,6 +766,21 @@ CREATE TABLE IF NOT EXISTS `vendor_ratings` (
   PRIMARY KEY (`vrating_id`),
   KEY `user_id` (`user_id`),
   KEY `vendor_id` (`vendor_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wishlists`
+--
+
+DROP TABLE IF EXISTS `wishlists`;
+CREATE TABLE IF NOT EXISTS `wishlists` (
+  `wishlist_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`wishlist_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

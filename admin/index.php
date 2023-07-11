@@ -8,17 +8,22 @@ if (session_status() === PHP_SESSION_NONE) {
 use App\Auth;
 use App\Database;
 $db = new Database();
+
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isAdmin()) {
+    header("Location: login.php");
+    exit();
+  }
+}
+
 $pageName = "Dashboard";
 $pageGroup = "Dashboard";
 $currentPage = "Dashboard";
 
-// if (Auth::check() === false && Auth::isAdmin() === false) {
-//   header("Location: login.php");
-// }
-
 $root = config("app.admin");
 require __DIR__ . '/../components/header.php';
-
 ?>
 <style>
   @import url("https://cdnjs.cloudflare.com/ajax/libs/jvectormap/2.0.5/jquery-jvectormap.min.css");

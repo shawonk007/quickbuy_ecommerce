@@ -42,7 +42,7 @@
 }
 #sidebar nav {
   margin-left: -2rem;
-  height: 100vh;
+  height: calc(100vh - 50px);
   overflow-y: auto;
 }
 #sidebar nav ul {

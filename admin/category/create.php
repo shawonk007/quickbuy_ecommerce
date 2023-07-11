@@ -3,14 +3,28 @@ require __DIR__ . '/../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Auth;
 use App\Database;
 use App\Class\Category;
+
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isAdmin()) {
+    header("Location: ../login.php");
+    exit();
+  }
+}
+
 $db = new Database();
 $categories = new Category($db->conn);
+
 $pageName = "Add New Category";
 $pageGroup = "Category & Product";
 $currentGroup = ["Category", "category/index.php"];
 $currentPage = "Create";
+
 require __DIR__ . '/../../components/header.php';
 ?>
 <body>

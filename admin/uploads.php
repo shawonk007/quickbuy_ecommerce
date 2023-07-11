@@ -3,11 +3,24 @@ require __DIR__ . '/../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Auth;
 use App\Database;
 $db = new Database();
+
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isAdmin()) {
+    header("Location: login.php");
+    exit();
+  }
+}
+
 $pageName = "Uploads";
 $pageGroup = "Uploads Center";
 $currentPage = "Uploads";
+
 require __DIR__ . '/../components/header.php';
 ?>
 <body>

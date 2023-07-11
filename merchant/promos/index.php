@@ -7,35 +7,30 @@ if (session_status() === PHP_SESSION_NONE) {
 use App\Auth;
 use App\Database;
 
-
 Auth::initialize();
 
 if (!isset($_SESSION['login'])) {
   if (!Auth::check() || !Auth::isAdmin()) {
-    header("Location: ../login.php");
+    header("Location: ../../auth/login.php");
     exit();
   }
 }
 
 $db = new Database();
 
-$pageName = "Notifications";
-$pageGroup = "Notifications";
-$currentGroup = ["Notifications", "notifications/index.php"];
-$currentPage = "Index";
-
-
+$pageName = "Manage Coupons";
+$pageGroup = "Coupons & Vouchers";
+$currentPage = "Promos";
 
 require __DIR__ . '/../../components/header.php';
 ?>
 <body>
-  <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
+  <?php require __DIR__ . "/../../components/sidebar/merchant.php" ?>
   <main id="content">
     <!-- SCROLL UP BUTTON -->
     <?php include __DIR__ . '/../../components/navigation/scroll-to-top.php' ?>
-    <?php require __DIR__ . "/../../components/navbar/admin.php" ?>
-    <?php include __DIR__ . '/../../components/breadcrumb/admin/secondary.php' ?>
-    <section class="container-fluid my-5"></section>
+    <?php require __DIR__ . "/../../components/navbar/merchant.php" ?>
+    <?php include __DIR__ . '/../../components/breadcrumb/merchant/primary.php' ?>
     <section class="container-fluid my-5">
       <a href="create.php" class="btn btn-primary">
         <i class="fas fa-plus"></i>
@@ -48,13 +43,10 @@ require __DIR__ . '/../../components/header.php';
           <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all-tab-pane" type="button" role="tab" aria-controls="all-tab-pane" aria-selected="true">All</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin-tab-pane" type="button" role="tab" aria-controls="admin-tab-pane" aria-selected="false">Comments</button>
+          <button class="nav-link" id="coupon-tab" data-bs-toggle="tab" data-bs-target="#coupon-tab-pane" type="button" role="tab" aria-controls="coupon-tab-pane" aria-selected="false">Coupons</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="seller-tab" data-bs-toggle="tab" data-bs-target="#seller-tab-pane" type="button" role="tab" aria-controls="seller-tab-pane" aria-selected="false">Reports</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="buyer-tab" data-bs-toggle="tab" data-bs-target="#buyer-tab-pane" type="button" role="tab" aria-controls="buyer-tab-pane" aria-selected="false">Reviews</button>
+          <button class="nav-link" id="voucher-tab" data-bs-toggle="tab" data-bs-target="#voucher-tab-pane" type="button" role="tab" aria-controls="voucher-tab-pane" aria-selected="false">Vouchers</button>
         </li>
       </ul>
     </section>
@@ -66,9 +58,9 @@ require __DIR__ . '/../../components/header.php';
               <thead class="table-dark">
                 <tr>
                   <th scope="col">SL</th>
-                  <th scope="col">Name of Users</th>
+                  <th scope="col">Promo Title</th>
                   <th scope="col">Promo Code</th>
-                  <th scope="col">User Role</th>
+                  <th scope="col">Promo Type</th>
                   <th scope="col">Status</th>
                 </tr>
               </thead>

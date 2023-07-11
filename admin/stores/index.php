@@ -3,11 +3,25 @@ require __DIR__ . '../../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Auth;
 use App\Database;
+
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isAdmin()) {
+    header("Location: ../login.php");
+    exit();
+  }
+}
+
 $db = new Database();
+
 $pageName = "Manage Merchants";
 $pageGroup = "Seller Center";
 $currentPage = "Stores";
+
 require __DIR__ . '/../../components/header.php';
 ?>
 <body>

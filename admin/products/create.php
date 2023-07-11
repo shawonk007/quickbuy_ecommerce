@@ -3,14 +3,28 @@ require __DIR__ . '/../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Auth;
 use App\Database;
 use App\Class\Category;
+
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isAdmin()) {
+    header("Location: ../login.php");
+    exit();
+  }
+}
+
 $db = new Database();
 $categories = new Category($db->conn);
+
 $pageName = "Add New Product";
 $pageGroup = "Product Catalogue";
 $currentGroup = ["Products", "products/index.php"];
 $currentPage = "Create";
+
 require __DIR__ . '/../../components/header.php';
 ?>
 <style>
@@ -74,6 +88,28 @@ require __DIR__ . '/../../components/header.php';
                   <div class="col-12">
                     <textarea name="description" id="description" placeholder="Type product description here ..."></textarea>
                   </div>
+                  <div class="col-12">
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>Disabled</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">...</div>
+  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">...</div>
+  <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">...</div>
+  <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">...</div>
+</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -88,10 +124,10 @@ require __DIR__ . '/../../components/header.php';
                       <div class="col-3 d-flex align-items-center">
                         <strong>Option Name</strong>
                       </div>
-                      <div class="col-5">
-                        <input type="text" name="o_name" class="form-control form-control-sm" id="length" placeholder="Enter Name" />
+                      <div class="col-5 ">
+                        <input type="text" name="o_name[]" class="form-control form-control-sm pe-0 me-0" id="length" placeholder="Enter Name" />
                       </div>
-                      <div class="col-4 d-flex justify-content-end ">
+                      <div class="col-4 d-flex justify-content-end">
                         <button type="button" class="btn btn-primary btn-sm ms-1 me-1" id="new" >
                           <i class="fas fa-plus"></i>
                           <span class="ps-1">Add New</span>
@@ -106,10 +142,10 @@ require __DIR__ . '/../../components/header.php';
                   <div class="card-body pt-0 pb-2 my-0">
                     <div class="row g-3 py-1 mt-0 mb-1" id="optionSet" >
                       <div class="col-3">
-                        <input type="text" name="o_type" class="form-control form-control-sm" id="length" placeholder="Option Type" />
+                        <input type="text" name="o_type[]" class="form-control form-control-sm" id="length" placeholder="Option Type" />
                       </div>
                       <div class="col-7">
-                        <input type="text" name="o_value" class="form-control form-control-sm" id="length" placeholder="Option Value" />
+                        <input type="text" name="o_value[]" class="form-control form-control-sm" id="length" placeholder="Option Value" />
                       </div>
                       <div class="col-2 d-flex justify-content-end ">
                         <button type="button" class="btn btn-primary btn-sm ms-1 me-1" id="add" >
@@ -236,6 +272,10 @@ require __DIR__ . '/../../components/header.php';
                 <h5 class="card-title text-light font-bold py-0 my-0">Product Gallery</h5>
               </div>
               <div class="card-body">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  Launch static backdrop modal
+                </button>
                 <div class="row g-3">
                   <div class="col">
                     <label for="imageInput" class="d-flex flex-column align-items-center justify-content-center bg-light h-100" style="border: 3px solid lightgray; border-style: dashed;">
@@ -314,6 +354,24 @@ require __DIR__ . '/../../components/header.php';
         </div>
       </form>
     </section>
+    <!-- Modal -->
+    <section class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+          <div class="modal-header py-1">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer py-1">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Understood</button>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
   <script>
     $(document).ready(function() {
@@ -378,6 +436,69 @@ require __DIR__ . '/../../components/header.php';
         var optionSet = $("#optionSet");
         var newOptionSet = optionSet.clone(true);
         optionSet.parent().append(newOptionSet);
+      });
+
+      $('form').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+          url: '<?= config("app.root") ?>src/actions/products/store.php',
+          type: 'POST',
+          data: $(this).serialize(),
+          dataType: 'json',
+          success: function(response) {
+            console.log(response);
+            if (response.success) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Created',
+                text: response.message,
+                timer: 2000,
+                showConfirmButton: false
+              }).then(function() {
+                window.location.href = 'index.php';
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: response.message,
+                timer: 2000,
+                showConfirmButton: false
+              });
+            }
+          },
+          error: function(xhr, status, error) {
+            if (xhr.status === 400) {
+              // Bad request error
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Bad request. Please check your form data.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            } else if (xhr.status === 500) {
+              // Internal server error
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Internal server error. Please try again later.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            } else {
+              // Other errors
+              console.error(error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while processing the request.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            }
+          }
+        });
       });
     });
   </script>

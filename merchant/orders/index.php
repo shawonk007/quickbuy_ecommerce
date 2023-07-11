@@ -7,39 +7,35 @@ if (session_status() === PHP_SESSION_NONE) {
 use App\Auth;
 use App\Database;
 
-
 Auth::initialize();
 
 if (!isset($_SESSION['login'])) {
   if (!Auth::check() || !Auth::isAdmin()) {
-    header("Location: ../login.php");
+    header("Location: ../../auth/login.php");
     exit();
   }
 }
 
 $db = new Database();
 
-$pageName = "Notifications";
-$pageGroup = "Notifications";
-$currentGroup = ["Notifications", "notifications/index.php"];
+$pageName = "Manage Categories";
+$pageGroup = "Category & Product";
+$currentGroup = ["Category", "category/index.php"];
 $currentPage = "Index";
-
-
-
 require __DIR__ . '/../../components/header.php';
 ?>
 <body>
-  <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
+  <?php require __DIR__ . "/../../components/sidebar/merchant.php" ?>
   <main id="content">
     <!-- SCROLL UP BUTTON -->
     <?php include __DIR__ . '/../../components/navigation/scroll-to-top.php' ?>
-    <?php require __DIR__ . "/../../components/navbar/admin.php" ?>
-    <?php include __DIR__ . '/../../components/breadcrumb/admin/secondary.php' ?>
+    <?php require __DIR__ . "/../../components/navbar/merchant.php" ?>
+    <?php include __DIR__ . '/../../components/breadcrumb/merchant/secondary.php' ?>
     <section class="container-fluid my-5"></section>
     <section class="container-fluid my-5">
-      <a href="create.php" class="btn btn-primary">
+      <a href="view.php" class="btn btn-primary">
         <i class="fas fa-plus"></i>
-        <span class="ps-1">Add New</span>
+        <span class="ps-1">View</span>
       </a>
     </section>
     <section class="container-fluid my-5">
@@ -48,13 +44,13 @@ require __DIR__ . '/../../components/header.php';
           <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all-tab-pane" type="button" role="tab" aria-controls="all-tab-pane" aria-selected="true">All</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin-tab-pane" type="button" role="tab" aria-controls="admin-tab-pane" aria-selected="false">Comments</button>
+          <button class="nav-link" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin-tab-pane" type="button" role="tab" aria-controls="admin-tab-pane" aria-selected="false">Administrators</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="seller-tab" data-bs-toggle="tab" data-bs-target="#seller-tab-pane" type="button" role="tab" aria-controls="seller-tab-pane" aria-selected="false">Reports</button>
+          <button class="nav-link" id="seller-tab" data-bs-toggle="tab" data-bs-target="#seller-tab-pane" type="button" role="tab" aria-controls="seller-tab-pane" aria-selected="false">Merchants</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="buyer-tab" data-bs-toggle="tab" data-bs-target="#buyer-tab-pane" type="button" role="tab" aria-controls="buyer-tab-pane" aria-selected="false">Reviews</button>
+          <button class="nav-link" id="buyer-tab" data-bs-toggle="tab" data-bs-target="#buyer-tab-pane" type="button" role="tab" aria-controls="buyer-tab-pane" aria-selected="false">Customers</button>
         </li>
       </ul>
     </section>
@@ -66,10 +62,11 @@ require __DIR__ . '/../../components/header.php';
               <thead class="table-dark">
                 <tr>
                   <th scope="col">SL</th>
-                  <th scope="col">Name of Users</th>
-                  <th scope="col">Promo Code</th>
-                  <th scope="col">User Role</th>
+                  <th scope="col">Category Title</th>
+                  <th scope="col">Parent Category</th>
+                  <th scope="col">Slug</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Date Created</th>
                 </tr>
               </thead>
               <tbody>
@@ -78,7 +75,10 @@ require __DIR__ . '/../../components/header.php';
                   <td>Coupon</td>
                   <td>XXXX-XXXX-XXXX</td>
                   <td>Coupon</td>
-                  <td>Active</td>
+                  <td>
+                    <span class="badge bg-success">Active</span>
+                  </td>
+                  <td>2 minutes ago</td>
                 </tr>
               </tbody>
             </table>

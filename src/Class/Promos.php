@@ -11,7 +11,7 @@ class Promos {
   }
 
   public function index() {
-    $sql = "SELECT * FROM " . $this->table;
+    $sql = "SELECT * FROM " . $this->table . " ORDER BY created_at DESC";
     $result = $this->conn->query($sql);
     if ($result->num_rows > 0) {
       $promos = [];

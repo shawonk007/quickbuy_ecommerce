@@ -35,6 +35,7 @@
   // width: 250px;
   width: 225px;
   // height: 100%;
+  // height: 100vh;
   position: fixed;
   // border-right: 1px solid antiquewhite;
   // overflow-y: auto;
@@ -42,7 +43,8 @@
   transition: 0.5s;
   nav {
     margin-left: -2rem;
-    height: 100vh;
+    height: calc(100vh - 50px);
+    // height: 100%;
     overflow-y: auto;
     ul {
       display: flex;

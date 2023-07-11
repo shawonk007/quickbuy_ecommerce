@@ -3,15 +3,24 @@ require __DIR__ . '/../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Auth;
 use App\Database;
 use App\Class\Brands;
+
+
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isAdmin()) {
+    header("Location: ../login.php");
+    exit();
+  }
+}
+
 $db = new Database();
 $brands = new Brands($db->conn);
-$pageName = "Edit Brand";
-$pageGroup = "Brands & Manufacturer";
-$currentGroup = ["Brands", "brands/index.php"];
-$currentPage = "Edit";
-require __DIR__ . '/../../components/header.php';
+
 if (isset($_GET['id'])) {
   $id = $_GET['id'];
   try {
@@ -20,6 +29,13 @@ if (isset($_GET['id'])) {
     //throw $th;
   }
 }
+
+$pageName = "Edit Brand";
+$pageGroup = "Brands & Manufacturer";
+$currentGroup = ["Brands", "brands/index.php"];
+$currentPage = "Edit";
+
+require __DIR__ . '/../../components/header.php';
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>

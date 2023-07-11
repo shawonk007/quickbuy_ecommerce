@@ -7,7 +7,7 @@ class ProductOptions
     private static $conn;
     private static $table = 'product_options';
 
-    public static function setConnection($db)
+    public static function initialize($db)
     {
         self::$conn = $db;
     }
@@ -26,7 +26,7 @@ class ProductOptions
 
     public static function updateProductOption($productOptionId, $optionSet, $optionType, $optionValue)
     {
-        $sql = "UPDATE " . self::$table . " SET option_set = ?, option_type = ?, option_value = ? WHERE product_option_id = ?";
+        $sql = "UPDATE " . self::$table . " SET option_set = ?, option_type = ?, option_value = ? WHERE option_id = ?";
         $stmt = self::$conn->prepare($sql);
         $stmt->bind_param("sssi", $optionSet, $optionType, $optionValue, $productOptionId);
         $stmt->execute();
@@ -38,7 +38,7 @@ class ProductOptions
 
     public static function getProductOption($productOptionId)
     {
-        $sql = "SELECT * FROM " . self::$table . " WHERE product_option_id = ?";
+        $sql = "SELECT * FROM " . self::$table . " WHERE option_id = ?";
         $stmt = self::$conn->prepare($sql);
         $stmt->bind_param("i", $productOptionId);
         $stmt->execute();

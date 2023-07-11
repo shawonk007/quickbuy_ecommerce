@@ -11,7 +11,7 @@ class Products {
   }
 
   public function index() {
-    $sql = "SELECT * FROM " . $this->table;
+    $sql = "SELECT * FROM " . $this->table . " ORDER BY created_at DESC";
     $result = $this->conn->query($sql);
     if ($result->num_rows > 0) {
       $roles = [];
@@ -37,7 +37,19 @@ class Products {
     }
   }
 
-  public function show() {}
+  public function show($slug) {
+    $sql = "SELECT * FROM ". $this->table . " WHERE product_slug = ?";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("s", $slug);
+    $statement->execute();
+    $result = $statement->get_result();
+    if ($result->num_rows === 1) {
+      $product = $result->fetch_assoc();
+      return $product;
+    } else {
+      return false;
+    }
+  }
 
   public function edit() {}
 

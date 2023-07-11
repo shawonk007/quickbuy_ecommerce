@@ -11,7 +11,7 @@ Auth::initialize();
 
 if (!isset($_SESSION['login'])) {
   if (!Auth::check() || !Auth::isAdmin()) {
-    header("Location: ../login.php");
+    header("Location: ../../auth/login.php");
     exit();
   }
 }
@@ -22,16 +22,15 @@ $pageName = "Manage Categories";
 $pageGroup = "Category & Product";
 $currentGroup = ["Category", "category/index.php"];
 $currentPage = "Index";
-
 require __DIR__ . '/../../components/header.php';
 ?>
 <body>
-  <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
+  <?php require __DIR__ . "/../../components/sidebar/merchant.php" ?>
   <main id="content">
     <!-- SCROLL UP BUTTON -->
     <?php include __DIR__ . '/../../components/navigation/scroll-to-top.php' ?>
-    <?php require __DIR__ . "/../../components/navbar/admin.php" ?>
-    <?php include __DIR__ . '/../../components/breadcrumb/admin/secondary.php' ?>
+    <?php require __DIR__ . "/../../components/navbar/merchant.php" ?>
+    <?php include __DIR__ . '/../../components/breadcrumb/merchant/secondary.php' ?>
     <section class="container-fluid my-5">
       <div class="row g-3 g-lg-5">
         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xl-6 col-xxl-6">
