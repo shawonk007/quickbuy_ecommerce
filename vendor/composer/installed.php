@@ -3,7 +3,7 @@
         'name' => 'code-crafters/quickbuy',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '18d5a272496c0b66c901307c3837ce8f9d28ce17',
+        'reference' => '06790235e5297f956e958a5f396a1093ec05e25f',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'code-crafters/quickbuy' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '18d5a272496c0b66c901307c3837ce8f9d28ce17',
+            'reference' => '06790235e5297f956e958a5f396a1093ec05e25f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
