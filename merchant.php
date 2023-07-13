@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
@@ -8,12 +8,9 @@ use App\Auth;
 use App\Database;
 
 $db = new Database();
-$pageName = "Profile";
-$pageGroup = "Profile";
-$currentGroup = ["Marchent", "users/profile.php"];
-$currentPage = "Profile";
-require __DIR__ . '/../components/header.php';
-// require_once "../connection.php";
+$pageName = "Merchant";
+
+require __DIR__ . '/components/header.php';
 ?>
 
 <head>
@@ -27,11 +24,10 @@ require __DIR__ . '/../components/header.php';
   </style>
 </head>
 <body>
-  <?php require __DIR__ . "/../components/sidebar/merchant.php" ?>
-  <main id="content">
-    <?php include __DIR__ . '/../components/navigation/scroll-to-top.php' ?>
-    <?php require __DIR__ . "/../components/navbar/merchant.php" ?>
-    <?php include __DIR__ . '/../components/breadcrumb/merchant/primary.php' ?>
+  <?php require __DIR__ . "/components/navbar/primary.php" ?>
+  <?php require __DIR__ . "/components/navbar/below.php" ?>
+  <main>
+    <?php include __DIR__ . '/components/navigation/scroll-to-top.php' ?>
     <section class="m-3">
     <div class="content container-fluid">
       <div class="row justify-content-lg-center">

@@ -7,13 +7,23 @@ if (session_status() === PHP_SESSION_NONE) {
 use App\Auth;
 use App\Database;
 
+// Auth::initialize();
+
+// if (!isset($_SESSION['login'])) {
+//   if (!Auth::check() || !Auth::isAdmin()) {
+//     header("Location: ../auth/login.php");
+//     exit();
+//   }
+// }
+
 $db = new Database();
+
 $pageName = "Dashboard";
 $pageGroup = "Dashboard";
 $currentGroup = ["Marchent", "users/index.php"];
 $currentPage = "Dashboard";
+
 require __DIR__ . '/../components/header.php';
-// require_once "../connection.php";
 ?>
 <head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">

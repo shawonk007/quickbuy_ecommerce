@@ -2,28 +2,30 @@
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Auth;
 use App\Database;
+
+// Auth::initialize();
+
+// if (!isset($_SESSION['login'])) {
+//   if (!Auth::check() || !Auth::isAdmin()) {
+//     header("Location: ../login.php");
+//     exit();
+//   }
+// }
+
 $db = new Database();
+
 $pageName = "Add New Role";
 $pageGroup = "Users Settings";
 $currentGroup = ["Roles", "roles/index.php"];
 $currentPage = "Create";
+
 require __DIR__ . '/../../components/header.php';
-
-$errors = [];
-
-function logError($errorMessage) {
-  global $pageName;
-  $logFile = __DIR__ . '/errors.log'; // Specify the log file name and path
-  $logMessage = '['. date('Y-m-d H:i:s A') . ']' . ' | ' . 'ERROR from ' . $pageName . $errorMessage . PHP_EOL ;
-  file_put_contents($logFile, $logMessage, FILE_APPEND);
-  logError($logMessage); // Call the logError function recursively
-}
-
 ?>
 <body>
   <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>

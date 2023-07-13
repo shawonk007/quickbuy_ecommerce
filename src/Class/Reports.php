@@ -7,7 +7,7 @@ class Report
     private static $conn;
     private static $table = 'reports';
 
-    public static function setConnection($db)
+    public static function initialize($db)
     {
         self::$conn = $db;
     }

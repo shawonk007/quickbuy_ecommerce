@@ -73,3 +73,45 @@
     </div>
   </div>
 </nav>
+<aside class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="yourCart" aria-labelledby="yourCartLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="yourCartLabel">Your Cart</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Thumbnail</th>
+          <th>Product Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <img src="https://via.placeholder.com/80x80" alt="" />
+          </td>
+          <td>
+            <h6 class="py-0 my-0">HP Elitebook 8440p</h6>
+            <p class="py-1 my-1">Laptop</p>
+            <p class="py-0 my-0">25,000.00</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row g-3 position-absolute w-100 bottom-0 pe-3 pb-3"  >
+      <div class="col d-grid">
+        <a href="cart.php" class="btn btn-primary ps-3 pe-3">
+          <i class="fas fa-eye"></i>
+          <strong class="ps-2">View Cart</strong>
+        </a>
+      </div>
+      <div class="col d-grid">
+        <a href="checkout.php" class="btn btn-primary ps-3 pe-3">
+          <i class="fas fa-cart-shopping"></i>
+          <strong class="ps-2">Checkout</strong>
+        </a>
+      </div>
+    </div>
+  </div>
+</aside>

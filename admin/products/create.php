@@ -3,14 +3,28 @@ require __DIR__ . '/../../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Auth;
 use App\Database;
 use App\Class\Category;
+
+// Auth::initialize();
+
+// if (!isset($_SESSION['login'])) {
+//   if (!Auth::check() || !Auth::isAdmin()) {
+//     header("Location: ../login.php");
+//     exit();
+//   }
+// }
+
 $db = new Database();
 $categories = new Category($db->conn);
+
 $pageName = "Add New Product";
 $pageGroup = "Product Catalogue";
 $currentGroup = ["Products", "products/index.php"];
 $currentPage = "Create";
+
 require __DIR__ . '/../../components/header.php';
 ?>
 <style>
@@ -378,6 +392,69 @@ require __DIR__ . '/../../components/header.php';
         var optionSet = $("#optionSet");
         var newOptionSet = optionSet.clone(true);
         optionSet.parent().append(newOptionSet);
+      });
+
+      $('form').submit(function(e) {
+        e.preventDefault();
+        $.ajax({
+          url: '<?= config("app.root") ?>src/actions/products/store.php',
+          type: 'POST',
+          data: $(this).serialize(),
+          dataType: 'json',
+          success: function(response) {
+            console.log(response);
+            if (response.success) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Created',
+                text: response.message,
+                timer: 2000,
+                showConfirmButton: false
+              }).then(function() {
+                window.location.href = 'index.php';
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: response.message,
+                timer: 2000,
+                showConfirmButton: false
+              });
+            }
+          },
+          error: function(xhr, status, error) {
+            if (xhr.status === 400) {
+              // Bad request error
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Bad request. Please check your form data.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            } else if (xhr.status === 500) {
+              // Internal server error
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Internal server error. Please try again later.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            } else {
+              // Other errors
+              console.error(error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while processing the request.',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            }
+          }
+        });
       });
     });
   </script>

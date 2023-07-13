@@ -3,9 +3,18 @@ require __DIR__ . '/vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
+
+use App\Class\Category;
+use App\Class\ProductImages;
+use App\Class\Products;
 use App\Database;
+
 $db = new Database();
+$products = new Products($db->conn);
+ProductImages::initialize($db->conn);
+
 $pageName = "Shop";
+
 require __DIR__ . '/components/header.php';
 ?>
 <body>
@@ -231,78 +240,113 @@ require __DIR__ . '/components/header.php';
             </div>
           </aside>
           <div class="row row-cols-3 g-3 my-3" >
-            <!-- Product Column -->
+            <?php $productList = $products->index();
+            foreach ($productList as $product) { 
+              echo $image = ProductImages::getProductImages($product['product_id']);
+            ?>
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
-              <a href="display.php" class="nav-link">
-                <!-- Card -->
+              <a href="display.php?product=<?= $product['product_slug'] ?>" class="nav-link">
                 <div class="card product-card" >
-                  <!-- Card Image -->
                   <div class="card-image">
-                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." /><!-- /.card-img-top -->
-                  </div><!-- /.card-image -->
-                  <!-- Card Gallery -->
-                  <div class="card-gallery owl-carousel owl-theme">
-                    <div class="item">
-                      <img src="https://via.placeholder.com/50x50" class="" alt="..." />
-                    </div>
-                    <div class="item">
-                      <img src="https://via.placeholder.com/50x50" class="" alt="..." />
-                    </div>
-                    <div class="item">
-                      <img src="https://via.placeholder.com/50x50" class="" alt="..." />
-                    </div>
-                    <div class="item">
-                      <img src="https://via.placeholder.com/50x50" class="" alt="..." />
-                    </div>
-                  </div><!-- /.card-gallery -->
-                  <!-- Card Body -->
+                    <img src="<?= isset($image) ? config("app.root") . 'uploads/products/' . $image : config("app.root") . 'assets/images/dummy-square.jpg' ;?>" class="card-img-top" alt="..." />
+                  </div>
                   <div class="card-body text-center">
-                    <!-- Card Title -->
-                    <h5 class="card-title">Nescafé Coffee Jar</h5><!-- /.card-title -->
-                    <!-- Card Text -->
-                    <a href="#" class="nav-link" >Beverages</a><!-- /.nav-link -->
-                    <!-- Card Text -->
+                    <h5 class="card-title"><?= $product['product_title'] ?></h5>
+                    <a href="#" class="nav-link" ><?= Category::parent($product['product_category'], $db) ?></a>
                     <p class="card-text mt-2">
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
-                    </p><!-- /.card-text -->
-                    <!-- Card Text -->
+                    </p>
                     <p class="card-text">
                       <strong>BDT.</strong>
-                      <span class="badge bg-secondary ms-1">195.00/-</span><!-- /.badge -->
-                    </p><!-- /.card-text -->
-                  </div><!-- /.card-body -->
-                  <!-- Card Footer -->
+                      <?php
+                      if (isset($product['offer_price'])) { ?>
+                        <s><?= $product['regular_price'] ?></s>
+                        <span class="badge bg-secondary ms-1"><?= $product['offer_price'] ?></span>
+                      <?php } else { ?>
+                        <span class="badge bg-secondary ms-1">195.00/-</span>
+                      <?php }
+                      ?>
+                    </p>
+                  </div>
                   <div class="card-footer card-btn d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-danger btn-sm me-2">
                       <i class="fas fa-heart"></i>
                       <span class="ps-1">Wishlist</span>
-                    </a><!-- /.btn -->
+                    </a>
                     <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
                       <i class="fas fa-eye"></i>
                       <span class="ps-1">Quick View</span>
-                    </a><!-- /.btn -->
-                  </div><!-- /.card-footer -->
-                </div><!-- /.card -->
+                    </a>
+                  </div>
+                </div>
               </a>
-            </div><!-- /.col -->
-            <!-- Product Column -->
+            </div>
+            <?php } ?>
+              <!-- <a href="display.php" class="nav-link">
+                <div class="card product-card" >
+                  <div class="card-image">
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." />
+                  <div class="card-gallery owl-carousel owl-theme">
+                      <img src="https://via.placeholder.com/50x50" class="" alt="..." />
+                    </div>
+                    <div class="item">
+                      <img src="https://via.placeholder.com/50x50" class="" alt="..." />
+                    </div>
+                    <div class="item">
+                      <img src="https://via.placeholder.com/50x50" class="" alt="..." />
+                    </div>
+                    <div class="item">
+                      <img src="https://via.placeholder.com/50x50" class="" alt="..." />
+                    </div>
+                  </div>
+                  <div class="card-body text-center">
+                    <h5 class="card-title">Nescafé Coffee Jar</h5>
+                    <a href="#" class="nav-link" >Beverages</a>
+                    <p class="card-text mt-2">
+                      <i class="fas fa-star rating-icon"></i>
+                      <i class="fas fa-star rating-icon"></i>
+                      <i class="fas fa-star rating-icon"></i>
+                      <i class="fas fa-star rating-icon"></i>
+                      <i class="fas fa-star rating-icon"></i>
+                    </p>
+                    
+                    <p class="card-text">
+                      <strong>BDT.</strong>
+                      <span class="badge bg-secondary ms-1">195.00/-</span>
+                    </p>
+                  </div>
+                  
+                  <div class="card-footer card-btn d-flex justify-content-center">
+                    <a href="#" class="btn btn-outline-danger btn-sm me-2">
+                      <i class="fas fa-heart"></i>
+                      <span class="ps-1">Wishlist</span>
+                    </a>
+                    <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
+                      <i class="fas fa-eye"></i>
+                      <span class="ps-1">Quick View</span>
+                    </a>
+                  </div>
+                </div>
+              </a>
+            </div>
+            
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
               <a href="display.php" class="nav-link">
-                <!-- Card -->
+                
                 <div class="card product-card" >
-                  <!-- Ribbon -->
+                  
                   <div class="ribbon">
                     <span>New</span>
-                  </div><!-- /.ribbon -->
-                  <!-- Card Image -->
+                  </div>
+                  
                   <div class="card-image">
-                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." /><!-- /.card-img-top -->
-                  </div><!-- /.card-image -->
-                  <!-- Card Gallery -->
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." />
+                  </div>
+                  
                   <div class="card-gallery owl-carousel owl-theme">
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
@@ -316,55 +360,55 @@ require __DIR__ . '/components/header.php';
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
                     </div>
-                  </div><!-- /.card-gallery -->
-                  <!-- Card Body -->
+                  </div>
+                  
                   <div class="card-body text-center">
-                    <!-- Card Title -->
-                    <h5 class="card-title">Arzish Ajwa Dates</h5><!-- /.card-title -->
-                    <!-- Card Text -->
-                    <a href="#" class="nav-link" >Fresh Fruits</a><!-- /.nav-link -->
-                    <!-- Card Text -->
+                    
+                    <h5 class="card-title">Arzish Ajwa Dates</h5>
+                    
+                    <a href="#" class="nav-link" >Fresh Fruits</a>
+                    
                     <p class="card-text mt-2">
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
-                    </p><!-- /.card-text -->
-                    <!-- Card Text -->
+                    </p>
+                    
                     <p class="card-text">
                       <strong>BDT.</strong>
-                      <span class="badge bg-secondary ms-1">700.00/-</span><!-- /.badge -->
-                    </p><!-- /.card-text -->
-                  </div><!-- /.card-body -->
-                  <!-- Card Footer -->
+                      <span class="badge bg-secondary ms-1">700.00/-</span>
+                    </p>
+                  </div>
+                  
                   <div class="card-footer card-btn d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-danger btn-sm me-2">
                       <i class="fas fa-heart"></i>
                       <span class="ps-1">Wishlist</span>
-                    </a><!-- /.btn -->
+                    </a>
                     <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
                       <i class="fas fa-eye"></i>
                       <span class="ps-1">Quick View</span>
-                    </a><!-- /.btn -->
-                  </div><!-- /.card-footer -->
-                </div><!-- /.card -->
+                    </a>
+                  </div>
+                </div>
               </a>
-            </div><!-- /.col -->
-            <!-- Product Column -->
+            </div>
+            
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
               <a href="display.php" class="nav-link">
-                <!-- Card -->
+                
                 <div class="card product-card" >
-                  <!-- Ribbon -->
+                  
                   <div class="ribbon">
                     <span>Hot</span>
-                  </div><!-- /.ribbon -->
-                  <!-- Card Image -->
+                  </div>
+                  
                   <div class="card-image">
-                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." /><!-- /.card-img-top -->
-                  </div><!-- /.card-image -->
-                  <!-- Card Gallery -->
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." />
+                  </div>
+                  
                   <div class="card-gallery owl-carousel owl-theme">
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
@@ -378,51 +422,51 @@ require __DIR__ . '/components/header.php';
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
                     </div>
-                  </div><!-- /.card-gallery -->
-                  <!-- Card Body -->
+                  </div>
+                  
                   <div class="card-body text-center">
-                    <!-- Card Title -->
-                    <h5 class="card-title">Nestlé Koko Krunch</h5><!-- /.card-title -->
-                    <!-- Card Text -->
-                    <a href="#" class="nav-link" >Cereals</a><!-- /.nav-link -->
-                    <!-- Card Text -->
+                    
+                    <h5 class="card-title">Nestlé Koko Krunch</h5>
+                    
+                    <a href="#" class="nav-link" >Cereals</a>
+                    
                     <p class="card-text mt-2">
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
-                    </p><!-- /.card-text -->
-                    <!-- Card Text -->
+                    </p>
+                    
                     <p class="card-text">
                       <strong>BDT.</strong>
-                      <span class="badge bg-secondary ms-1">450.00/-</span><!-- /.badge -->
-                    </p><!-- /.card-text -->
-                  </div><!-- /.card-body -->
-                  <!-- Card Footer -->
+                      <span class="badge bg-secondary ms-1">450.00/-</span>
+                    </p>
+                  </div>
+                  
                   <div class="card-footer card-btn d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-danger btn-sm me-2">
                       <i class="fas fa-heart"></i>
                       <span class="ps-1">Wishlist</span>
-                    </a><!-- /.btn -->
+                    </a>
                     <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
                       <i class="fas fa-eye"></i>
                       <span class="ps-1">Quick View</span>
-                    </a><!-- /.btn -->
-                  </div><!-- /.card-footer -->
-                </div><!-- /.card -->
+                    </a>
+                  </div>
+                </div>
               </a>
-            </div><!-- /.col -->
-            <!-- Product Column -->
+            </div>
+            
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
               <a href="display.php" class="nav-link">
-                <!-- Card -->
+                
                 <div class="card product-card" >
-                  <!-- Card Image -->
+                  
                   <div class="card-image">
-                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." /><!-- /.card-img-top -->
-                  </div><!-- /.card-image -->
-                  <!-- Card Gallery -->
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." />
+                  </div>
+                  
                   <div class="card-gallery owl-carousel owl-theme">
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
@@ -436,51 +480,51 @@ require __DIR__ . '/components/header.php';
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
                     </div>
-                  </div><!-- /.card-gallery -->
-                  <!-- Card Body -->
+                  </div>
+                  
                   <div class="card-body text-center">
-                    <!-- Card Title -->
-                    <h5 class="card-title">Vim Liquid Pouch</h5><!-- /.card-title -->
-                    <!-- Card Text -->
-                    <a href="#" class="nav-link" >Diswashing Supplies</a><!-- /.nav-link -->
-                    <!-- Card Text -->
+                    
+                    <h5 class="card-title">Vim Liquid Pouch</h5>
+                    
+                    <a href="#" class="nav-link" >Diswashing Supplies</a>
+                    
                     <p class="card-text mt-2">
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
-                    </p><!-- /.card-text -->
-                    <!-- Card Text -->
+                    </p>
+                    
                     <p class="card-text">
                       <strong>BDT.</strong>
-                      <span class="badge bg-secondary ms-1">70.00/-</span><!-- /.badge -->
-                    </p><!-- /.card-text -->
-                  </div><!-- /.card-body -->
-                  <!-- Card Footer -->
+                      <span class="badge bg-secondary ms-1">70.00/-</span>
+                    </p>
+                  </div>
+                  
                   <div class="card-footer card-btn d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-danger btn-sm me-2">
                       <i class="fas fa-heart"></i>
                       <span class="ps-1">Wishlist</span>
-                    </a><!-- /.btn -->
+                    </a>
                     <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
                       <i class="fas fa-eye"></i>
                       <span class="ps-1">Quick View</span>
-                    </a><!-- /.btn -->
-                  </div><!-- /.card-footer -->
-                </div><!-- /.card -->
+                    </a>
+                  </div>
+                </div>
               </a>
-            </div><!-- /.col -->
-            <!-- Product Column -->
+            </div>
+            
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
               <a href="display.php" class="nav-link">
-                <!-- Card -->
+                
                 <div class="card product-card" >
-                  <!-- Card Image -->
+                  
                   <div class="card-image">
-                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." /><!-- /.card-img-top -->
-                  </div><!-- /.card-image -->
-                  <!-- Card Gallery -->
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." />
+                  </div>
+                  
                   <div class="card-gallery owl-carousel owl-theme">
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
@@ -494,51 +538,51 @@ require __DIR__ . '/components/header.php';
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
                     </div>
-                  </div><!-- /.card-gallery -->
-                  <!-- Card Body -->
+                  </div>
+                  
                   <div class="card-body text-center">
-                    <!-- Card Title -->
-                    <h5 class="card-title">Dove Bar (White)</h5><!-- /.card-title -->
-                    <!-- Card Text -->
-                    <a href="#" class="nav-link" >Women's Soap</a><!-- /.nav-link -->
-                    <!-- Card Text -->
+                    
+                    <h5 class="card-title">Dove Bar (White)</h5>
+                    
+                    <a href="#" class="nav-link" >Women's Soap</a>
+                    
                     <p class="card-text mt-2">
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
-                    </p><!-- /.card-text -->
-                    <!-- Card Text -->
+                    </p>
+                    
                     <p class="card-text">
                       <strong>BDT.</strong>
-                      <span class="badge bg-secondary ms-1">195.00/-</span><!-- /.badge -->
-                    </p><!-- /.card-text -->
-                  </div><!-- /.card-body -->
-                  <!-- Card Footer -->
+                      <span class="badge bg-secondary ms-1">195.00/-</span>
+                    </p>
+                  </div>
+                  
                   <div class="card-footer card-btn d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-danger btn-sm me-2">
                       <i class="fas fa-heart"></i>
                       <span class="ps-1">Wishlist</span>
-                    </a><!-- /.btn -->
+                    </a>
                     <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
                       <i class="fas fa-eye"></i>
                       <span class="ps-1">Quick View</span>
-                    </a><!-- /.btn -->
-                  </div><!-- /.card-footer -->
-                </div><!-- /.card -->
+                    </a>
+                  </div>
+                </div>
               </a>
-            </div><!-- /.col -->
-            <!-- Product Column -->
+            </div>
+            
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
               <a href="display.php" class="nav-link">
-                <!-- Card -->
+                
                 <div class="card product-card" >
-                  <!-- Card Image -->
+                  
                   <div class="card-image">
-                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." /><!-- /.card-img-top -->
-                  </div><!-- /.card-image -->
-                  <!-- Card Gallery -->
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." />
+                  </div>
+                  
                   <div class="card-gallery owl-carousel owl-theme">
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
@@ -552,51 +596,51 @@ require __DIR__ . '/components/header.php';
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
                     </div>
-                  </div><!-- /.card-gallery -->
-                  <!-- Card Body -->
+                  </div>
+                  
                   <div class="card-body text-center">
-                    <!-- Card Title -->
-                    <h5 class="card-title">Dairy Milk Silk</h5><!-- /.card-title -->
-                    <!-- Card Text -->
-                    <a href="#" class="nav-link" >Chocolate</a><!-- /.nav-link -->
-                    <!-- Card Text -->
+                    
+                    <h5 class="card-title">Dairy Milk Silk</h5>
+                    
+                    <a href="#" class="nav-link" >Chocolate</a>
+                    
                     <p class="card-text mt-2">
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
-                    </p><!-- /.card-text -->
-                    <!-- Card Text -->
+                    </p>
+                    
                     <p class="card-text">
                       <strong>BDT.</strong>
-                      <span class="badge bg-secondary ms-1">140.00/-</span><!-- /.badge -->
-                    </p><!-- /.card-text -->
-                  </div><!-- /.card-body -->
-                  <!-- Card Footer -->
+                      <span class="badge bg-secondary ms-1">140.00/-</span>
+                    </p>
+                  </div>
+                  
                   <div class="card-footer card-btn d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-danger btn-sm me-2">
                       <i class="fas fa-heart"></i>
                       <span class="ps-1">Wishlist</span>
-                    </a><!-- /.btn -->
+                    </a>
                     <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
                       <i class="fas fa-eye"></i>
                       <span class="ps-1">Quick View</span>
-                    </a><!-- /.btn -->
-                  </div><!-- /.card-footer -->
-                </div><!-- /.card -->
+                    </a>
+                  </div>
+                </div>
               </a>
-            </div><!-- /.col -->
-            <!-- Product Column -->
+            </div>
+            
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
               <a href="display.php" class="nav-link">
-                <!-- Card -->
+                
                 <div class="card product-card" >
-                  <!-- Card Image -->
+                  
                   <div class="card-image">
-                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." /><!-- /.card-img-top -->
-                  </div><!-- /.card-image -->
-                  <!-- Card Gallery -->
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." />
+                  </div>
+                  
                   <div class="card-gallery owl-carousel owl-theme">
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
@@ -610,51 +654,51 @@ require __DIR__ . '/components/header.php';
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
                     </div>
-                  </div><!-- /.card-gallery -->
-                  <!-- Card Body -->
+                  </div>
+                  
                   <div class="card-body text-center">
-                    <!-- Card Title -->
-                    <h5 class="card-title">Standard Horlicks</h5><!-- /.card-title -->
-                    <!-- Card Text -->
-                    <a href="#" class="nav-link" >Food Suppliments</a><!-- /.nav-link -->
-                    <!-- Card Text -->
+                    
+                    <h5 class="card-title">Standard Horlicks</h5>
+                    
+                    <a href="#" class="nav-link" >Food Suppliments</a>
+                    
                     <p class="card-text mt-2">
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
-                    </p><!-- /.card-text -->
-                    <!-- Card Text -->
+                    </p>
+                    
                     <p class="card-text">
                       <strong>BDT.</strong>
-                      <span class="badge bg-secondary ms-1">420.00/-</span><!-- /.badge -->
-                    </p><!-- /.card-text -->
-                  </div><!-- /.card-body -->
-                  <!-- Card Footer -->
+                      <span class="badge bg-secondary ms-1">420.00/-</span>
+                    </p>
+                  </div>
+                  
                   <div class="card-footer card-btn d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-danger btn-sm me-2">
                       <i class="fas fa-heart"></i>
                       <span class="ps-1">Wishlist</span>
-                    </a><!-- /.btn -->
+                    </a>
                     <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
                       <i class="fas fa-eye"></i>
                       <span class="ps-1">Quick View</span>
-                    </a><!-- /.btn -->
-                  </div><!-- /.card-footer -->
-                </div><!-- /.card -->
+                    </a>
+                  </div>
+                </div>
               </a>
-            </div><!-- /.col -->
-            <!-- Product Column -->
+            </div>
+            
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
               <a href="display.php" class="nav-link">
-                <!-- Card -->
+                
                 <div class="card product-card" >
-                  <!-- Card Image -->
+                  
                   <div class="card-image">
-                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." /><!-- /.card-img-top -->
-                  </div><!-- /.card-image -->
-                  <!-- Card Gallery -->
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." />
+                  </div>
+                  
                   <div class="card-gallery owl-carousel owl-theme">
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
@@ -668,51 +712,51 @@ require __DIR__ . '/components/header.php';
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
                     </div>
-                  </div><!-- /.card-gallery -->
-                  <!-- Card Body -->
+                  </div>
+                  
                   <div class="card-body text-center">
-                    <!-- Card Title -->
-                    <h5 class="card-title">Maggi Noodles</h5><!-- /.card-title -->
-                    <!-- Card Text -->
-                    <a href="#" class="nav-link" >Snacks</a><!-- /.nav-link -->
-                    <!-- Card Text -->
+                    
+                    <h5 class="card-title">Maggi Noodles</h5>
+                    
+                    <a href="#" class="nav-link" >Snacks</a>
+                    
                     <p class="card-text mt-2">
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
-                    </p><!-- /.card-text -->
-                    <!-- Card Text -->
+                    </p>
+                    
                     <p class="card-text">
                       <strong>BDT.</strong>
-                      <span class="badge bg-secondary ms-1">239.00/-</span><!-- /.badge -->
-                    </p><!-- /.card-text -->
-                  </div><!-- /.card-body -->
-                  <!-- Card Footer -->
+                      <span class="badge bg-secondary ms-1">239.00/-</span>
+                    </p>
+                  </div>
+                  
                   <div class="card-footer card-btn d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-danger btn-sm me-2">
                       <i class="fas fa-heart"></i>
                       <span class="ps-1">Wishlist</span>
-                    </a><!-- /.btn -->
+                    </a>
                     <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
                       <i class="fas fa-eye"></i>
                       <span class="ps-1">Quick View</span>
-                    </a><!-- /.btn -->
-                  </div><!-- /.card-footer -->
-                </div><!-- /.card -->
+                    </a>
+                  </div>
+                </div>
               </a>
-            </div><!-- /.col -->
-            <!-- Product Column -->
+            </div>
+            
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
               <a href="display.php" class="nav-link">
-                <!-- Card -->
+                
                 <div class="card product-card" >
-                  <!-- Card Image -->
+                  
                   <div class="card-image">
-                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." /><!-- /.card-img-top -->
-                  </div><!-- /.card-image -->
-                  <!-- Card Gallery -->
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." />
+                  </div>
+                  
                   <div class="card-gallery owl-carousel owl-theme">
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
@@ -726,51 +770,51 @@ require __DIR__ . '/components/header.php';
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
                     </div>
-                  </div><!-- /.card-gallery -->
-                  <!-- Card Body -->
+                  </div>
+                  
                   <div class="card-body text-center">
-                    <!-- Card Title -->
-                    <h5 class="card-title">Lays Potato Chips</h5><!-- /.card-title -->
-                    <!-- Card Text -->
-                    <a href="#" class="nav-link" >Snacks</a><!-- /.nav-link -->
-                    <!-- Card Text -->
+                    
+                    <h5 class="card-title">Lays Potato Chips</h5>
+                    
+                    <a href="#" class="nav-link" >Snacks</a>
+                    
                     <p class="card-text mt-2">
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
-                    </p><!-- /.card-text -->
-                    <!-- Card Text -->
+                    </p>
+                    
                     <p class="card-text">
                       <strong>BDT.</strong>
-                      <span class="badge bg-secondary ms-1">60.00/-</span><!-- /.badge -->
-                    </p><!-- /.card-text -->
-                  </div><!-- /.card-body -->
-                  <!-- Card Footer -->
+                      <span class="badge bg-secondary ms-1">60.00/-</span>
+                    </p>
+                  </div>
+                  
                   <div class="card-footer card-btn d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-danger btn-sm me-2">
                       <i class="fas fa-heart"></i>
                       <span class="ps-1">Wishlist</span>
-                    </a><!-- /.btn -->
+                    </a>
                     <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
                       <i class="fas fa-eye"></i>
                       <span class="ps-1">Quick View</span>
-                    </a><!-- /.btn -->
-                  </div><!-- /.card-footer -->
-                </div><!-- /.card -->
+                    </a>
+                  </div>
+                </div>
               </a>
-            </div><!-- /.col -->
-            <!-- Product Column -->
+            </div>
+            
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
               <a href="display.php" class="nav-link">
-                <!-- Card -->
+                
                 <div class="card product-card" >
-                  <!-- Card Image -->
+                  
                   <div class="card-image">
-                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." /><!-- /.card-img-top -->
-                  </div><!-- /.card-image -->
-                  <!-- Card Gallery -->
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." />
+                  </div>
+                  
                   <div class="card-gallery owl-carousel owl-theme">
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
@@ -784,51 +828,51 @@ require __DIR__ . '/components/header.php';
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
                     </div>
-                  </div><!-- /.card-gallery -->
-                  <!-- Card Body -->
+                  </div>
+                  
                   <div class="card-body text-center">
-                    <!-- Card Title -->
-                    <h5 class="card-title">Zero Cal</h5><!-- /.card-title -->
-                    <!-- Card Text -->
-                    <a href="#" class="nav-link" >Diabetic Food</a><!-- /.nav-link -->
-                    <!-- Card Text -->
+                    
+                    <h5 class="card-title">Zero Cal</h5>
+                    
+                    <a href="#" class="nav-link" >Diabetic Food</a>
+                    
                     <p class="card-text mt-2">
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
-                    </p><!-- /.card-text -->
-                    <!-- Card Text -->
+                    </p>
+                    
                     <p class="card-text">
                       <strong>BDT.</strong>
-                      <span class="badge bg-secondary ms-1">200.00/-</span><!-- /.badge -->
-                    </p><!-- /.card-text -->
-                  </div><!-- /.card-body -->
-                  <!-- Card Footer -->
+                      <span class="badge bg-secondary ms-1">200.00/-</span>
+                    </p>
+                  </div>
+                  
                   <div class="card-footer card-btn d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-danger btn-sm me-2">
                       <i class="fas fa-heart"></i>
                       <span class="ps-1">Wishlist</span>
-                    </a><!-- /.btn -->
+                    </a>
                     <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
                       <i class="fas fa-eye"></i>
                       <span class="ps-1">Quick View</span>
-                    </a><!-- /.btn -->
-                  </div><!-- /.card-footer -->
-                </div><!-- /.card -->
+                    </a>
+                  </div>
+                </div>
               </a>
-            </div><!-- /.col -->
-            <!-- Product Column -->
+            </div>
+            
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
               <a href="display.php" class="nav-link">
-                <!-- Card -->
+                
                 <div class="card product-card" >
-                  <!-- Card Image -->
+                  
                   <div class="card-image">
-                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." /><!-- /.card-img-top -->
-                  </div><!-- /.card-image -->
-                  <!-- Card Gallery -->
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." />
+                  </div>
+                  
                   <div class="card-gallery owl-carousel owl-theme">
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
@@ -842,55 +886,55 @@ require __DIR__ . '/components/header.php';
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
                     </div>
-                  </div><!-- /.card-gallery -->
-                  <!-- Card Body -->
+                  </div>
+                  
                   <div class="card-body text-center">
-                    <!-- Card Title -->
-                    <h5 class="card-title">Kulson Maccaroni</h5><!-- /.card-title -->
-                    <!-- Card Text -->
-                    <a href="#" class="nav-link" >Pasta & Maccaroni</a><!-- /.nav-link -->
-                    <!-- Card Text -->
+                    
+                    <h5 class="card-title">Kulson Maccaroni</h5>
+                    
+                    <a href="#" class="nav-link" >Pasta & Maccaroni</a>
+                    
                     <p class="card-text mt-2">
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
-                    </p><!-- /.card-text -->
-                    <!-- Card Text -->
+                    </p>
+                    
                     <p class="card-text">
                       <strong>BDT.</strong>
-                      <span class="badge bg-secondary ms-1">85.00/-</span><!-- /.badge -->
-                    </p><!-- /.card-text -->
-                  </div><!-- /.card-body -->
-                  <!-- Card Footer -->
+                      <span class="badge bg-secondary ms-1">85.00/-</span>
+                    </p>
+                  </div>
+                  
                   <div class="card-footer card-btn d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-danger btn-sm me-2">
                       <i class="fas fa-heart"></i>
                       <span class="ps-1">Wishlist</span>
-                    </a><!-- /.btn -->
+                    </a>
                     <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
                       <i class="fas fa-eye"></i>
                       <span class="ps-1">Quick View</span>
-                    </a><!-- /.btn -->
-                  </div><!-- /.card-footer -->
-                </div><!-- /.card -->
+                    </a>
+                  </div>
+                </div>
               </a>
-            </div><!-- /.col -->
-            <!-- Product Column -->
+            </div>
+            
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
               <a href="display.php" class="nav-link">
-                <!-- Card -->
+                
                 <div class="card product-card" >
-                  <!-- Ribbon -->
+                  
                   <div class="ribbon">
                     <span>-10%</span>
-                  </div><!-- /.ribbon -->
-                  <!-- Card Image -->
+                  </div>
+                  
                   <div class="card-image">
-                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." /><!-- /.card-img-top -->
-                  </div><!-- /.card-image -->
-                  <!-- Card Gallery -->
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." />
+                  </div>
+                  
                   <div class="card-gallery owl-carousel owl-theme">
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
@@ -904,42 +948,42 @@ require __DIR__ . '/components/header.php';
                     <div class="item">
                       <img src="https://via.placeholder.com/50x50" class="" alt="..." />
                     </div>
-                  </div><!-- /.card-gallery -->
-                  <!-- Card Body -->
+                  </div>
+                  
                   <div class="card-body text-center">
-                    <!-- Card Title -->
-                    <h5 class="card-title">Lexus Biscuits</h5><!-- /.card-title -->
-                    <!-- Card Text -->
-                    <a href="#" class="nav-link" >Snacks</a><!-- /.nav-link -->
-                    <!-- Card Text -->
+                    
+                    <h5 class="card-title">Lexus Biscuits</h5>
+                    
+                    <a href="#" class="nav-link" >Snacks</a>
+                    
                     <p class="card-text mt-2">
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
-                    </p><!-- /.card-text -->
-                    <!-- Card Text -->
+                    </p>
+                    
                     <p class="card-text">
                       <strong>BDT.</strong>
                       <s>100.00/-</s>
-                      <span class="badge bg-secondary ms-1">90.00/-</span><!-- /.badge -->
-                    </p><!-- /.card-text -->
-                  </div><!-- /.card-body -->
-                  <!-- Card Footer -->
+                      <span class="badge bg-secondary ms-1">90.00/-</span>
+                    </p>
+                  </div>
+                  
                   <div class="card-footer card-btn d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-danger btn-sm me-2">
                       <i class="fas fa-heart"></i>
                       <span class="ps-1">Wishlist</span>
-                    </a><!-- /.btn -->
+                    </a>
                     <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
                       <i class="fas fa-eye"></i>
                       <span class="ps-1">Quick View</span>
-                    </a><!-- /.btn -->
-                  </div><!-- /.card-footer -->
-                </div><!-- /.card -->
+                    </a>
+                  </div>
+                </div>
               </a>
-            </div><!-- /.col -->
+            </div> -->
           </div><!-- /.row -->
         </div><!-- /.container -->
     </section>

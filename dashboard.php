@@ -7,14 +7,14 @@ use App\Auth;
 use App\Database;
 $db = new Database();
 
-Auth::initialize();
+// Auth::initialize();
 
-if (!isset($_SESSION['login']) || $_SESSION['login'] === false) {
-  if (!Auth::check() || !Auth::isCustomer()) {
-    header("Location: auth/login.php");
-    exit();
-  }
-}
+// if (!isset($_SESSION['login']) || $_SESSION['login'] === false) {
+//   if (!Auth::check() || !Auth::isCustomer()) {
+//     header("Location: auth/login.php");
+//     exit();
+//   }
+// }
 
 $userId = $_SESSION['user']['id'];
 $data = Auth::getUserById($userId);

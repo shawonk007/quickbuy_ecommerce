@@ -7,7 +7,7 @@ class Comments
     private static $conn;
     private static $table = 'comments';
 
-    public static function setConnection($db)
+    public static function initialize($db)
     {
         self::$conn = $db;
     }

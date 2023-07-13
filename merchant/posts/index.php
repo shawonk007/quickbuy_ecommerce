@@ -11,32 +11,31 @@ use App\Database;
 
 // if (!isset($_SESSION['login'])) {
 //   if (!Auth::check() || !Auth::isAdmin()) {
-//     header("Location: ../login.php");
+//     header("Location: ../../auth/login.php");
 //     exit();
 //   }
 // }
 
 $db = new Database();
 
-$pageName = "Manage Categories";
-$pageGroup = "Category & Product";
-$currentGroup = ["Category", "category/index.php"];
-$currentPage = "Index";
+$pageName = "Manage Posts";
+$pageGroup = "Blog Posts";
+$currentPage = "Posts";
 
 require __DIR__ . '/../../components/header.php';
 ?>
 <body>
-  <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
+  <?php require __DIR__ . "/../../components/sidebar/merchant.php" ?>
   <main id="content">
     <!-- SCROLL UP BUTTON -->
     <?php include __DIR__ . '/../../components/navigation/scroll-to-top.php' ?>
-    <?php require __DIR__ . "/../../components/navbar/admin.php" ?>
-    <?php include __DIR__ . '/../../components/breadcrumb/admin/secondary.php' ?>
+    <?php require __DIR__ . "/../../components/navbar/merchant.php" ?>
+    <?php include __DIR__ . '/../../components/breadcrumb/merchant/primary.php' ?>
     <section class="container-fluid my-5"></section>
     <section class="container-fluid my-5">
-      <a href="view.php" class="btn btn-primary">
+      <a href="create.php" class="btn btn-primary">
         <i class="fas fa-plus"></i>
-        <span class="ps-1">View</span>
+        <span class="ps-1">Add New</span>
       </a>
     </section>
     <section class="container-fluid my-5">
@@ -63,11 +62,10 @@ require __DIR__ . '/../../components/header.php';
               <thead class="table-dark">
                 <tr>
                   <th scope="col">SL</th>
-                  <th scope="col">Category Title</th>
-                  <th scope="col">Parent Category</th>
-                  <th scope="col">Slug</th>
+                  <th scope="col">Name of Users</th>
+                  <th scope="col">Promo Code</th>
+                  <th scope="col">User Role</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Date Created</th>
                 </tr>
               </thead>
               <tbody>
@@ -76,10 +74,7 @@ require __DIR__ . '/../../components/header.php';
                   <td>Coupon</td>
                   <td>XXXX-XXXX-XXXX</td>
                   <td>Coupon</td>
-                  <td>
-                    <span class="badge bg-success">Active</span>
-                  </td>
-                  <td>2 minutes ago</td>
+                  <td>Active</td>
                 </tr>
               </tbody>
             </table>

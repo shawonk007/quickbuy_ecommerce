@@ -7,7 +7,7 @@ class Wishlist
     private static $conn;
     private static $table = 'wishlist';
 
-    public static function setConnection($db)
+    public static function initialize($db)
     {
         self::$conn = $db;
     }

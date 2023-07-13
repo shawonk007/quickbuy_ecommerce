@@ -7,7 +7,7 @@ class Orders
     private static $conn;
     private static $table = 'orders';
 
-    public static function setConnection($db)
+    public static function initialize($db)
     {
         self::$conn = $db;
     }

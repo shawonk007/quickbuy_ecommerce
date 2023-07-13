@@ -7,7 +7,7 @@ class Payment
     private static $conn;
     private static $table = 'payments';
 
-    public static function setConnection($db)
+    public static function initialize($db)
     {
         self::$conn = $db;
     }

@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
@@ -11,38 +11,38 @@ use App\Database;
 
 // if (!isset($_SESSION['login'])) {
 //   if (!Auth::check() || !Auth::isAdmin()) {
-//     header("Location: ../login.php");
+//     header("Location: ../auth/login.php");
 //     exit();
 //   }
 // }
 
 $db = new Database();
 
-$pageName = "Add New Merchant";
+$pageName = "My Store";
 $pageGroup = "Seller Center";
-$currentGroup = ["Stores", "stores/index.php"];
-$currentPage = "Create";
-
-require __DIR__ . '/../../components/header.php';
+$currentPage = "Store";
 
 $jsonData = file_get_contents(config("app.root") . 'assets/data/bangladesh.json');
 $data = json_decode($jsonData, true);
 $divisions = $data['divisions'];
+
+require __DIR__ . '/../components/header.php';
 ?>
 <body>
-  <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
+  <?php require __DIR__ . "/../components/sidebar/merchant.php" ?>
   <main id="content">
     <!-- SCROLL UP BUTTON -->
-    <?php include __DIR__ . '/../../components/navigation/scroll-to-top.php' ?>
-    <?php require __DIR__ . "/../../components/navbar/admin.php" ?>
-    <?php include __DIR__ . '/../../components/breadcrumb/admin/secondary.php' ?>
+    <?php include __DIR__ . '/../components/navigation/scroll-to-top.php' ?>
+    <?php require __DIR__ . "/../components/navbar/merchant.php" ?>
+    <?php include __DIR__ . '/../components/breadcrumb/merchant/primary.php' ?>
     <section class="container-fluid my-5"></section>
     <section class="container-fluid my-5">
-      <form action="" method="post" enctype="multipart/form-data">
+      <?= $_SESSION['user']['id'] ?>
+      <form action="<?= config("app.root") ?>src/actions/seller/store.php" method="post" enctype="multipart/form-data">
         <div class="row row-cols-3 row-cols-lg-5 g-3 g-lg-3">
           <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-4 col-xxl-4">
             <div class="card shadow">
-              <div class="card-header bg-primary py-1">
+              <div class="card-header bg-success py-1">
                 <h5 class="card-title text-light py-0 my-0">Store Logo</h5>
               </div>
               <div class="card-body">
@@ -58,11 +58,11 @@ $divisions = $data['divisions'];
                           <span>(MIN. RES. 300X300)</span>
                         </p>
                       </div>
-                      <input type="file" name="logo" class="d-none" id="imageInput" required accept="image/*;capture=camera" />
+                      <input type="file" name="logo" class="d-none" id="imageInput" accept="image/*;capture=camera" />
                     </label>
                   </div>
                   <div class="col-6">
-                    <img id="dummy" src="../../assets/images/dummy-square.jpg" class="w-100" alt="" />
+                    <img id="dummy" src="<?= config("app.root") ?>/../assets/images/dummy-square.jpg" class="w-100" alt="" />
                   </div>
                 </div>
               </div>
@@ -70,8 +70,8 @@ $divisions = $data['divisions'];
           </div>
           <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8 col-xxl-8">
             <div class="card shadow">
-              <div class="card-header bg-primary pb-0">
-                <h5 class="card-title text-light">Store Banner</h5>
+              <div class="card-header bg-success py-1">
+                <h5 class="card-title text-light py-0 my-0">Store Banner</h5>
               </div>
               <div class="card-body">
                 <div class="row g-3">
@@ -86,11 +86,11 @@ $divisions = $data['divisions'];
                           <span>(MIN. RES. 1280X550)</span>
                         </p>
                       </div>
-                      <input type="file" name="banner" class="d-none" id="imageInput" required accept="image/*;capture=camera" />
+                      <input type="file" name="banner" class="d-none" id="imageInput" accept="image/*;capture=camera" />
                     </label>
                   </div>
                   <div class="col-9">
-                    <img src="../../assets/images/dummy-square.jpg" class="w-100" style="aspect-ratio: 3.35/1;" alt="" />
+                    <img src="<?= config("app.root") ?>/../assets/images/dummy-square.jpg" class="w-100" style="aspect-ratio: 3.35/1;" alt="" />
                   </div>
                 </div>
               </div>
@@ -98,8 +98,8 @@ $divisions = $data['divisions'];
           </div>
           <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-4 col-xxl-4">
             <div class="card shadow">
-              <div class="card-header bg-primary pb-0">
-                <h5 class="card-title text-light">Store Informations</h5>
+              <div class="card-header bg-success py-1">
+                <h5 class="card-title text-light py-0 my-0">Store Informations</h5>
               </div>
               <div class="card-body">
                 <div class="input-group input-group-sm mb-3">
@@ -113,11 +113,6 @@ $divisions = $data['divisions'];
                 <div class="input-group input-group-sm mb-3">
                   <span class="input-group-text"><i class="fas fa-at"></i></span>
                   <input type="text" name="slug" class="form-control" id="slug" placeholder="Store Slug" />
-                </div>
-                <div class="input-group input-group-sm mb-3">
-                  <select name="owner" class="form-control" id="owner">
-                    <option value="">-- Choose Owner --</option>
-                  </select>
                 </div>
                 <hr>
                 <div class="input-group input-group-sm mb-3">
@@ -141,24 +136,25 @@ $divisions = $data['divisions'];
                   <input type="tel" name="whatsapp" class="form-control" id="whatsapp" placeholder="+88 (01X) XX-XXXXXX" oninput="formatPhoneNumber(this)" maxlength="19" />
                 </div>
                 <hr>
+                <div class="input-group input-group-sm my-3">
+                  <input type="text" name="address_one" class="form-control" id="line1" placeholder="Address Line 1" />
+                </div>
                 <div class="input-group input-group-sm">
-                  <select name="category" class="form-control" id="category">
-                    <option selected>-- Main Category --</option>
-                  </select>
+                  <input type="text" name="address_two" class="form-control" id="line2" placeholder="Address Line 2" />
                 </div>
               </div>
               <div class="card-footer">
                 <div class="row g-3">
                   <div class="col d-grid">
-                    <a href="index.php" class="btn btn-secondary btn-sm rounded-pill py-2">
+                    <a href="index.php" class="btn btn-secondary btn-sm rounded-pill py-1">
                       <i class="fas fa-arrow-left"></i>
                       <span class="ps-1">Discard</span>
                     </a>
                   </div>
                   <div class="col d-grid">
-                    <button type="submit" class="btn btn-primary btn-sm rounded-pill py-2">
-                      <i class="fas fa-plus"></i>
-                      <span class="ps-1">Create New</span>
+                    <button type="submit" class="btn btn-success btn-sm rounded-pill py-1">
+                      <i class="fas fa-check"></i>
+                      <span class="ps-1">Update</span>
                     </button>
                   </div>
                 </div>
@@ -167,28 +163,16 @@ $divisions = $data['divisions'];
           </div>
           <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-8 col-xxl-8">
             <div class="card shadow">
-              <div class="card-header bg-primary pb-0">
-                <h5 class="card-title text-light">Store Details</h5>
+              <div class="card-header bg-success py-1">
+                <h5 class="card-title text-light py-0 my-0">Store Details</h5>
               </div>
               <div class="card-body">
                 <div class="input-group input-group-sm mb-3">
-                  <textarea name="description" class="form-control" id="description" cols="30" rows="20" placeholder="Type your details here ..."></textarea>
+                  <textarea name="description" class="form-control" id="" cols="30" rows="22" placeholder="Type your details here ..."></textarea>
                 </div>
                 <hr>
-                <div class="row g-3 mb-3">
-                  <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
-                    <div class="input-group input-group-sm">
-                      <input type="text" name="address_one" class="form-control" id="line1" placeholder="Address Line 1" />
-                    </div>
-                  </div>
-                  <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
-                    <div class="input-group input-group-sm">
-                      <input type="text" name="address_two" class="form-control" id="line2" placeholder="Address Line 2" />
-                    </div>
-                  </div>
-                </div>
                 <div class="row g-3">
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                  <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                     <div class="input-group input-group-sm">
                       <select name="division" class="form-control" id="division" onchange="populateDistricts()" >
                         <option value="">-- Choose Division --</option>
@@ -198,23 +182,16 @@ $divisions = $data['divisions'];
                       </select>
                     </div>
                   </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                  <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                     <div class="input-group input-group-sm">
-                      <select name="district" class="form-control" id="district" >
+                      <select name=district"" class="form-control" id="district" >
                         <option value="">-- Choose District --</option>
                       </select>
                     </div>
                   </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                  <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                     <div class="input-group input-group-sm">
-                      <input type="text" name="postal" class="form-control" id="postal" placeholder="Postal Code" />
-                    </div>
-                  </div>
-                  <div class="col-6 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                    <div class="input-group input-group-sm">
-                      <select name="status" class="form-control" id="status">
-                        <option value="">-- Choose Status --</option>
-                      </select>
+                      <input type="text" name="postal" class="form-control" id="" placeholder="Postal Code" />
                     </div>
                   </div>
                 </div>

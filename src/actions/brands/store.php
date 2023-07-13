@@ -68,7 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $constraint->aspectRatio();
     });
     $image->save($uploadPath . $img);
-    $image->save($uploadPath . $img);
     if (empty($errors)) {
       try {
         if ($brands->create($title, $desc, $img, $slug, $status, $mark)) {

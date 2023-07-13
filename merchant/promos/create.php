@@ -11,7 +11,7 @@ use App\Database;
 
 // if (!isset($_SESSION['login'])) {
 //   if (!Auth::check() || !Auth::isAdmin()) {
-//     header("Location: ../login.php");
+//     header("Location: ../../auth/login.php");
 //     exit();
 //   }
 // }
@@ -26,12 +26,12 @@ $currentPage = "Create";
 require __DIR__ . '/../../components/header.php';
 ?>
 <body>
-  <?php require __DIR__ . "/../../components/sidebar/admin.php" ?>
+  <?php require __DIR__ . "/../../components/sidebar/merchant.php" ?>
   <main id="content">
     <!-- SCROLL UP BUTTON -->
     <?php include __DIR__ . '/../../components/navigation/scroll-to-top.php' ?>
-    <?php require __DIR__ . "/../../components/navbar/admin.php" ?>
-    <?php include __DIR__ . '/../../components/breadcrumb/admin/secondary.php' ?>
+    <?php require __DIR__ . "/../../components/navbar/merchant.php" ?>
+    <?php include __DIR__ . '/../../components/breadcrumb/merchant/secondary.php' ?>
     <section class="container-fluid d-flex align-items-center justify-content-center my-5">
       <div class="col-12 col-sm-12 col-md-8 col-lg-7 col-xl-7 col-xxl-7">
         <form action="<?= config("app.root")?>src/actions/promo/store.php" method="post">
@@ -41,7 +41,7 @@ require __DIR__ . '/../../components/header.php';
             </div>
             <div class="card-body">
               <div class="row g-3">
-                <div class="col-12">
+                <div class="col-6">
                   <input type="text" name="title" class="form-control form-control-sm" id="title" placeholder="Promo Title" required />
                 </div>
                 <div class="col-6">
@@ -51,11 +51,6 @@ require __DIR__ . '/../../components/header.php';
                     </button>
                     <input type="text" name="code" class="form-control form-control-sm text-center" id="promoInput" placeholder="XXXX-XXXX-XXXX" style="text-transform: uppercase;" required />
                   </div>
-                </div>
-                <div class="col-6">
-                  <select name="merchant" class="select2 select2-bootstrap-5-theme w-100" id="storeName" >
-                    <option value="">-- Choose Merchant --</option>
-                  </select>
                 </div>
                 <div class="col-12">
                   <textarea name="description" class="form-control form-control-sm" id="description" cols="30" rows="8"></textarea>

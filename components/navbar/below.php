@@ -50,7 +50,9 @@ use App\Auth;
             <span class="ps-1">Account</span>
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="admin/dashboard.php">Admin</a></li>
+            <li><a class="dropdown-item" href="<?= config("app.admin") ?>">Admin</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="<?= config("app.merchant") ?>">Merchant</a></li>
             <li><hr class="dropdown-divider"></li>
             <?php
             if (isset($_SESSION['login'])) { ?>

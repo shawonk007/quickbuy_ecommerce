@@ -1,20 +1,15 @@
 <?php
-
 require __DIR__ . '/../../../vendor/autoload.php';
-
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 use App\Auth;
 use App\Database;
 $db = new Database();
-
 $root = config("app.root");
 $admin = config("app.admin");
 $merchant = config("app.merchant");
-
 Auth::initialize();
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $auth = $_POST['auth'];
   $pass = $_POST['password'];
@@ -24,10 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $_SESSION['user'] = Auth::getUser();
       if (Auth::isAdmin()) {
         $redirect = "{$admin}index.php";
-      } elseif (Auth::isMerchant()) {
-        $redirect = "{$merchant}index.php";
       } else {
-        $redirect = "{$root}dashboard.php";
+        $redirect = "{$root}login.php";
       }
       $response = [
         'success' => true,
