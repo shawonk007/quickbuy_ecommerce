@@ -9,6 +9,7 @@ use App\Auth;
 use App\Database;
 $db = new Database();
 
+<<<<<<< HEAD
 // Auth::initialize();
 
 // if (!isset($_SESSION['login'])) {
@@ -17,6 +18,16 @@ $db = new Database();
 //     exit();
 //   }
 // }
+=======
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isAdmin()) {
+    header("Location: login.php");
+    exit();
+  }
+}
+>>>>>>> 2b59195ad61800ccdb78cfc6be7f06e03605a476
 
 $pageName = "Dashboard";
 $pageGroup = "Dashboard";

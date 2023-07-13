@@ -50,7 +50,7 @@ class Comments
 
     public static function getCommentsForPost($postId)
     {
-        $sql = "SELECT * FROM " . self::$table . " WHERE post_id = ? ORDER BY created_at ASC";
+        $sql = "SELECT * FROM " . self::$table . " WHERE post_id = ? ORDER BY created_at DESC";
         $stmt = self::$conn->prepare($sql);
         $stmt->bind_param("i", $postId);
         $stmt->execute();

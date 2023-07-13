@@ -10,6 +10,7 @@ use App\Auth;
 use App\Database;
 use App\Class\Roles;
 
+<<<<<<< HEAD
 // Auth::initialize();
 
 // if (!isset($_SESSION['login'])) {
@@ -18,6 +19,16 @@ use App\Class\Roles;
 //     exit();
 //   }
 // }
+=======
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isAdmin()) {
+    header("Location: ../login.php");
+    exit();
+  }
+}
+>>>>>>> 2b59195ad61800ccdb78cfc6be7f06e03605a476
 
 $db = new Database();
 $roles = new Roles($db->conn);

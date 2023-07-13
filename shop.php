@@ -17,6 +17,7 @@ $pageName = "Shop";
 
 require __DIR__ . '/components/header.php';
 ?>
+
 <body>
   <?php require __DIR__ . '/components/navbar/primary.php' ?>
   <?php require __DIR__ . '/components/navbar/below.php' ?>
@@ -24,220 +25,103 @@ require __DIR__ . '/components/header.php';
     <!-- SCROLL UP BUTTON -->
     <?php include __DIR__ . '/components/navigation/scroll-to-top.php' ?>
     <section class="py-5">
-        <div class="container">
-          <div class="d-flex justify-content-between">
-            <div class="row">
-              <div class="col pe-0 me-0">
-                <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#searchFilters" aria-controls="searchFilters">
-                  <i class="fas fa-sliders"></i>
-                  <span class="ps-1">Filter</span>
-                </button>
-              </div>
-              <div class="col ps-0 ms-0">
-                <select class="form-select form-select-sm" aria-label="Default select example">
-                  <option selected>Default</option>
-                  <option value="1">Name A to Z</option>
-                  <option value="2">Name Z to A</option>
-                  <option value="3">Price Low to High</option>
-                  <option value="4">Price High to Low</option>
-                </select>
-              </div>
+      <div class="container">
+        <div class="d-flex justify-content-between">
+          <div class="row">
+            <div class="col pe-0 me-0">
+              <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#searchFilters" aria-controls="searchFilters">
+                <i class="fas fa-sliders"></i>
+                <span class="ps-1">Filter</span>
+              </button>
             </div>
-            <nav aria-label="Page navigation example">
-              <ul class="pagination pagination-sm justify-content-end">
-                <li class="page-item disabled">
-                  <a class="page-link">
-                    <i class="fas fa-angle-left"></i>
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link active" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">
-                    <i class="fas fa-angle-right"></i>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <div class="col ps-0 ms-0">
+              <select class="form-select form-select-sm" aria-label="Default select example">
+                <option selected>Default</option>
+                <option value="1">Name A to Z</option>
+                <option value="2">Name Z to A</option>
+                <option value="3">Price Low to High</option>
+                <option value="4">Price High to Low</option>
+              </select>
+            </div>
           </div>
-          <aside class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="searchFilters" aria-labelledby="searchFiltersLabel">
-            <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="searchFiltersLabel">Search Filter</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-sm justify-content-end">
+              <li class="page-item disabled">
+                <a class="page-link">
+                  <i class="fas fa-angle-left"></i>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link active" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">
+                  <i class="fas fa-angle-right"></i>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <aside class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="searchFilters" aria-labelledby="searchFiltersLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="searchFiltersLabel">Search Filter</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <!-- <p>Try scrolling the rest of the page to see this option in action.</p> -->
+            <form action="">
+              <h6>Search by keyword :</h6>
+              <div class="form-group mt-2 mb-4">
+                <div class="input-group">
+                  <input type="search" name="" class="form-control" id="search" placeholder="Search here ..." />
+                  <button type="submit" class="btn btn-outline-primary">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+            <hr>
+            <div class="my-4">
+              <label for="customRange2" class="form-label">Price Range</label>
+              <input type="range" class="form-range" id="customRange2" />
             </div>
-            <div class="offcanvas-body">
-              <!-- <p>Try scrolling the rest of the page to see this option in action.</p> -->
+            <hr>
+            <div class="my-4">
+              <h6>Filter By Brands :</h6>
               <form action="">
-                <h6>Search by keyword :</h6>
-                <div class="form-group mt-2 mb-4">
-                  <div class="input-group">
-                    <input type="search" name="" class="form-control" id="search" placeholder="Search here ..." />
-                    <button type="submit" class="btn btn-outline-primary" >
-                      <i class="fas fa-search"></i>
-                    </button>
-                  </div>
+                <div class="input-group input-group-sm mt-1 mb-2">
+                  <input type="search" name="" class="form-control" id="brandSearch" placeholder="Search Brands ..." />
+                  <button type="submit" class="btn btn-outline-primary">
+                    <i class="fas fa-search"></i>
+                  </button>
                 </div>
               </form>
-              <hr>
-              <div class="my-4">
-                <label for="customRange2" class="form-label">Price Range</label>
-                <input type="range" class="form-range" id="customRange2" />
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="nestle">
+                <label class="form-check-label" for="nestle">Nestle</label>
               </div>
-              <hr>
-              <div class="my-4">
-                <h6>Filter By Brands :</h6>
-                <form action="">
-                  <div class="input-group input-group-sm mt-1 mb-2">
-                    <input type="search" name="" class="form-control" id="brandSearch" placeholder="Search Brands ..." />
-                    <button type="submit" class="btn btn-outline-primary" >
-                      <i class="fas fa-search"></i>
-                    </button>
-                  </div>
-                </form>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="nestle">
-                  <label class="form-check-label" for="nestle">Nestle</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="unilever">
-                  <label class="form-check-label" for="unilever">Unilever</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="cocaCola">
-                  <label class="form-check-label" for="cocaCola">Coca-Cola</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="pepsico">
-                  <label class="form-check-label" for="pepsico">Pepsico</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="pranGroup">
-                  <label class="form-check-label" for="pranGroup">Pran Group</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="bombaySweets">
-                  <label class="form-check-label" for="bombaySweets">Bombay Sweets</label>
-                </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="unilever">
+                <label class="form-check-label" for="unilever">Unilever</label>
               </div>
-              <hr>
-              <div class="mt-4">
-                <h6>Filter By Category :</h6>
-                <form action="">
-                  <div class="input-group input-group-sm mt-1 mb-2">
-                    <input type="search" name="" class="form-control" id="catSearch" placeholder="Search Category ..." />
-                    <button type="submit" class="btn btn-outline-primary" >
-                      <i class="fas fa-search"></i>
-                    </button>
-                  </div>
-                </form>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="foodBeverages">
-                  <label class="form-check-label" for="foodBeverages">Foods & Beverages</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="cleaningSupplies">
-                  <label class="form-check-label" for="cleaningSupplies">Cleaning Supplies</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="personalCare">
-                  <label class="form-check-label" for="personalCare">Personal Care</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="healthWellness">
-                  <label class="form-check-label" for="healthWellness">Health & Wellness</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="babyCare">
-                  <label class="form-check-label" for="babyCare">Baby Care</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="homeKitchen">
-                  <label class="form-check-label" for="homeKitchen">Home & Kitchen</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="stationaryOffice">
-                  <label class="form-check-label" for="stationaryOffice">Stationary & Office</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="beautyMakeup">
-                  <label class="form-check-label" for="beautyMakeup">Beauty and MakeUp</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="fashionLifestyle">
-                  <label class="form-check-label" for="fashionLifestyle">Fashion & Lifestyle</label>
-                </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="cocaCola">
+                <label class="form-check-label" for="cocaCola">Coca-Cola</label>
               </div>
-              <hr>
-              <div class="mt-4">
-                <h6>Filter By Ratings :</h6>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="fiveStar">
-                  <label class="form-check-label" for="fiveStar">
-                    <span>5 Star</span>
-                    <span>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                    </span>
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="fourStar">
-                  <label class="form-check-label" for="fourStar">
-                    <span>4 Star</span>
-                    <span>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="far fa-star"></i>
-                    </span>
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="threeStar">
-                  <label class="form-check-label" for="threeStar">
-                    <span>3 Star</span>
-                    <span>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
-                    </span>
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="twoStar">
-                  <label class="form-check-label" for="twoStar">
-                    <span>2 Star</span>
-                    <span>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
-                    </span>
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="oneStar">
-                  <label class="form-check-label" for="oneStar">
-                    <span>1 Star</span>
-                    <span>
-                      <i class="fas fa-star"></i>
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
-                      <i class="far fa-star"></i>
-                    </span>
-                  </label>
-                </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="pepsico">
+                <label class="form-check-label" for="pepsico">Pepsico</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="pranGroup">
+                <label class="form-check-label" for="pranGroup">Pran Group</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="bombaySweets">
+                <label class="form-check-label" for="bombaySweets">Bombay Sweets</label>
               </div>
             </div>
+<<<<<<< HEAD
           </aside>
           <div class="row row-cols-3 g-3 my-3" >
             <?php $productList = $products->index();
@@ -253,6 +137,141 @@ require __DIR__ . '/components/header.php';
                   <div class="card-body text-center">
                     <h5 class="card-title"><?= $product['product_title'] ?></h5>
                     <a href="#" class="nav-link" ><?= Category::parent($product['product_category'], $db) ?></a>
+=======
+            <hr>
+            <div class="mt-4">
+              <h6>Filter By Category :</h6>
+              <form action="">
+                <div class="input-group input-group-sm mt-1 mb-2">
+                  <input type="search" name="" class="form-control" id="catSearch" placeholder="Search Category ..." />
+                  <button type="submit" class="btn btn-outline-primary">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </form>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="foodBeverages">
+                <label class="form-check-label" for="foodBeverages">Foods & Beverages</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="cleaningSupplies">
+                <label class="form-check-label" for="cleaningSupplies">Cleaning Supplies</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="personalCare">
+                <label class="form-check-label" for="personalCare">Personal Care</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="healthWellness">
+                <label class="form-check-label" for="healthWellness">Health & Wellness</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="babyCare">
+                <label class="form-check-label" for="babyCare">Baby Care</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="homeKitchen">
+                <label class="form-check-label" for="homeKitchen">Home & Kitchen</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="stationaryOffice">
+                <label class="form-check-label" for="stationaryOffice">Stationary & Office</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="beautyMakeup">
+                <label class="form-check-label" for="beautyMakeup">Beauty and MakeUp</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="fashionLifestyle">
+                <label class="form-check-label" for="fashionLifestyle">Fashion & Lifestyle</label>
+              </div>
+            </div>
+            <hr>
+            <div class="mt-4">
+              <h6>Filter By Ratings :</h6>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="fiveStar">
+                <label class="form-check-label" for="fiveStar">
+                  <span>5 Star</span>
+                  <span>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                  </span>
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="fourStar">
+                <label class="form-check-label" for="fourStar">
+                  <span>4 Star</span>
+                  <span>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                  </span>
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="threeStar">
+                <label class="form-check-label" for="threeStar">
+                  <span>3 Star</span>
+                  <span>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                  </span>
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="twoStar">
+                <label class="form-check-label" for="twoStar">
+                  <span>2 Star</span>
+                  <span>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                  </span>
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="oneStar">
+                <label class="form-check-label" for="oneStar">
+                  <span>1 Star</span>
+                  <span>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                    <i class="far fa-star"></i>
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </aside>
+        <div class="row row-cols-3 g-3 my-3">
+          <?php $productList = $products->index();
+          foreach ($productList as $product) {
+            echo $image = ProductImages::getProductImages($product['product_id']);
+          ?>
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
+              <a href="display.php?product=<?= $product['product_slug'] ?>" class="nav-link">
+                <div class="card product-card">
+                  <div class="card-image">
+                    <img src="<?= isset($image) ? config("app.root") . 'uploads/products/' . $image : config("app.root") . 'assets/images/dummy-square.jpg'; ?>" class="card-img-top" alt="..." />
+                  </div>
+                  <div class="card-body text-center">
+                    <h5 class="card-title"><?= $product['product_title'] ?></h5>
+                    <a href="#" class="nav-link"><?= Category::parent($product['product_category'], $db) ?></a>
+>>>>>>> 2b59195ad61800ccdb78cfc6be7f06e03605a476
                     <p class="card-text mt-2">
                       <i class="fas fa-star rating-icon"></i>
                       <i class="fas fa-star rating-icon"></i>
@@ -272,6 +291,57 @@ require __DIR__ . '/components/header.php';
                       ?>
                     </p>
                   </div>
+<<<<<<< HEAD
+=======
+                  <div class="card-footer card-btn d-flex justify-content-center">
+                    <a href="my-wishlist.php" class="btn btn-outline-danger btn-sm me-2" id="wishlist">
+                      <i class="fas fa-heart"></i>
+                      <span class="ps-1">Wishlist</span>
+                    </a>
+                    <a href="#" role="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#productModal">
+                      <i class="fas fa-eye"></i>
+                      <span class="ps-1">Quick View</span>
+                    </a>
+                  </div>
+                </div>
+              </a>
+            </div>
+          <?php } ?>
+          <!-- <a href="display.php" class="nav-link">
+                <div class="card product-card" >
+                  <div class="card-image">
+                    <img src="https://via.placeholder.com/300x300" class="card-img-top" alt="..." />
+                  <div class="card-gallery owl-carousel owl-theme">
+                      <img src="https://via.placeholder.com/50x50" class="" alt="..." />
+                    </div>
+                    <div class="item">
+                      <img src="https://via.placeholder.com/50x50" class="" alt="..." />
+                    </div>
+                    <div class="item">
+                      <img src="https://via.placeholder.com/50x50" class="" alt="..." />
+                    </div>
+                    <div class="item">
+                      <img src="https://via.placeholder.com/50x50" class="" alt="..." />
+                    </div>
+                  </div>
+                  <div class="card-body text-center">
+                    <h5 class="card-title">Nescafé Coffee Jar</h5>
+                    <a href="#" class="nav-link" >Beverages</a>
+                    <p class="card-text mt-2">
+                      <i class="fas fa-star rating-icon"></i>
+                      <i class="fas fa-star rating-icon"></i>
+                      <i class="fas fa-star rating-icon"></i>
+                      <i class="fas fa-star rating-icon"></i>
+                      <i class="fas fa-star rating-icon"></i>
+                    </p>
+                    
+                    <p class="card-text">
+                      <strong>BDT.</strong>
+                      <span class="badge bg-secondary ms-1">195.00/-</span>
+                    </p>
+                  </div>
+                  
+>>>>>>> 2b59195ad61800ccdb78cfc6be7f06e03605a476
                   <div class="card-footer card-btn d-flex justify-content-center">
                     <a href="#" class="btn btn-outline-danger btn-sm me-2">
                       <i class="fas fa-heart"></i>
@@ -285,6 +355,7 @@ require __DIR__ . '/components/header.php';
                 </div>
               </a>
             </div>
+<<<<<<< HEAD
             <?php } ?>
               <!-- <a href="display.php" class="nav-link">
                 <div class="card product-card" >
@@ -333,6 +404,8 @@ require __DIR__ . '/components/header.php';
                 </div>
               </a>
             </div>
+=======
+>>>>>>> 2b59195ad61800ccdb78cfc6be7f06e03605a476
             
             <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 col-xxl-3">
               <a href="display.php" class="nav-link">
@@ -984,8 +1057,13 @@ require __DIR__ . '/components/header.php';
                 </div>
               </a>
             </div> -->
+<<<<<<< HEAD
           </div><!-- /.row -->
         </div><!-- /.container -->
+=======
+        </div><!-- /.row -->
+      </div><!-- /.container -->
+>>>>>>> 2b59195ad61800ccdb78cfc6be7f06e03605a476
     </section>
     <section>
       <!-- Modal -->
@@ -1020,7 +1098,7 @@ require __DIR__ . '/components/header.php';
                       <div class="card-body">
                         <div class="card-text">
                           <h6>Highlights</h6>
-                          <p class="text-xs" style="text-align: justify;" >
+                          <p class="text-xs" style="text-align: justify;">
                             Filled with a wide range of vitamins and minerals including as Calcium, Iron, Zinc, Phosphorous, Vitamins A, C, E, D, B1, B2, B6, B12 - Horlicks is a nourishing beverage that helps support your child’s growth. Produced from a mix of malted barley, wheat and milk, this unrivaled tasty recipe has been providing nutrition to people for many years. Horlicks helps to make kids Taller, Stronger and Sharper!
                           </p>
                         </div>
@@ -1068,7 +1146,7 @@ require __DIR__ . '/components/header.php';
                             </tr>
                             <tr>
                               <th class="ps-0 pe-0 py-1">
-                                  <h6>Stock</h6>
+                                <h6>Stock</h6>
                               </th>
                               <td class="ps-0 pe-1 py-1">:</td>
                               <td class="ps-0 pe-0 py-1">
@@ -1087,7 +1165,7 @@ require __DIR__ . '/components/header.php';
                               <label for="size">Size</label>
                               <select id="size" class="form-control mt-2">
                                 <option value="small">250 gm</option>
-                                <option value="medium" selected >500 gm</option>
+                                <option value="medium" selected>500 gm</option>
                                 <option value="large">1000 gm</option>
                               </select>
                             </div>
@@ -1143,5 +1221,33 @@ require __DIR__ . '/components/header.php';
   </main>
   <?php require __DIR__ . '/components/footer/footer-widgets.php' ?>
   <?php require __DIR__ . '/components/footer/footer-bar.php' ?>
+  <script>
+    $(document).ready(function() {
+      $('#wishlist').click(function(e) {
+        e.preventDefault();
+      });
+    });
+
+    $(".wishlist-btn").on("click", function() {
+      var productId = $(this).data("product-id");
+
+      // Send AJAX request to the PHP script
+      $.ajax({
+        url: "add_to_wishlist.php",
+        method: "POST",
+        data: {
+          productId: productId
+        },
+        success: function(response) {
+          if (response === "success") {
+            alert("Product added to wishlist successfully.");
+          } else {
+            alert("Failed to add product to wishlist.");
+          }
+        }
+      });
+    });
+  </script>
 </body>
+
 </html>

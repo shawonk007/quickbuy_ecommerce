@@ -63,7 +63,6 @@
   <!-- Sweetalart2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Summernote (v0.8.20) -->
-  <!-- <script src="<?= $root ?>plugins/summernote-0.8.20/js/summernote-lite.min.js"></script> -->
   <script src="<?= $root ?>plugins/summernote-0.8.20/summernote-lite.min.js"></script>
   <!-- Perfect Scrollbar (v1.5.0) -->
   <script src="<?= $root ?>plugins/perfect-scrollbar-v1.5.0/js/perfect-scrollbar.min.js"></script>

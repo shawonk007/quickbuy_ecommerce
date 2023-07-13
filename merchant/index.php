@@ -7,6 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 use App\Auth;
 use App\Database;
 
+<<<<<<< HEAD
 // Auth::initialize();
 
 // if (!isset($_SESSION['login'])) {
@@ -15,6 +16,16 @@ use App\Database;
 //     exit();
 //   }
 // }
+=======
+Auth::initialize();
+
+if (!isset($_SESSION['login'])) {
+  if (!Auth::check() || !Auth::isAdmin()) {
+    header("Location: ../auth/login.php");
+    exit();
+  }
+}
+>>>>>>> 2b59195ad61800ccdb78cfc6be7f06e03605a476
 
 $db = new Database();
 
