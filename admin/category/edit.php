@@ -8,26 +8,6 @@ use App\Auth;
 use App\Database;
 use App\Class\Category;
 
-<<<<<<< HEAD
-// Auth::initialize();
-
-// if (!isset($_SESSION['login'])) {
-//   if (!Auth::check() || !Auth::isAdmin()) {
-//     header("Location: ../login.php");
-//     exit();
-//   }
-// }
-=======
-Auth::initialize();
-
-if (!isset($_SESSION['login'])) {
-  if (!Auth::check() || !Auth::isAdmin()) {
-    header("Location: ../login.php");
-    exit();
-  }
-}
->>>>>>> 2b59195ad61800ccdb78cfc6be7f06e03605a476
-
 $db = new Database();
 $categories = new Category($db->conn);
 
@@ -93,7 +73,7 @@ require __DIR__ . '/../../components/header.php';
                 </div>
                 <div class="col-6 d-flex align-items-center">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="mark" value="1" id="" />
+                    <input class="form-check-input" type="checkbox" name="mark" value="1" id="" <?= isset($category['is_featured']) && $category['is_featured'] == 1 ? 'checked' : '' ?> />
                     <label class="form-check-label " for="" style="font-size: 0.9rem;">Mark as Featured Category</label>
                   </div>
                 </div>

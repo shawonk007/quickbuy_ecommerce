@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 13, 2023 at 05:57 AM
+-- Generation Time: Jul 15, 2023 at 11:08 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.2.0
 
@@ -305,31 +305,41 @@ CREATE TABLE IF NOT EXISTS `products` (
   `user_id` int NOT NULL,
   `vendor_id` int NOT NULL,
   `product_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `product_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `product_category` int NOT NULL,
   `product_sku` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `product_brand` int NOT NULL,
   `regular_price` double(10,2) NOT NULL,
   `offer_price` double(10,2) DEFAULT NULL,
-  `product_highlights` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `product_thumbnail` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `product_slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `product_status` tinyint DEFAULT NULL,
   `is_featured` tinyint(1) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `user_id`, `vendor_id`, `product_title`, `product_description`, `product_category`, `product_sku`, `product_brand`, `regular_price`, `offer_price`, `product_highlights`, `product_slug`, `product_status`, `is_featured`, `created_at`, `updated_at`) VALUES
-(1, 0, 0, 'Test', '<p>lorem ipsum<br></p>', 5, 'QBP-0001', 0, 1111.00, 1000.00, '<p>lorem ipsum</p>', 'test', 1, NULL, '2023-07-10 04:50:55', '2023-07-10 04:50:55'),
-(2, 0, 0, 'Realme C25Y', '<p>lorem ipsum<br></p>', 5, 'QBP-0001', 0, 1111.00, 1000.00, '<p>lorem ipsum</p>', 'realme-c25y', 1, NULL, '2023-07-10 05:26:11', '2023-07-10 05:26:11'),
-(3, 0, 0, 'Realme C25Y', '<p>lorem ipsum<br></p>', 5, 'QBP-0001', 0, 1111.00, 1000.00, '<p>lorem ipsum</p>', 'realme-c25y', 1, NULL, '2023-07-10 06:33:12', '2023-07-10 06:33:12'),
-(4, 0, 0, 'Realme C25Y', '<p>lorem ipsum<br></p>', 5, 'QBP-0001', 0, 1111.00, 1000.00, '<p>lorem ipsum</p>', 'realme-c25y', 1, NULL, '2023-07-10 06:35:52', '2023-07-10 06:35:52'),
-(5, 0, 0, 'Realme C25Y', '<p>lorem ipsum<br></p>', 5, 'QBP-0001', 0, 1111.00, 1000.00, '<p>lorem ipsum</p>', 'realme-c25y', 1, NULL, '2023-07-10 06:37:42', '2023-07-10 06:37:42');
+INSERT INTO `products` (`product_id`, `user_id`, `vendor_id`, `product_title`, `product_sku`, `product_brand`, `regular_price`, `offer_price`, `product_thumbnail`, `product_slug`, `product_status`, `is_featured`, `created_at`, `updated_at`) VALUES
+(6, 0, 0, 'Test Product 01', 'QBP-00001', 0, 1111.00, 1000.00, 'QBP_1689432060_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 14:41:01', '2023-07-15 14:41:01'),
+(7, 0, 0, 'Test Product 01', 'QBP-00001', 0, 1111.00, 1000.00, 'QBP_1689432602_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 14:50:02', '2023-07-15 14:50:02'),
+(8, 0, 0, 'Test Product 01', 'QBP-00003', 0, 1111.00, 1000.00, 'QBP_1689433161_qb.jpg', 'test-product-01', 0, NULL, '2023-07-15 14:59:22', '2023-07-15 14:59:22'),
+(9, 0, 0, 'Test Product 01', 'QBP-00003', 0, 1111.00, 1000.00, 'QBP_1689433196_qb.jpg', 'test-product-01', 0, NULL, '2023-07-15 14:59:56', '2023-07-15 14:59:56'),
+(10, 0, 0, 'Test Product 01', 'QBP-00005', 0, 1111.00, 1000.00, 'QBP_1689433284_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 15:01:24', '2023-07-15 15:01:24'),
+(11, 0, 0, 'Test Product 01', 'QBP-00005', 0, 1111.00, 1000.00, 'QBP_1689433355_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 15:02:35', '2023-07-15 15:02:35'),
+(12, 0, 0, 'Test Product 01', 'QBP-00007', 0, 1111.00, 1000.00, 'QBP_1689438360_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 16:26:00', '2023-07-15 16:26:00'),
+(13, 0, 0, 'Test Product 01', 'QBP-00007', 0, 1111.00, 1000.00, 'QBP_1689438412_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 16:26:52', '2023-07-15 16:26:52'),
+(14, 0, 0, 'Test Product 01', 'QBP-00007', 0, 1111.00, 1000.00, 'QBP_1689438497_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 16:28:18', '2023-07-15 16:28:18'),
+(15, 0, 0, 'Test Product 01', 'QBP-00007', 0, 1111.00, 1000.00, 'QBP_1689438514_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 16:28:34', '2023-07-15 16:28:34'),
+(16, 0, 0, 'Test Product 01', 'QBP-00007', 0, 1111.00, 1000.00, 'QBP_1689438533_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 16:28:53', '2023-07-15 16:28:53'),
+(17, 0, 0, 'Test Product 01', 'QBP-00007', 0, 1111.00, 1000.00, 'QBP_1689438580_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 16:29:40', '2023-07-15 16:29:40'),
+(18, 0, 0, 'Test Product 01', 'QBP-00011', 0, 1111.00, 1000.00, 'QBP_1689438667_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 16:31:07', '2023-07-15 16:31:07'),
+(19, 0, 0, 'Test Product 02', 'QBP-00015', 0, 1111.00, 1000.00, 'QBP_1689439082_qb.jpg', 'test-product-02', 1, NULL, '2023-07-15 16:38:02', '2023-07-15 16:38:02'),
+(20, 0, 0, 'Test Product 01', 'QBP-00088', 0, 1111.00, 1000.00, 'QBP_1689439309_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 16:41:49', '2023-07-15 16:41:49'),
+(21, 0, 0, 'Test Product 01', 'QBP-00088', 0, 1111.00, 1000.00, 'QBP_1689439437_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 16:43:58', '2023-07-15 16:43:58'),
+(22, 0, 0, 'Test Product 01', 'QBP-00088', 0, 1111.00, 1000.00, 'QBP_1689439463_qb.jpg', 'test-product-01', 1, NULL, '2023-07-15 16:44:23', '2023-07-15 16:44:23');
 
 -- --------------------------------------------------------
 
@@ -350,6 +360,35 @@ CREATE TABLE IF NOT EXISTS `product_attributes` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_category`
+--
+
+DROP TABLE IF EXISTS `product_category`;
+CREATE TABLE IF NOT EXISTS `product_category` (
+  `prdcat_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `main_category` int NOT NULL,
+  `sub_category` int NOT NULL,
+  `product_type` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_category`
+--
+
+INSERT INTO `product_category` (`prdcat_id`, `product_id`, `main_category`, `sub_category`, `product_type`) VALUES
+(0, 11, 1, 2, 5),
+(0, 12, 1, 2, 5),
+(0, 13, 1, 2, 5),
+(0, 15, 1, 2, 5),
+(0, 16, 1, 2, 5),
+(0, 17, 1, 2, 5),
+(0, 18, 1, 2, 5),
+(0, 19, 1, 2, 5);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product_comments`
 --
 
@@ -364,6 +403,34 @@ CREATE TABLE IF NOT EXISTS `product_comments` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`cmnt_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_details`
+--
+
+DROP TABLE IF EXISTS `product_details`;
+CREATE TABLE IF NOT EXISTS `product_details` (
+  `pdetail_id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `product_highlights` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `product_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `product_specifications` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `product_additionals` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`pdetail_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_details`
+--
+
+INSERT INTO `product_details` (`pdetail_id`, `product_id`, `product_highlights`, `product_description`, `product_specifications`, `product_additionals`) VALUES
+(1, 14, '<p>lorem ipsum</p>', '<p>lorem ipsum<br></p>', '<p>lorem ipsum<br></p>', '<p>lorem ipsum<br></p>'),
+(2, 16, '<p>lorem ipsum</p>', '<p>lorem ipsum<br></p>', '<p>lorem ipsum<br></p>', '<p>lorem ipsum<br></p>'),
+(3, 17, '<p>lorem ipsum</p>', '<p>lorem ipsum<br></p>', '<p>lorem ipsum<br></p>', '<p>lorem ipsum<br></p>'),
+(4, 18, '<p>lorem ipsum</p>', '<p>lorem ipsum<br></p>', '<p>lorem ipsum<br></p>', '<p>lorem ipsum<br></p>'),
+(5, 19, '<p>lorem ipsum</p>', '<p>lorem ipsum<br></p>', '<p>lorem ipsum<br></p>', '<p>lorem ipsum<br></p>');
 
 -- --------------------------------------------------------
 
@@ -390,11 +457,19 @@ CREATE TABLE IF NOT EXISTS `product_options` (
   `option_id` int NOT NULL AUTO_INCREMENT,
   `product_id` int NOT NULL,
   `option_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `option_type` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `option_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`option_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_options`
+--
+
+INSERT INTO `product_options` (`option_id`, `product_id`, `option_name`, `option_type`, `option_value`, `created_at`, `updated_at`) VALUES
+(1, 21, 'Array', 'Array', 'Array', '2023-07-15 16:43:58', '2023-07-15 16:43:58');
 
 -- --------------------------------------------------------
 
@@ -447,6 +522,13 @@ CREATE TABLE IF NOT EXISTS `product_shippings` (
   `product_height` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `product_shippings`
+--
+
+INSERT INTO `product_shippings` (`pship_id`, `product_id`, `product_weight`, `product_length`, `product_width`, `product_height`) VALUES
+(0, 19, '10.00', '20.00', '10.00', '20.00');
+
 -- --------------------------------------------------------
 
 --
@@ -461,7 +543,7 @@ CREATE TABLE IF NOT EXISTS `product_stock` (
   `stock_status` tinyint DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`stock_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_stock`
@@ -472,7 +554,10 @@ INSERT INTO `product_stock` (`stock_id`, `product_id`, `stock_quantity`, `stock_
 (2, 2, 10, 0, '2023-07-10 05:26:11'),
 (3, 3, 10, 0, '2023-07-10 06:33:12'),
 (4, 4, 10, 0, '2023-07-10 06:35:52'),
-(5, 5, 10, 0, '2023-07-10 06:37:42');
+(5, 5, 10, 0, '2023-07-10 06:37:42'),
+(6, 17, 0, 0, '2023-07-15 16:29:40'),
+(7, 18, 10, 1, '2023-07-15 16:31:07'),
+(8, 19, 10, 1, '2023-07-15 16:38:02');
 
 -- --------------------------------------------------------
 
@@ -570,7 +655,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`role_id`),
   UNIQUE KEY `role_slug` (`role_slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `roles`
@@ -583,7 +668,8 @@ INSERT INTO `roles` (`role_id`, `role_title`, `role_description`, `role_slug`, `
 (4, 'Contributor', '', 'contributor', 1, '2023-07-07 16:54:55', '2023-07-07 16:54:55'),
 (5, 'Author', '', 'author', 1, '2023-07-07 16:56:43', '2023-07-07 16:56:43'),
 (6, 'Merchant', '', 'merchant', 1, '2023-07-07 16:56:55', '2023-07-07 16:56:55'),
-(7, 'Customer', '', 'customer', 1, '2023-07-07 16:57:06', '2023-07-07 16:57:06');
+(7, 'Customer', '', 'customer', 1, '2023-07-07 16:57:06', '2023-07-07 16:57:06'),
+(8, 'Subscriber', '', 'subscriber', 1, '2023-07-13 13:54:32', '2023-07-13 13:54:32');
 
 -- --------------------------------------------------------
 

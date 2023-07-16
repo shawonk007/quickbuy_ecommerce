@@ -7,15 +7,6 @@ use App\Auth;
 use App\Database;
 $db = new Database();
 
-Auth::initialize();
-
-if (!isset($_SESSION['login'])) {
-  if (!Auth::check() || !Auth::isCustomer()) {
-    header("Location: auth/login.php");
-    exit();
-  }
-}
-
 $jsonData = file_get_contents(config("app.root") . 'assets/data/bangladesh.json');
 $data = json_decode($jsonData, true);
 $divisions = $data['divisions'];

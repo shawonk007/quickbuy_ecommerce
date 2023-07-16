@@ -9,26 +9,6 @@ use App\Database;
 use App\Class\Category;
 use Carbon\Carbon;
 
-<<<<<<< HEAD
-// Auth::initialize();
-
-// if (!isset($_SESSION['login'])) {
-//   if (!Auth::check() || !Auth::isAdmin()) {
-//     header("Location: ../login.php");
-//     exit();
-//   }
-// }
-=======
-Auth::initialize();
-
-if (!isset($_SESSION['login'])) {
-  if (!Auth::check() || !Auth::isAdmin()) {
-    header("Location: ../login.php");
-    exit();
-  }
-}
->>>>>>> 2b59195ad61800ccdb78cfc6be7f06e03605a476
-
 $db = new Database();
 $categories = new Category($db->conn);
 
@@ -55,10 +35,10 @@ require __DIR__ . '/../../components/header.php';
     <section class="container-fluid my-5">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all-tab-pane" type="button" role="tab" aria-controls="all-tab-pane" aria-selected="true">All</button>
+          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin-tab-pane" type="button" role="tab" aria-controls="admin-tab-pane" aria-selected="false">Administrators</button>
+          <button class="nav-link" id="parent-tab" data-bs-toggle="tab" data-bs-target="#parent-tab-pane" type="button" role="tab" aria-controls="parent-tab-pane" aria-selected="false">Parent</button>
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" id="seller-tab" data-bs-toggle="tab" data-bs-target="#seller-tab-pane" type="button" role="tab" aria-controls="seller-tab-pane" aria-selected="false">Merchants</button>
@@ -69,7 +49,7 @@ require __DIR__ . '/../../components/header.php';
       </ul>
     </section>
     <section class="container-fluid tab-content my-5" id="myTabContent">
-      <div class="tab-pane fade show active" id="all-tab-pane" role="tabpanel" aria-labelledby="all-tab" tabindex="0">
+      <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
         <div class="card shadow">
           <div class="card-body py-5">
             <table class="table data-table py-5">
@@ -125,27 +105,59 @@ require __DIR__ . '/../../components/header.php';
           </div>
         </div>
       </div>
-      <div class="tab-pane fade" id="coupon-tab-pane" role="tabpanel" aria-labelledby="coupon-tab" tabindex="0">
+      <div class="tab-pane fade" id="parent-tab-pane" role="tabpanel" aria-labelledby="parent-tab" tabindex="0">
         <div class="card shadow">
           <div class="card-body py-5">
-            <table class="table data-table py-5">
+          <table class="table data-table py-5">
               <thead class="table-dark">
                 <tr>
                   <th scope="col">SL</th>
-                  <th scope="col">Promo Title</th>
-                  <th scope="col">Promo Code</th>
-                  <th scope="col">Promo Type</th>
+                  <th scope="col">Category Title</th>
+                  <th scope="col">Parent Category</th>
+                  <th scope="col">Slug</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Date Created</th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
+                <?php $parentList = $categories->index();
+                foreach ($parentList as $k => $mother) {
+                  if ($mother['parent_id'] == 0) {
+                  $statusLabel = "";
+                  $statusClass = "";
+                  $parentTitle = Category::parent($mother['parent_id'], $db);
+                  $main = $parentTitle !== false ? $parentTitle : "No Parent";
+                  if ($category['cat_status'] == 1) {
+                    $statusLabel = "Active";
+                    $statusClass = "bg-success";
+                  } elseif ($category['cat_status'] == 0) {
+                    $statusLabel = "Deactive";
+                    $statusClass = "bg-danger";
+                  } else {
+                    $statusLabel = "Pending";
+                    $statusClass = "bg-secondary";
+                  }
+                ?>
                 <tr>
-                  <th scope="row">1</th>
-                  <td>Coupon</td>
-                  <td>XXXX-XXXX-XXXX</td>
-                  <td>Coupon</td>
-                  <td>Active</td>
+                  <th scope="row"><?= $k+1 ?></th>
+                  <td><?= $mother['cat_title'] ?></td>
+                  <td><?= $main ?></td>
+                  <td><?= $mother['cat_slug'] ?></td>
+                  <td>
+                    <span class="badge <?= $statusClass ?>"><?= $statusLabel ?></span>
+                  </td>
+                  <td><?= Carbon::parse($mother['created_at'])->diffForHumans() ?></td>
+                  <td>
+                    <a href="edit.php?id=<?= $mother['cat_id'] ?>" class="btn btn-info btn-sm">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteCat(<?= $mother['cat_id'] ?>)" >
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </td>
                 </tr>
+                <?php } } ?>
               </tbody>
             </table>
           </div>

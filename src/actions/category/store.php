@@ -11,14 +11,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
   $desc = $_POST['description'];
   $parent = $_POST['parent'];
   $sub = $_POST['sub-parent'];
-  // $slug = isset($_POST['slug']) ? $_POST['slug'] : Pathify::make($title);
+  // $slug = empty($slug) ? $_POST['slug'] : Pathify::make($title);
   $status = $_POST['status'];
   $mark = isset($_POST['mark']) ? $_POST['mark'] : NULL;
-  // if (isset($_POST['slug'])) {
-  //   $slug = $_POST['slug'];
-  // } else {
+  if (empty($_POST['slug'])) {
     $slug = Pathify::make($title);
-  // }
+  } else {
+    $slug = $_POST['slug'];
+  }
   if (isset($sub) && $sub != NULL) {
     $cat = $sub;
   } else {

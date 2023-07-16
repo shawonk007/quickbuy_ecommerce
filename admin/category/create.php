@@ -8,26 +8,6 @@ use App\Auth;
 use App\Database;
 use App\Class\Category;
 
-<<<<<<< HEAD
-// Auth::initialize();
-
-// if (!isset($_SESSION['login'])) {
-//   if (!Auth::check() || !Auth::isAdmin()) {
-//     header("Location: ../login.php");
-//     exit();
-//   }
-// }
-=======
-Auth::initialize();
-
-if (!isset($_SESSION['login'])) {
-  if (!Auth::check() || !Auth::isAdmin()) {
-    header("Location: ../login.php");
-    exit();
-  }
-}
->>>>>>> 2b59195ad61800ccdb78cfc6be7f06e03605a476
-
 $db = new Database();
 $categories = new Category($db->conn);
 
@@ -157,7 +137,8 @@ require __DIR__ . '/../../components/header.php';
                 timer: 1500,
                 showConfirmButton: false
               }).then(function() {
-                window.location.href = 'index.php';
+                // window.location.href = 'index.php';
+                location.reload();
               });
             } else {
               Swal.fire({

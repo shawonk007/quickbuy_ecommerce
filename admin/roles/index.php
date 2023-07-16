@@ -9,26 +9,6 @@ use App\Database;
 use App\Class\Roles;
 use Carbon\Carbon;
 
-<<<<<<< HEAD
-// Auth::initialize();
-
-// if (!isset($_SESSION['login'])) {
-//   if (!Auth::check() || !Auth::isAdmin()) {
-//     header("Location: ../login.php");
-//     exit();
-//   }
-// }
-=======
-Auth::initialize();
-
-if (!isset($_SESSION['login'])) {
-  if (!Auth::check() || !Auth::isAdmin()) {
-    header("Location: ../login.php");
-    exit();
-  }
-}
->>>>>>> 2b59195ad61800ccdb78cfc6be7f06e03605a476
-
 $db = new Database();
 $roles = new Roles($db->conn);
 
@@ -113,9 +93,9 @@ require __DIR__ . '/../../components/header.php';
                       <a href="edit.php?id=<?= $role['role_id'] ?>" class="btn btn-outline-info btn-sm">
                         <i class="fas fa-edit"></i>
                       </a>
-                      <!-- <button type="button" class="btn btn-outline-success btn-sm view-role" data-bs-toggle="modal" data-bs-target="#viewRole" data-role-id="<?= $role['role_id'] ?>" >
+                      <button type="button" class="btn btn-outline-success btn-sm view-role" data-bs-toggle="modal" data-bs-target="#viewRole" data-role-id="<?= $role['role_id'] ?>" >
                         <i class="fas fa-eye"></i>
-                      </button> -->
+                      </button>
                       <button type="submit" class="btn btn-outline-danger btn-sm" onclick="deleteRole(<?= $role['role_id'] ?>)" >
                         <i class="fas fa-trash-alt"></i>
                       </button>
@@ -124,14 +104,6 @@ require __DIR__ . '/../../components/header.php';
                   <?php } ?>
               </tbody>
             </table>
-            <div class="row mt-5">
-              <div class="col">
-                <caption><span class="text-secondary" >Showing Results <?= count($roleList) ?></span></caption>
-              </div>
-              <div class="col d-flex justify-content-end">
-              <?php include __DIR__ . '/../../components/navigation/pagination.php' ?>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -215,32 +187,30 @@ require __DIR__ . '/../../components/header.php';
       </div>
     </section>
     <!-- Modal -->
+    <?php
+
+    ?>
     <section class="modal fade" id="viewRole" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="viewRoleLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
-          <?php
-            if (isset($_GET['id'])) {
-              $id = $_GET['id'];
-              $role = $roles->show($id); ?>
-            
-            <div class="modal-header py-2">
-              <h1 class="modal-title fs-5" id="viewRoleLabel"><?= $role['role_title'] ?></h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <div id="roleDetails"></div>
-            </div>
-            <div class="modal-footer py-1">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">
-                <i class="fas fa-plus"></i>
-                <strong class="ps-2">Create New</strong>
-              </button>
-            </div>
-          <?php } ?>
+          <div class="modal-header py-2">
+            <h1 class="modal-title fs-5" id="viewRoleLabel"><?= $role['role_title'] ?></h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="roleDetails"></div>
+          </div>
+          <div class="modal-footer py-1">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-plus"></i>
+              <strong class="ps-2">Create New</strong>
+            </button>
+          </div>
         </div>
       </div>
     </section>
+    <?php ?>
   </main>
   <script>
     function deleteRole(roleId) {

@@ -7,15 +7,6 @@ use App\Auth;
 use App\Database;
 $db = new Database();
 
-// Auth::initialize();
-
-// if (!isset($_SESSION['login'])) {
-//   if (!Auth::check() || !Auth::isCustomer()) {
-//     header("Location: auth/login.php");
-//     exit();
-//   }
-// }
-
 $name = $_SESSION['user']['first_name'] . " " . $_SESSION['user']['last_name'];
 
 $pageName = "My Wishlist < {$name}";

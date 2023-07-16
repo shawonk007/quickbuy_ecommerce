@@ -24,12 +24,12 @@ class Products {
     }
   }
 
-  public function create($title, $desc, $cat, $sku, $brand, $rPrice, $oPrice, $shorts, $slug, $status, $featured) {
+  public function create($title, $sku, $brand, $rPrice, $oPrice, $slug, $img, $status, $featured) {
     $sql = "INSERT INTO " . $this->table . "
-    (product_title, product_description, product_category, product_sku, product_brand, regular_price, offer_price, product_highlights, product_slug, product_status, is_featured, created_at, updated_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+    (product_title, product_sku, product_brand, regular_price, offer_price, product_slug, product_thumbnail, product_status, is_featured, created_at, updated_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
     $statement = $this->conn->prepare($sql);
-    $statement->bind_param("ssisiiissii", $title, $desc, $cat, $sku, $brand, $rPrice, $oPrice, $shorts, $slug, $status, $featured);
+    $statement->bind_param("ssiiissii", $title, $sku, $brand, $rPrice, $oPrice, $slug, $img, $status, $featured);
     if ($statement->execute()) {
       return true;
     } else {
@@ -37,10 +37,10 @@ class Products {
     }
   }
 
-  public function show($slug) {
-    $sql = "SELECT * FROM ". $this->table . " WHERE product_slug = ?";
+  public function show($column, $value) {
+    $sql = "SELECT * FROM ". $this->table . " WHERE {$column} = ?";
     $statement = $this->conn->prepare($sql);
-    $statement->bind_param("s", $slug);
+    $statement->bind_param("s", $value);
     $statement->execute();
     $result = $statement->get_result();
     if ($result->num_rows === 1) {
@@ -53,10 +53,10 @@ class Products {
 
   public function edit() {}
 
-  public function update($id, $title, $desc, $cat, $sku, $brand, $rPrice, $oPrice, $shorts, $slug, $status, $featured) {
-    $sql = "UPDATE " . $this->table . " SET product_title = ?, product_description = ?, product_category = ?, product_sku = ?, product_brand = ?, regular_price = ?, offer_price = ?, product_highlights = ?, product_slug = ?, product_status = ?, is_featured = ?, created_at = ?, updated_at = NOW() WHERE product_id = ?";
+  public function update($id, $title, $sku, $brand, $rPrice, $oPrice, $slug, $img, $status, $featured) {
+    $sql = "UPDATE " . $this->table . " SET product_title = ?, product_sku = ?, product_brand = ?, regular_price = ?, offer_price = ?, product_slug = ?, product_thumbnail = ?, product_status = ?, is_featured = ?, created_at = ?, updated_at = NOW() WHERE product_id = ?";
     $statement = $this->conn->prepare($sql);
-    $statement->bind_param("ssisiiissii", $title, $desc, $cat, $sku, $brand, $rPrice, $oPrice, $shorts, $slug, $status, $featured, $id);
+    $statement->bind_param("ssiiissiii", $title, $sku, $brand, $rPrice, $oPrice, $slug, $img, $status, $featured, $id);
     $statement->execute();
     if ($statement->affected_rows === 1) {
       return true;
@@ -80,6 +80,17 @@ class Products {
         return $result > 0;
     } else {
         return false;
+    }
+  }
+
+  public function category($product, $main, $sub, $type) {
+    $sql = "INSERT INTO product_category (product_id, main_category, sub_category, product_type) VALUES (?, ?, ?, ?)";
+    $statement = $this->conn->prepare($sql);
+    $statement->bind_param("iiii", $product, $main, $sub, $type);
+    if ($statement->execute()) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

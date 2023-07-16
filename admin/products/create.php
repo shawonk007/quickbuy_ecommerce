@@ -8,26 +8,6 @@ use App\Auth;
 use App\Database;
 use App\Class\Category;
 
-<<<<<<< HEAD
-// Auth::initialize();
-
-// if (!isset($_SESSION['login'])) {
-//   if (!Auth::check() || !Auth::isAdmin()) {
-//     header("Location: ../login.php");
-//     exit();
-//   }
-// }
-=======
-Auth::initialize();
-
-if (!isset($_SESSION['login'])) {
-  if (!Auth::check() || !Auth::isAdmin()) {
-    header("Location: ../login.php");
-    exit();
-  }
-}
->>>>>>> 2b59195ad61800ccdb78cfc6be7f06e03605a476
-
 $db = new Database();
 $categories = new Category($db->conn);
 
@@ -77,7 +57,7 @@ require __DIR__ . '/../../components/header.php';
               <div class="card-body">
                 <div class="row g-3">
                   <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                    <select name="main" class="select2 select2-bootstrap-5-theme w-100" id="mainCat" >
+                    <select name="main_category" class="select2 select2-bootstrap-5-theme w-100" id="mainCat" >
                       <option value="">-- Main Category --</option>
                       <?php $mainCat = $categories->index();
                       foreach ($mainCat as $main) {
@@ -87,39 +67,38 @@ require __DIR__ . '/../../components/header.php';
                     </select>
                   </div>
                   <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                    <select name="sub" class="select2 select2-bootstrap-5-theme w-100" id="subCat">
+                    <select name="sub_category" class="select2 select2-bootstrap-5-theme w-100" id="subCat">
                       <option value="">-- Sub Category --</option>
                     </select>
                   </div>
                   <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                    <select name="type" class="select2 select2-bootstrap-5-theme w-100" id="productType">
+                    <select name="product_type" class="select2 select2-bootstrap-5-theme w-100" id="productType">
                       <option value="">-- Product Type --</option>
                     </select>
                   </div>
                   <div class="col-12">
-                    <textarea name="description" id="description" placeholder="Type product description here ..."></textarea>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active py-1" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Description</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link py-1" id="specifications-tab" data-bs-toggle="tab" data-bs-target="#specifications-tab-pane" type="button" role="tab" aria-controls="specifications-tab-pane" aria-selected="false">Specifications</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link py-1" id="additional-tab" data-bs-toggle="tab" data-bs-target="#additional-tab-pane" type="button" role="tab" aria-controls="additional-tab-pane" aria-selected="false">Additional</button>
+                    </li>
+                  </ul>
+                  <div class="tab-content pt-2" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                      <textarea name="description" id="description" placeholder="Type product description here ..."></textarea>
+                    </div>
+                    <div class="tab-pane fade" id="specifications-tab-pane" role="tabpanel" aria-labelledby="specifications-tab" tabindex="0">
+                      <textarea name="specifications" id="specifications" placeholder="Type product specifications here ..."></textarea>
+                    </div>
+                    <div class="tab-pane fade" id="additional-tab-pane" role="tabpanel" aria-labelledby="additional-tab" tabindex="0">
+                      <textarea name="additional" id="additional" placeholder="Type product additional here ..."></textarea>
+                    </div>
                   </div>
-                  <div class="col-12">
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
-  </li>
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>Disabled</button>
-  </li>
-</ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">...</div>
-  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">...</div>
-  <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">...</div>
-  <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">...</div>
-</div>
                   </div>
                 </div>
               </div>
@@ -256,7 +235,7 @@ require __DIR__ . '/../../components/header.php';
                   <div class="col d-grid">
                     <a href="index.php" class="btn btn-secondary btn-sm rounded-pill py-1">
                       <i class="fas fa-arrow-left"></i>
-                      <span class="ps-1">Previous</span>
+                      <span class="ps-1">Discard</span>
                     </a>
                   </div>
                   <div class="col d-grid">
@@ -273,20 +252,16 @@ require __DIR__ . '/../../components/header.php';
                 <h5 class="card-title text-light font-bold py-0 my-0">Tags Manager</h5>
               </div>
               <div class="card-body">
-                <select name="" class="select2 select2-bootstrap-5-theme w-100" id="productTags" multiple >
+                <select name="product_tag" class="select2 select2-bootstrap-5-theme w-100" id="productTags" multiple >
                   <!-- <option value="">-- Article Tags --</option> -->
                 </select>
               </div>
             </div>
             <div class="card shadow my-3">
               <div class="card-header bg-primary py-1">
-                <h5 class="card-title text-light font-bold py-0 my-0">Product Gallery</h5>
+                <h5 class="card-title text-light font-bold py-0 my-0">Product Thumbnail</h5>
               </div>
               <div class="card-body">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                  Launch static backdrop modal
-                </button>
                 <div class="row g-3">
                   <div class="col">
                     <label for="imageInput" class="d-flex flex-column align-items-center justify-content-center bg-light h-100" style="border: 3px solid lightgray; border-style: dashed;">
@@ -298,11 +273,14 @@ require __DIR__ . '/../../components/header.php';
                           <small>(MAX. UPLOAD SIZE 2MB)</small>
                         </p>
                       </div>
-                      <input type="file" name="file" class="d-none" id="imageInput" accept="image/*;capture=camera" />
+                      <input type="file" name="thumbnail" class="d-none" id="imageInput" accept="image/*;capture=camera" />
                     </label>
                   </div>
-                  <div class="col">
-                    <img src="../../assets/images/dummy-square.jpg" class="w-100" alt="" />
+                  <div class="col position-relative">
+                    <img id="dummy" src="../../assets/images/dummy-square.jpg" class="w-100" alt="" />
+                    <button type="button" class="btn btn-danger btn-sm position-absolute" style="right: 0.5rem;">
+                      <i class="fas fa-close"></i>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -319,23 +297,38 @@ require __DIR__ . '/../../components/header.php';
                         <h1 class="mb-0"><i class="fas fa-cloud-arrow-up"></i></h1>
                         <h6 class="my-0 text-dark text-center"><small>Upload</small></h6>
                       </div>
-                      <input type="file" name="file" class="d-none" id="imageInput" accept="image/*;capture=camera" />
+                      <input type="file" name="gallery[]" class="d-none" id="imageInput" accept="image/*;capture=camera" multiple />
                     </label>
                   </div>
-                  <div class="col-4">
+                  <div class="col-4 position-relative">
                     <img src="../../assets/images/dummy-square.jpg" class="w-100" alt="" />
+                    <button type="button" class="btn btn-danger btn-sm position-absolute" style="right: 0.5rem;">
+                      <i class="fas fa-close"></i>
+                    </button>
                   </div>
-                  <div class="col-4">
+                  <div class="col-4 position-relative">
                     <img src="../../assets/images/dummy-square.jpg" class="w-100" alt="" />
+                    <button type="button" class="btn btn-danger btn-sm position-absolute" style="right: 0.5rem;">
+                      <i class="fas fa-close"></i>
+                    </button>
                   </div>
-                  <div class="col-4">
+                  <div class="col-4 position-relative">
                     <img src="../../assets/images/dummy-square.jpg" class="w-100" alt="" />
+                    <button type="button" class="btn btn-danger btn-sm position-absolute" style="right: 0.5rem;">
+                      <i class="fas fa-close"></i>
+                    </button>
                   </div>
-                  <div class="col-4">
+                  <div class="col-4 position-relative">
                     <img src="../../assets/images/dummy-square.jpg" class="w-100" alt="" />
+                    <button type="button" class="btn btn-danger btn-sm position-absolute" style="right: 0.5rem;">
+                      <i class="fas fa-close"></i>
+                    </button>
                   </div>
-                  <div class="col-4">
+                  <div class="col-4 position-relative">
                     <img src="../../assets/images/dummy-square.jpg" class="w-100" alt="" />
+                    <button type="button" class="btn btn-danger btn-sm position-absolute" style="right: 0.5rem;">
+                      <i class="fas fa-close"></i>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -364,24 +357,6 @@ require __DIR__ . '/../../components/header.php';
           </div>
         </div>
       </form>
-    </section>
-    <!-- Modal -->
-    <section class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
-        <div class="modal-content">
-          <div class="modal-header py-1">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer py-1">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Understood</button>
-          </div>
-        </div>
-      </div>
     </section>
   </main>
   <script>
@@ -426,11 +401,12 @@ require __DIR__ . '/../../components/header.php';
         }
       });
 
-      $('#description').summernote({
-        height: 500,
+      $('#description, #specifications, #additional').summernote({
+        height: 450,
         width: '100%',
         placeholder: 'Type product destails here ...',
       });
+
       $('#highlights').summernote({
         height: 200,
         width: '100%',
@@ -449,69 +425,77 @@ require __DIR__ . '/../../components/header.php';
         optionSet.parent().append(newOptionSet);
       });
 
-      $('form').submit(function(e) {
-        e.preventDefault();
-        $.ajax({
-          url: '<?= config("app.root") ?>src/actions/products/store.php',
-          type: 'POST',
-          data: $(this).serialize(),
-          dataType: 'json',
-          success: function(response) {
-            console.log(response);
-            if (response.success) {
-              Swal.fire({
-                icon: 'success',
-                title: 'Created',
-                text: response.message,
-                timer: 2000,
-                showConfirmButton: false
-              }).then(function() {
-                window.location.href = 'index.php';
-              });
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: response.message,
-                timer: 2000,
-                showConfirmButton: false
-              });
-            }
-          },
-          error: function(xhr, status, error) {
-            if (xhr.status === 400) {
-              // Bad request error
-              Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Bad request. Please check your form data.',
-                timer: 2000,
-                showConfirmButton: false
-              });
-            } else if (xhr.status === 500) {
-              // Internal server error
-              Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Internal server error. Please try again later.',
-                timer: 2000,
-                showConfirmButton: false
-              });
-            } else {
-              // Other errors
-              console.error(error);
-              Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'An error occurred while processing the request.',
-                timer: 2000,
-                showConfirmButton: false
-              });
-            }
-          }
-        });
-      });
+      // $('form').submit(function(e) {
+      //   e.preventDefault();
+      //   $.ajax({
+      //     url: '<?= config("app.root") ?>src/actions/products/store.php',
+      //     type: 'POST',
+      //     data: $(this).serialize(),
+      //     dataType: 'json',
+      //     success: function(response) {
+      //       console.log(response);
+      //       if (response.success) {
+      //         Swal.fire({
+      //           icon: 'success',
+      //           title: 'Created',
+      //           text: response.message,
+      //           timer: 2000,
+      //           showConfirmButton: false
+      //         }).then(function() {
+      //           window.location.href = 'index.php';
+      //         });
+      //       } else {
+      //         Swal.fire({
+      //           icon: 'error',
+      //           title: 'Error',
+      //           text: response.message,
+      //           timer: 2000,
+      //           showConfirmButton: false
+      //         });
+      //       }
+      //     },
+      //     error: function(xhr, status, error) {
+      //       if (xhr.status === 400) {
+      //         // Bad request error
+      //         Swal.fire({
+      //           icon: 'error',
+      //           title: 'Error',
+      //           text: 'Bad request. Please check your form data.',
+      //           timer: 2000,
+      //           showConfirmButton: false
+      //         });
+      //       } else if (xhr.status === 500) {
+      //         // Internal server error
+      //         Swal.fire({
+      //           icon: 'error',
+      //           title: 'Error',
+      //           text: 'Internal server error. Please try again later.',
+      //           timer: 2000,
+      //           showConfirmButton: false
+      //         });
+      //       } else {
+      //         // Other errors
+      //         console.error(error);
+      //         Swal.fire({
+      //           icon: 'error',
+      //           title: 'Error',
+      //           text: 'An error occurred while processing the request.',
+      //           timer: 2000,
+      //           showConfirmButton: false
+      //         });
+      //       }
+      //     }
+      //   });
+      // });
     });
+    var imgInp = document.getElementById("imageInput");
+    var dummy = document.getElementById("dummy");
+    imgInp.onchange = evt => {
+      const [file] = imgInp.files
+      if (file) {
+        dummy.src = URL.createObjectURL(file)
+      }
+    }
   </script>
 </body>
 </html>

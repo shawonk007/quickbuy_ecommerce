@@ -1,25 +1,27 @@
-<?php
-require __DIR__ . '/../../../vendor/autoload.php';
+<?php require __DIR__ . '/../../../vendor/autoload.php';
+
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 
 use App\Database;
 use App\Class\Products;
-use App\Class\ProductStock;
-use App\Class\ProductImages;
-use App\Class\ProductOptions;
-use App\Class\ProductShipping;
+use App\Class\ProductStock as Stock;
+use App\Class\ProductImages as Images;
+use App\Class\ProductDetails as Details;
+use App\Class\ProductOptions as Options;
+use App\Class\ProductShipping as Shipping;
 use App\Pathify;
 use Intervention\Image\ImageManagerStatic as Image;
 
 $db = new Database();
 $products = new Products($db->conn);
 
-ProductImages::initialize($db->conn);
-ProductStock::initialize($db->conn);
-ProductShipping::initialize($db->conn);
-ProductOptions::initialize($db->conn);
+Images::initialize($db->conn);
+Stock::initialize($db->conn);
+Shipping::initialize($db->conn);
+Options::initialize($db->conn);
+Details::initialize($db->conn);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $thumbnail = $_FILES['thumbnail'];
@@ -38,12 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   $title = $_POST['title'];
-  $shorts = $_POST['highlights'];
-  $type = $_POST['type'];
-  $desc = $_POST['description'];
-  $oName = $_POST['o_name'];
-  $oType = $_POST['o_type'];
-  $oValue = $_POST['o_value'];
+  $main = $_POST['main_category'];
+  $sub = $_POST['sub_category'];
+  $type = $_POST['product_type'];
+  $highlights = $_POST['highlights'];
+  $description = $_POST['description'];
+  $specifications = $_POST['specifications'];
+  $additional = $_POST['additional'];
+  $oName = $_POST['o_name'] ?? array();
+  $oType = $_POST['o_type'] ?? array();
+  $oValue = $_POST['o_value'] ?? array();
   $weight = $_POST['weight'];
   $length = $_POST['length'];
   $width = $_POST['width'];
@@ -62,9 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if ($thumbnail['error'] === UPLOAD_ERR_OK) {
     $path = __DIR__ . '/../../../uploads/products/';
+    
     if (!is_dir($path)) {
       mkdir($path, 0777, true);
     }
+
     $img = "QBP_" . time() . "_qb.jpg";
     $image = (new Image())->make($thumbnail['tmp_name']);
     $image->encode('jpg', 80);
@@ -74,9 +82,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $image->save($path . $img);
 
     try {
-      if ($products->create($title, $desc, $type, $sku, $brand, $rPrice, $oPrice, $shorts, $slug, $pStatus, $featured)) {
+      if ($products->create($title, $sku, $brand, $rPrice, $oPrice, $slug, $img, $pStatus, $featured)) {
         $productId = $db->conn->insert_id;
-        if (ProductStock::addProductStock($productId, $qty, $sStatus) || ProductShipping::addProductShipping($productId, $weight, $length, $width, $height) || ProductImages::addProductImage($productId, $img)) {
+        if (
+          // $products->category($productId, $main, $sub, $type) && Stock::addProductStock($productId, $qty, $sStatus) &&
+          // Details::addProductDetails($productId, $highlights, $description, $specifications, $additional) &&
+          // Shipping::addProductShipping($productId, $weight, $length, $width, $height) && 
+          // Images::addProductImage($productId, $imgs) && 
+          Options::addProductOption($productId, $oName, $oType, $oValue)) {
           $response = [
             'success' => true,
             'message' => 'Product created successfully!'

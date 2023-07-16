@@ -11,7 +11,7 @@
             "App\\": ["src/","config/"]
         },
         "files": [
-            "src/quickbuy.php"            
+            "src/quickbuy.php"
         ]
     },
     "authors": [

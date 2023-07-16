@@ -9,26 +9,6 @@ if (session_status() === PHP_SESSION_NONE) {
 use App\Auth;
 use App\Database;
 
-<<<<<<< HEAD
-// Auth::initialize();
-
-// if (!isset($_SESSION['login'])) {
-//   if (!Auth::check() || !Auth::isAdmin()) {
-//     header("Location: ../login.php");
-//     exit();
-//   }
-// }
-=======
-Auth::initialize();
-
-if (!isset($_SESSION['login'])) {
-  if (!Auth::check() || !Auth::isAdmin()) {
-    header("Location: ../login.php");
-    exit();
-  }
-}
->>>>>>> 2b59195ad61800ccdb78cfc6be7f06e03605a476
-
 $db = new Database();
 
 $pageName = "Add New Role";
@@ -113,7 +93,8 @@ require __DIR__ . '/../../components/header.php';
                 timer: 2000,
                 showConfirmButton: false
               }).then(function() {
-                window.location.href = 'index.php';
+                // window.location.href = 'index.php';
+                location.reload();
               });
             } else {
               Swal.fire({

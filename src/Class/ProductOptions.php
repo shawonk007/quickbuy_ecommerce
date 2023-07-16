@@ -12,11 +12,11 @@ class ProductOptions
         self::$conn = $db;
     }
 
-    public static function addProductOption($productId, $optionSet, $optionType, $optionValue)
+    public static function addProductOption($productId, $optionName, $optionType, $optionValue)
     {
-        $sql = "INSERT INTO " . self::$table . " (product_id, option_set, option_type, option_value) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO " . self::$table . " (product_id, option_name, option_type, option_value) VALUES (?, ?, ?, ?)";
         $stmt = self::$conn->prepare($sql);
-        $stmt->bind_param("isss", $productId, $optionSet, $optionType, $optionValue);
+        $stmt->bind_param("issss", $productId, $optionName, $optionType, $optionValue);
         $stmt->execute();
         $productOptionId = $stmt->insert_id;
         $stmt->close();
@@ -24,11 +24,11 @@ class ProductOptions
         return $productOptionId;
     }
 
-    public static function updateProductOption($productOptionId, $optionSet, $optionType, $optionValue)
+    public static function updateProductOption($productOptionId, $optionName, $optionType, $optionValue)
     {
-        $sql = "UPDATE " . self::$table . " SET option_set = ?, option_type = ?, option_value = ? WHERE option_id = ?";
+        $sql = "UPDATE " . self::$table . " SET option_name = ?, option_type = ?, option_value = ? WHERE option_id = ?";
         $stmt = self::$conn->prepare($sql);
-        $stmt->bind_param("sssi", $optionSet, $optionType, $optionValue, $productOptionId);
+        $stmt->bind_param("sssi", $optionName, $optionType, $optionValue, $productOptionId);
         $stmt->execute();
         $affectedRows = $stmt->affected_rows;
         $stmt->close();

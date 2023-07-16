@@ -13,13 +13,13 @@ if (isset($_GET['product'])) {
   $slug = $_GET['product'];
   // $product = $products->show($slug);
   try {
-    $product = $products->show($slug);
+    $product = $products->show('product_slug', $slug);
   } catch (Exception $e) {
-    //throw $th;
+    echo "Error: " . $e->getMessage();
   }
 }
 
-$pageName = $product['product_title'];
+$pageName = isset($product['product_title']) ? $product['product_title'] : 'Display';
 
 require __DIR__ . '/components/header.php';
 ?>

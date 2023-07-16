@@ -1,11 +1,24 @@
 # QuickBuy - Multivendor System Ecommerce Platform
 
-**[QuickBuy](https://quickbuy.shawon-khan.com/)** is a fully responsive multivendor system ecommerce platform/web application. It is developed using **[Object-Oriented PHP]** and utilizes the **[Bootstrap 5.3.0](https://getbootstrap.com/)** framework along with JavaScript/jQuery plugins. The platform is designed to be compatible with various screen resolutions, providing optimal user experience across small mobile devices to large desktops.
+**[QuickBuy](https://quickbuy.shawon-khan.com/)** is a fully responsive multivendor system ecommerce platform/web application. It is developed using **[Object-Oriented PHP]** and utilizes the **[Bootstrap (v5.3.0)](https://getbootstrap.com/)** framework along with JavaScript/jQuery plugins. The platform is designed to be compatible with various screen resolutions, providing optimal user experience across small mobile devices to large desktops.
 
 
 ## Live Preview
 
 To preview this project please visit **<https://quickbuy.shawon-khan.com/>**.
+
+
+## Used Plugins
+
+- **[Bootstrap (v5.3.0)](https://getbootstrap.com/)**
+- **[Font Awesome (v6.4.0)](https://fontawesome.com/)**
+- **[Owl-Carousel (v2.3.4)](https://owlcarousel2.github.io/OwlCarousel2/)**
+- **[jQuery (v3.7.0)](https://jquery.com/)**
+- **[Chart.js (v4.3.0)](https://www.chartjs.org/)**
+- **[DataTables (v1.13.4)](https://datatables.net/)**
+- **[Sweetalert2 (v11.7.16)](https://sweetalert2.github.io/)**
+- **[Select2 (v1.3.0)](https://select2.org/)**
+- **[Summernote (v0.8.20)](https://summernote.org/)**
 
 
 ## Features
@@ -33,6 +46,11 @@ To install **[QuickBuy](https://quickbuy.shawon-khan.com/)**, please follow the 
 git clone https://github.com/shawonk007/quickbuy_ecommerce.git
 ```
 
+#### Select Project Folder
+```bash
+cd quickbuy_ecommerce
+```
+
 #### Install Dependencies
 ```bash
 composer i
@@ -51,7 +69,7 @@ composer dump-autoload
 6. Ensure that the necessary file and directory permissions are set to enable read and write access.
 7. Access the application through your web browser.
 
-**Note:** Make sure you have PHP and MySQL installed and properly configured on your server.
+**Note:** Make sure you have PHP version 8.2 and MySQL installed and properly configured on your server.
 
 
 ## Usage
